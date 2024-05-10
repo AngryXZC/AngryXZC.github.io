@@ -120,7 +120,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -157,7 +157,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://angryxzc.github.io/2024/05/10/Spring%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">
+    <link itemprop="mainEntityOfPage" href="http://angryxzc.github.io/2024/05/10/Spring%E6%9D%82%E8%B0%88/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -175,7 +175,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/05/10/Spring%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">精通Spring4.x企业应用开发实战-Chapter01</a>
+          <a href="/2024/05/10/Spring%E6%9D%82%E8%B0%88/" class="post-title-link" itemprop="url">Spring实践日记</a>
         </h2>
 
         <div class="post-meta-container">
@@ -187,7 +187,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2024-05-10 17:19:25 / 修改时间：20:55:29" itemprop="dateCreated datePublished" datetime="2024-05-10T17:19:25+08:00">2024-05-10</time>
+      <time title="创建时间：2024-05-10 21:00:41 / 修改时间：21:12:31" itemprop="dateCreated datePublished" datetime="2024-05-10T21:00:41+08:00">2024-05-10</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -209,29 +209,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="第一章-Spring概述"><a href="#第一章-Spring概述" class="headerlink" title="第一章 Spring概述"></a>第一章 Spring概述</h1><p>开始学习框架之前让我们了解下国外一位程序员老哥对框架的<a target="_blank" rel="noopener" href="https://www.cnblogs.com/trunks2008/p/15648061.html">吐槽</a>：</p>
-<h2 id="Spring的好处："><a href="#Spring的好处：" class="headerlink" title="Spring的好处："></a>Spring的好处：</h2><ul>
-<li>⽅便解耦，简化开发。通过 Spring 提供的IoC 容器，⽤户可以将对象之间的 赖关系交由 Spring 进⾏控制，避免硬编码所造成的过度程序耦合。有了 Spring， ⽤户不必再为单实例模式类、属性⽂件解析等这些底层的需求编写代码，可以 更专注于上层的应⽤。 </li>
-<li>AOP 编程的⽀持。通过 Spring 提供的 AOP 功能，⽅便进⾏⾯向切⾯的编程， 很多不容易⽤传统OOP 实现的功能可以通过 AOP 轻松应对。 </li>
-<li>声明式事务的⽀持。在Spring 中，⽤户可以从单调烦闷的事务管理代码中解脱 出来，通过声明的⽅式灵活地进⾏事务管理，提⾼开发效率和质量。 </li>
-<li>⽅便程序的测试。可以⽤⾮容器依赖的编程⽅式进⾏⼏乎所有的测试⼯作。在Spring ⾥，测试不再是昂贵的操作，⽽是随⼿可做的事情。 </li>
-<li>⽅便集成各种优秀框架。Spring 不排斥各种优秀的开源框架，相反，Spring 可<br>以降低各种框架的使⽤难度。Spring 提供了对各种优秀框架（如 Struts、<br>Hibernate、Hessian、Quartz 等）的直接⽀持。</li>
-<li>降低 Java EE API 的使⽤难度。Spring 对很多难⽤的 Java EE API（如JDBC、 JavaMail、远程调⽤等）提供了⼀个薄层封装，通过Spring 的简易封装，这些 Java EE API 的使⽤难度⼤⼤降低。 </li>
-<li>Java 源码是经典的学习范例。Spring 的源码设计精妙、结构清晰、匠⼼独运， 处处体现着⼤师对Java设计模式的灵活运⽤及对Java 技术的⾼深造诣。Spring 框架源码⽆疑是 Java 技术的最佳实践范例。如果想在短时间内迅速提⾼⾃⼰ 的Java 技术⽔平和应⽤开发⽔平，学习和研究 Spring 源码将会收到意想不到的效果。</li>
-</ul>
-<h2 id="Spring体系结构："><a href="#Spring体系结构：" class="headerlink" title="Spring体系结构："></a>Spring体系结构：</h2><p><img src="/images/spring/Spring%E4%BD%93%E7%B3%BB%E6%A1%86%E6%9E%B6%E5%9B%BE.png" alt="Spring体系框架图"></p>
-<ol>
-<li>IOC容器：Spring的核心容器，负责管理bean的生命周期，创建和装配bean。</li>
-<li>AOP：面向切面编程，提供了事务管理、日志、权限控制等功能。</li>
-<li>数据访问和集成：提供了对JDBC、Hibernate、JPA、JMS、JTA等的支持。</li>
-<li>Web及远程操作：提供了对Servlet、Struts、JSF、WebService、RMI等的支持。</li>
-<li>web及远程访问：Spring自己提供了一个轻量级的web框架SpringMVC，用于简化web开发。</li>
-<li>WebSocket 支持：Spring 4.0 开始支持 WebSocket，提供了对 WebSocket 的支持。</li>
-</ol>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>全世界成千上万的项⽬都构建于 Spring技术框架之上，Spring 已然成为事实上标准 的Java 技术框架。它颠覆了传统Java 开发笨重难⽤的学院派⻛格，给Java 开发者带来了⼀股敏捷便利、灵活实⽤的编程之风。</p>
-<p>Spring 4.0在核⼼容器、Web、测试、缓存、数据访问等⽅⾯进⾏了重⼤升级，全⾯<br>⽀持 Java 8.0、WebSocket、Groovy 动态语⾔等，项⽬源码以当前灵活的Gradle 构建⼯ 具进⾏组织，进⼀步增强了 Spring 在Java 开源领域第⼀开源框架的领导地位。</p>
-<p><span style="color:green">整体而言，第一章吹了下Spring,整体介绍了下架构，以及从<a target="_blank" rel="noopener" href="https://spring.io/projects/spring-boot">官网</a>上获取Spring的方法</span></p>
-<h2 id="PS"><a href="#PS" class="headerlink" title="PS:"></a>PS:</h2><h3 id="关于Spring的一些资源"><a href="#关于Spring的一些资源" class="headerlink" title="关于Spring的一些资源"></a>关于Spring的一些资源</h3><ul>
+          <h3 id="关于Spring的一些资源"><a href="#关于Spring的一些资源" class="headerlink" title="关于Spring的一些资源"></a>关于Spring的一些资源</h3><ul>
 <li>官网上有个快速构建Spring项目的工具，可以快速构建Spring项目，<a target="_blank" rel="noopener" href="https://start.spring.io/">点这里</a>。</li>
 <li>github源码：<a target="_blank" rel="noopener" href="https://github.com/spring-projects">点这里</a></li>
 <li>Spring4.x官网上的架构图：</li>
@@ -287,6 +265,106 @@
 <h4 id="非web应用下优雅的关闭IOC"><a href="#非web应用下优雅的关闭IOC" class="headerlink" title="非web应用下优雅的关闭IOC"></a>非web应用下优雅的关闭IOC</h4><p><code>ConfigurableApplicationContext.registerShutdownHook</code></p>
 <h4 id="Aware接口"><a href="#Aware接口" class="headerlink" title="Aware接口"></a>Aware接口</h4><p>实现Aware接口可以在Bean依赖注入的时候将Spring的资源注入到Bean对象中去。从而Bean对象也可以获取到Spring的内部资源。<br>BeanNameAware，BeanClassLoaderAware，BeanFactoryAware在初始化Bean时执行<br>剩下的接口是通过后置处理器BeanPostProcessor前初始化完成。<br><img src="/images/spring/%E5%90%84%E7%A7%8DAware%E6%8E%A5%E5%8F%A3.png" alt="source/_posts/各种Aware接口"></p>
 <h4 id="Bean的生命周期总结"><a href="#Bean的生命周期总结" class="headerlink" title="Bean的生命周期总结"></a>Bean的生命周期总结</h4><p>Bean的生命周期分为4个部分。其中初始化方法，销毁Bean对象这2部分又分为多个小部分。<br><span style="color:pink">注：Bean的生命周期中还涉及到BeanPostProcessor（后置处理器）部分，这部分跟AOP有很大的关系.</span><br><img src="/images/spring/Bean%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" alt="Bean生命周期"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://angryxzc.github.io/2024/05/10/Spring%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="星之辰">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星之辰的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 星之辰的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/05/10/Spring%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">精通Spring4.x企业应用开发实战-Chapter01</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-05-10 17:19:25 / 修改时间：21:11:14" itemprop="dateCreated datePublished" datetime="2024-05-10T17:19:25+08:00">2024-05-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="第一章-Spring概述"><a href="#第一章-Spring概述" class="headerlink" title="第一章 Spring概述"></a>第一章 Spring概述</h1><p>开始学习框架之前让我们了解下国外一位程序员老哥对框架的<a target="_blank" rel="noopener" href="https://www.cnblogs.com/trunks2008/p/15648061.html">吐槽</a>：</p>
+<h2 id="Spring的好处："><a href="#Spring的好处：" class="headerlink" title="Spring的好处："></a>Spring的好处：</h2><ul>
+<li>⽅便解耦，简化开发。通过 Spring 提供的IoC 容器，⽤户可以将对象之间的 赖关系交由 Spring 进⾏控制，避免硬编码所造成的过度程序耦合。有了 Spring， ⽤户不必再为单实例模式类、属性⽂件解析等这些底层的需求编写代码，可以 更专注于上层的应⽤。 </li>
+<li>AOP 编程的⽀持。通过 Spring 提供的 AOP 功能，⽅便进⾏⾯向切⾯的编程， 很多不容易⽤传统OOP 实现的功能可以通过 AOP 轻松应对。 </li>
+<li>声明式事务的⽀持。在Spring 中，⽤户可以从单调烦闷的事务管理代码中解脱 出来，通过声明的⽅式灵活地进⾏事务管理，提⾼开发效率和质量。 </li>
+<li>⽅便程序的测试。可以⽤⾮容器依赖的编程⽅式进⾏⼏乎所有的测试⼯作。在Spring ⾥，测试不再是昂贵的操作，⽽是随⼿可做的事情。 </li>
+<li>⽅便集成各种优秀框架。Spring 不排斥各种优秀的开源框架，相反，Spring 可<br>以降低各种框架的使⽤难度。Spring 提供了对各种优秀框架（如 Struts、<br>Hibernate、Hessian、Quartz 等）的直接⽀持。</li>
+<li>降低 Java EE API 的使⽤难度。Spring 对很多难⽤的 Java EE API（如JDBC、 JavaMail、远程调⽤等）提供了⼀个薄层封装，通过Spring 的简易封装，这些 Java EE API 的使⽤难度⼤⼤降低。 </li>
+<li>Java 源码是经典的学习范例。Spring 的源码设计精妙、结构清晰、匠⼼独运， 处处体现着⼤师对Java设计模式的灵活运⽤及对Java 技术的⾼深造诣。Spring 框架源码⽆疑是 Java 技术的最佳实践范例。如果想在短时间内迅速提⾼⾃⼰ 的Java 技术⽔平和应⽤开发⽔平，学习和研究 Spring 源码将会收到意想不到的效果。</li>
+</ul>
+<h2 id="Spring体系结构："><a href="#Spring体系结构：" class="headerlink" title="Spring体系结构："></a>Spring体系结构：</h2><p><img src="/images/spring/Spring%E4%BD%93%E7%B3%BB%E6%A1%86%E6%9E%B6%E5%9B%BE.png" alt="Spring体系框架图"></p>
+<ol>
+<li>IOC容器：Spring的核心容器，负责管理bean的生命周期，创建和装配bean。</li>
+<li>AOP：面向切面编程，提供了事务管理、日志、权限控制等功能。</li>
+<li>数据访问和集成：提供了对JDBC、Hibernate、JPA、JMS、JTA等的支持。</li>
+<li>Web及远程操作：提供了对Servlet、Struts、JSF、WebService、RMI等的支持。</li>
+<li>web及远程访问：Spring自己提供了一个轻量级的web框架SpringMVC，用于简化web开发。</li>
+<li>WebSocket 支持：Spring 4.0 开始支持 WebSocket，提供了对 WebSocket 的支持。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>全世界成千上万的项⽬都构建于 Spring技术框架之上，Spring 已然成为事实上标准 的Java 技术框架。它颠覆了传统Java 开发笨重难⽤的学院派⻛格，给Java 开发者带来了⼀股敏捷便利、灵活实⽤的编程之风。</p>
+<p>Spring 4.0在核⼼容器、Web、测试、缓存、数据访问等⽅⾯进⾏了重⼤升级，全⾯<br>⽀持 Java 8.0、WebSocket、Groovy 动态语⾔等，项⽬源码以当前灵活的Gradle 构建⼯ 具进⾏组织，进⼀步增强了 Spring 在Java 开源领域第⼀开源框架的领导地位。</p>
+<p><span style="color:green">整体而言，第一章吹了下Spring,整体介绍了下架构，以及从<a target="_blank" rel="noopener" href="https://spring.io/projects/spring-boot">官网</a>上获取Spring的方法</span></p>
 
       
     </div>
