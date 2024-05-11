@@ -22,7 +22,7 @@
     <meta name="description" content="关于Spring的一些资源 官网上有个快速构建Spring项目的工具，可以快速构建Spring项目，点这里。 github源码：点这里 Spring4.x官网上的架构图：   IOC容器IoC（Inversion of Control，控制反转）就是把原来代码里需要实现的对象创建、依赖，反转给容器来帮忙实现。我们需要创建一个容器，同时需要一种描述来让容器知道要创建的对象与对象的关系。这个描述最具体">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring实践日记">
-<meta property="og:url" content="http://angryxzc.github.io/2024/05/10/Spring%E6%9D%82%E8%B0%88/index.html">
+<meta property="og:url" content="http://angryxzc.github.io/2024/05/10/Spring%E5%AE%9E%E8%B7%B5%E6%97%A5%E8%AE%B0/index.html">
 <meta property="og:site_name" content="星之辰的博客">
 <meta property="og:description" content="关于Spring的一些资源 官网上有个快速构建Spring项目的工具，可以快速构建Spring项目，点这里。 github源码：点这里 Spring4.x官网上的架构图：   IOC容器IoC（Inversion of Control，控制反转）就是把原来代码里需要实现的对象创建、依赖，反转给容器来帮忙实现。我们需要创建一个容器，同时需要一种描述来让容器知道要创建的对象与对象的关系。这个描述最具体">
 <meta property="og:locale" content="zh_CN">
@@ -34,19 +34,19 @@
 <meta property="og:image" content="http://angryxzc.github.io/images/spring/%E5%90%84%E7%A7%8DAware%E6%8E%A5%E5%8F%A3.png">
 <meta property="og:image" content="http://angryxzc.github.io/images/spring/Bean%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
 <meta property="article:published_time" content="2024-05-10T13:00:41.000Z">
-<meta property="article:modified_time" content="2024-05-10T13:12:31.914Z">
+<meta property="article:modified_time" content="2024-05-11T01:44:59.981Z">
 <meta property="article:author" content="星之辰">
-<meta property="article:tag" content="Spring">
 <meta property="article:tag" content="Java">
+<meta property="article:tag" content="Spring">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://angryxzc.github.io/images/spring/Spring4.xRunTime.png">
 
 
-<link rel="canonical" href="http://angryxzc.github.io/2024/05/10/Spring%E6%9D%82%E8%B0%88/">
+<link rel="canonical" href="http://angryxzc.github.io/2024/05/10/Spring%E5%AE%9E%E8%B7%B5%E6%97%A5%E8%AE%B0/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://angryxzc.github.io/2024/05/10/Spring%E6%9D%82%E8%B0%88/","path":"2024/05/10/Spring杂谈/","title":"Spring实践日记"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://angryxzc.github.io/2024/05/10/Spring%E5%AE%9E%E8%B7%B5%E6%97%A5%E8%AE%B0/","path":"2024/05/10/Spring实践日记/","title":"Spring实践日记"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>Spring实践日记 | 星之辰的博客</title>
@@ -135,13 +135,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -173,7 +173,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://angryxzc.github.io/2024/05/10/Spring%E6%9D%82%E8%B0%88/">
+    <link itemprop="mainEntityOfPage" href="http://angryxzc.github.io/2024/05/10/Spring%E5%AE%9E%E8%B7%B5%E6%97%A5%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -201,9 +201,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-05-10 21:00:41 / 修改时间：21:12:31" itemprop="dateCreated datePublished" datetime="2024-05-10T21:00:41+08:00">2024-05-10</time>
+      <time title="创建时间：2024-05-10 21:00:41" itemprop="dateCreated datePublished" datetime="2024-05-10T21:00:41+08:00">2024-05-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-05-11 09:44:59" itemprop="dateModified" datetime="2024-05-11T09:44:59+08:00">2024-05-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -233,7 +239,7 @@
 <h3 id="IOC容器"><a href="#IOC容器" class="headerlink" title="IOC容器"></a>IOC容器</h3><p>IoC（Inversion of Control，控制反转）就是把原来代码里需要实现的对象创建、依赖，反转给容器来帮忙实现。我们需要创建一个容器，同时需要一种描述来让容器知道要创建的对象与对象的关系。这个描述最具体的表现就是我们所看到的配置文件。<br>org.springframework.beans和org.springframework.context包是 Spring Framework 的 IoC 容器的基础。该 <a target="_blank" rel="noopener" href="https://docs.spring.io/spring-framework/docs/5.3.23/javadoc-api/org/springframework/beans/factory/BeanFactory.html">BeanFactory</a>接口提供了一种高级配置机制，能够管理任何类型的对象。 <a target="_blank" rel="noopener" href="https://docs.spring.io/spring-framework/docs/5.3.23/javadoc-api/org/springframework/context/ApplicationContext.html">ApplicationContext</a> 是BeanFactory的子接口。</p>
 <h4 id="IOC容器的两种实现方式（IDEA）"><a href="#IOC容器的两种实现方式（IDEA）" class="headerlink" title="IOC容器的两种实现方式（IDEA）"></a>IOC容器的两种实现方式（IDEA）</h4><p>现在我们已经知道ApplicationContext是BeanFactory的子接口，并且也知道BeanFactory是用来管理容器的，由此得知ApplicationContext也是管理容器的，再推出ApplicationContext的实现类也是同样的作用。</p>
 <ul>
-<li>IDEA向下查看实现类快捷键：ctrl+h</li>
+<li>IDEA向下查看实现类快捷键：ctrl+h（MAC上control+h）</li>
 <li>IDEA向上查看接口和继承快捷键：CTRL+Alt+U</li>
 </ul>
 <p><img src="/images/spring/IOC_two_ways.png" alt="spring实现IOC的两种方式"></p>
@@ -289,8 +295,8 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Spring/" rel="tag"># Spring</a>
               <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/Spring/" rel="tag"># Spring</a>
           </div>
 
         
@@ -302,6 +308,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2024/05/11/%E4%BB%8A%E6%97%A5%E9%98%85%E8%AF%BB-2024-5-10/" rel="next" title="今日阅读-2024-5-10">
+                  今日阅读-2024-5-10 <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>
