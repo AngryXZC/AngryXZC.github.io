@@ -27,7 +27,7 @@
 <meta property="og:description" content="一张图了解UML类图">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-05-14T03:12:55.000Z">
-<meta property="article:modified_time" content="2024-05-15T03:03:35.062Z">
+<meta property="article:modified_time" content="2024-05-17T02:49:19.141Z">
 <meta property="article:author" content="星之辰">
 <meta property="article:tag" content="UML">
 <meta name="twitter:card" content="summary">
@@ -126,7 +126,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -200,7 +200,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-15 11:03:35" itemprop="dateModified" datetime="2024-05-15T11:03:35+08:00">2024-05-15</time>
+      <time title="修改时间：2024-05-17 10:49:19" itemprop="dateModified" datetime="2024-05-17T10:49:19+08:00">2024-05-17</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -226,14 +226,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>398</span>
+      <span>805</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>3 分钟</span>
     </span>
 </div>
 
@@ -390,6 +390,14 @@ class 讲人话{
 <p>6.依赖关系</p>
 <figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Animal</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Metabolism</span>(<span class="params">Oxgen oxgen,Water water</span>)</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
 
+<p><em>在面向对象编程中，类与类之间的关系可以分为以下几种：关联关系、依赖关系、合成关系和聚合关系。这些关系的相同点在于，它们都描述了类与类之间的交互。不同点在于，它们描述的交互的强度和生命周期不同。</em></p>
+<ul>
+<li>关联关系(Association)：关联关系是一种较强的关系，表示一个类对象与另一个类对象有直接的连接。这种连接通常通过类的属性来实现。关联关系中的类对象通常有相同的生命周期，或者一个对象的生命周期依赖于另一个对象。  </li>
+<li>依赖关系(Dependency)：依赖关系是一种较弱的关系，表示一个类的实现需要另一个类。如果一个类的方法操纵另一个类的对象，我们就说一个类依赖于另一个类。依赖关系通常是短暂的，只在一个方法内部存在。</li>
+<li>合成关系(Composition)：合成关系是一种强度更高的关系，表示一个类是另一个类的一部分，或者说一个类由另一个类组成。在合成关系中，部分和整体的生命周期是一致的，当整体被销毁时，部分也会被销毁。</li>
+<li>聚合关系(Aggregation)：聚合关系是一种特殊的关联关系，表示一个类是另一个类的一部分，但部分和整体的生命周期可以不一致。也就是说，当整体被销毁时，部分可以继续存在。</li>
+</ul>
+
     </div>
 
     
@@ -443,13 +451,13 @@ class 讲人话{
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">24k</span>
+    <span title="站点总字数">26k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:26</span>
+    <span title="站点阅读时长">1:34</span>
   </span>
 </div>
 <div class="busuanzi-count">
