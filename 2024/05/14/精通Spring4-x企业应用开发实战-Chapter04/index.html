@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://angryxzc.github.io/images/spring/Spring4.x_%E4%BC%81%E4%B8%9A%E5%BC%80%E5%8F%91%E5%AE%9E%E6%88%98/%E7%B1%BB%E5%AE%9E%E4%BE%8B-%E7%B1%BB%E6%8F%8F%E8%BF%B0-%E8%A3%85%E8%BD%BD%E5%99%A8.png">
 <meta property="article:published_time" content="2024-05-14T01:07:08.000Z">
-<meta property="article:modified_time" content="2024-05-16T02:03:23.142Z">
+<meta property="article:modified_time" content="2024-05-20T09:10:09.703Z">
 <meta property="article:author" content="星之辰">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="Spring">
@@ -117,7 +117,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#IoC%E5%AE%B9%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">IoC容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IoC%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">IoC概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E5%AE%9E%E4%BE%8B%E7%90%86%E8%A7%A3IoC%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.</span> <span class="nav-text">通过实例理解IoC概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">2.1.1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E7%9A%84%E6%83%B3%E6%B3%95"><span class="nav-number">2.1.2.</span> <span class="nav-text">直接的想法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%901"><span class="nav-number">2.1.3.</span> <span class="nav-text">问题分析1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E8%A7%92%E8%89%B2%E7%BC%96%E6%8E%92%E5%89%A7%E6%9C%AC"><span class="nav-number">2.1.4.</span> <span class="nav-text">通过角色编排剧本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%902"><span class="nav-number">2.1.5.</span> <span class="nav-text">问题分析2</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IoC%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">IoC的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E5%AE%B9%E5%99%A8%E5%AE%8C%E6%88%90%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%E6%B3%A8%E5%85%A5"><span class="nav-number">2.3.</span> <span class="nav-text">通过容器完成依赖关系注入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">3.</span> <span class="nav-text">相关Java基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E5%AE%9E%E4%BE%8B"><span class="nav-number">3.1.</span> <span class="nav-text">简单实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E8%A3%85%E8%BD%BD%E5%99%A8ClassLoader"><span class="nav-number">3.2.</span> <span class="nav-text">类装载器ClassLoader</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%BB%E8%A3%85%E8%BD%BD%E5%99%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6"><span class="nav-number">3.2.1.</span> <span class="nav-text">类装载器的工作机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ClassLoader-%E7%9A%84%E9%87%8D%E8%A6%81%E2%BD%85%E6%B3%95"><span class="nav-number">3.2.2.</span> <span class="nav-text">ClassLoader 的重要⽅法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6"><span class="nav-number">3.3.</span> <span class="nav-text">Java 反射机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%88%A9%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">资源访问利器</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#IoC%E5%AE%B9%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">IoC容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IoC%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">IoC概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E5%AE%9E%E4%BE%8B%E7%90%86%E8%A7%A3IoC%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.</span> <span class="nav-text">通过实例理解IoC概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">2.1.1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E7%9A%84%E6%83%B3%E6%B3%95"><span class="nav-number">2.1.2.</span> <span class="nav-text">直接的想法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%901"><span class="nav-number">2.1.3.</span> <span class="nav-text">问题分析1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E8%A7%92%E8%89%B2%E7%BC%96%E6%8E%92%E5%89%A7%E6%9C%AC"><span class="nav-number">2.1.4.</span> <span class="nav-text">通过角色编排剧本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%902"><span class="nav-number">2.1.5.</span> <span class="nav-text">问题分析2</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IoC%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">IoC的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E5%AE%B9%E5%99%A8%E5%AE%8C%E6%88%90%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%E6%B3%A8%E5%85%A5"><span class="nav-number">2.3.</span> <span class="nav-text">通过容器完成依赖关系注入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">3.</span> <span class="nav-text">相关Java基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E5%AE%9E%E4%BE%8B"><span class="nav-number">3.1.</span> <span class="nav-text">简单实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E8%A3%85%E8%BD%BD%E5%99%A8ClassLoader"><span class="nav-number">3.2.</span> <span class="nav-text">类装载器ClassLoader</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%BB%E8%A3%85%E8%BD%BD%E5%99%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6"><span class="nav-number">3.2.1.</span> <span class="nav-text">类装载器的工作机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ClassLoader-%E7%9A%84%E9%87%8D%E8%A6%81%E2%BD%85%E6%B3%95"><span class="nav-number">3.2.2.</span> <span class="nav-text">ClassLoader 的重要⽅法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6"><span class="nav-number">3.3.</span> <span class="nav-text">Java 反射机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%88%A9%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">资源访问利器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E6%8A%BD%E8%B1%A1%E6%8E%A5%E5%8F%A3"><span class="nav-number">4.1.</span> <span class="nav-text">资源抽象接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD"><span class="nav-number">4.2.</span> <span class="nav-text">资源加载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BeanFactory%E5%92%8CApplicationContext"><span class="nav-number">5.</span> <span class="nav-text">BeanFactory和ApplicationContext</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -204,7 +204,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-16 10:03:23" itemprop="dateModified" datetime="2024-05-16T10:03:23+08:00">2024-05-16</time>
+      <time title="修改时间：2024-05-20 17:10:09" itemprop="dateModified" datetime="2024-05-20T17:10:09+08:00">2024-05-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -230,14 +230,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>5k</span>
+      <span>7.8k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>18 分钟</span>
+      <span>28 分钟</span>
     </span>
 </div>
 
@@ -376,6 +376,7 @@ LiuDeHua ..|&gt; GeLi
 <h2 id="相关Java基础知识"><a href="#相关Java基础知识" class="headerlink" title="相关Java基础知识"></a>相关Java基础知识</h2><p>Java 语⾔允许通过程序化的⽅式间接对Class 进⾏操作。Class ⽂件由类装载器装载 后，在JVM 中将形成⼀份描述 Class 结构的元信息对象，通过该元信息对象可以获知 Class 的结构信息，如构造函数、属性和⽅法等。Java 允许⽤户借由这个与 Class 相关 的元信息对象间接调⽤ Class 对象的功能，这就为使⽤程序化⽅式操作 Class 对象开辟了途径。</p>
 <h3 id="简单实例"><a href="#简单实例" class="headerlink" title="简单实例"></a>简单实例</h3><p>简单的例⼦开始探访Java 反射机制的征程。下⾯的Car 类拥有两个构造函数、⼀个⽅法及3个属性：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.smart.reflect;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Car</span> &#123;</span><br><span class="line"> <span class="keyword">private</span> String brand;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">private</span> String color;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">private</span> <span class="type">int</span> maxSpeed;</span><br><span class="line"></span><br><span class="line"> <span class="comment">//①默认构造函数</span></span><br><span class="line"> <span class="keyword">public</span> <span class="title function_">Car</span><span class="params">()</span>&#123;System.out.println(<span class="string">&quot;init car!!&quot;</span>);&#125;</span><br><span class="line"> <span class="comment">//②带参构造函数</span></span><br><span class="line"> <span class="keyword">public</span> <span class="title function_">Car</span><span class="params">(String brand,String color,<span class="type">int</span> maxSpeed)</span>&#123;</span><br><span class="line">  <span class="built_in">this</span>.brand = brand;</span><br><span class="line">  <span class="built_in">this</span>.color = color;</span><br><span class="line">  <span class="built_in">this</span>.maxSpeed = maxSpeed;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">//③未带参的方法</span></span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">introduce</span><span class="params">()</span> &#123;</span><br><span class="line">       System.out.println(<span class="string">&quot;brand:&quot;</span>+brand+<span class="string">&quot;;color:&quot;</span>+color+<span class="string">&quot;;maxSpeed:&quot;</span>+maxSpeed);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">public</span> String <span class="title function_">getBrand</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> brand;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setBrand</span><span class="params">(String brand)</span> &#123;</span><br><span class="line">  <span class="built_in">this</span>.brand = brand;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">public</span> String <span class="title function_">getColor</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> color;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setColor</span><span class="params">(String color)</span> &#123;</span><br><span class="line">  <span class="built_in">this</span>.color = color;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getMaxSpeed</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> maxSpeed;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setMaxSpeed</span><span class="params">(<span class="type">int</span> maxSpeed)</span> &#123;</span><br><span class="line">  <span class="built_in">this</span>.maxSpeed = maxSpeed;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>⼀般情况下，我们会使⽤如下代码创建Car 的实例：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Car</span> <span class="variable">car</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Car</span>();</span><br><span class="line">car.serBrand(<span class="string">&quot;红旗CA72&quot;</span>);</span><br></pre></td></tr></table></figure>
 
@@ -435,7 +436,7 @@ LiuDeHua ..|&gt; GeLi
 <li><code>Class loadClass（String name）</code>：name 参数指定类装载器需要装载类的名字，必须使⽤全限定类名，如 com.smart. beans.Car。该⽅法有⼀个重载⽅法 loadClass（String name,boolean resolve），resolve 参数告诉类装载器是否需要解析该类。在初始化类之前，应考虑进⾏类解析的⼯作，但并不是所有的类都需要解析。如果JVM 只需要知道该类是否存在或找出该类的超类，那么就不需要进⾏解析。</li>
 <li><code>Class defineClass（String name, byte［］b, int off, int len）</code>：将类⽂件的字节数组转换成JVM 内部的 java.lang.Class 对象。字节数组可以从本地⽂件系统、远程⽹络 获取。参数 name 为字节数组对应的全限定类名。  </li>
 <li><code>Class findSystemClass（String name）</code>：从本地⽂件系统载⼊Class ⽂件。如果本地 ⽂件系统不存在该 Class ⽂件，则将抛出 ClassNotFoundException 异常。该⽅法 是JVM 默认使⽤的装载机制。</li>
-<li><code>Class findLoadedClass（String name）</code>：调⽤该⽅法来查看 ClassLoader 是否已装⼊ 某个类。如果已装⼊，那么返回 java.lang.Class 对象；否则返回 null。如果强⾏ 装载已存在的类，那么将会抛出链接错误。 ⼜ </li>
+<li><code>Class findLoadedClass（String name）</code>：调⽤该⽅法来查看 ClassLoader 是否已装⼊ 某个类。如果已装⼊，那么返回 java.lang.Class 对象；否则返回 null。如果强⾏ 装载已存在的类，那么将会抛出链接错误。 ⼜</li>
 <li><code>ClassLoader getParentO）</code>：获取类装载器的⽗装载器。除根装载器外，所有的类装载器都有且仅有⼀个⽗装载器。</li>
 <li><code>ExtClassLoader</code> 的⽗装载器是根装载器，因为根装载器⾮Java 语⾔编写，所以⽆法获得，将返回 null。</li>
 <li>除JVM默认的3个 ClassLoader 外，⽤户可以编写⾃⼰的第三⽅类装载器，以实现 ⼀些特殊的需求。类⽂件被装载并解析后，在JVM 内将拥有⼀个对应的java.lang.Class 类描述对象，该类的实例都拥有指向这个类描述对象的引⽤，⽽类描述对象又拥有指向 关联 ClassLoader 的引⽤，如图</li>
@@ -458,7 +459,388 @@ LiuDeHua ..|&gt; GeLi
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drive private car! the color is:红色</span><br></pre></td></tr></table></figure>
 
 <p>在访问 private或 protected 成员变量和⽅法时，必须通过 setAccessible（boolean access）⽅法取消 Java 语⾔检查，否则将拋出 IIlegalAccessException。如果 JVM 的安全管理器设置了相应的安全机制，那么调⽤该⽅法将抛出 SecurityException。</p>
-<h2 id="资源访问利器"><a href="#资源访问利器" class="headerlink" title="资源访问利器"></a>资源访问利器</h2><p>TODO</p>
+<h2 id="资源访问利器"><a href="#资源访问利器" class="headerlink" title="资源访问利器"></a>资源访问利器</h2><h3 id="资源抽象接口"><a href="#资源抽象接口" class="headerlink" title="资源抽象接口"></a>资源抽象接口</h3><p>JDK 所提供的访问资源的类（如 java.net.URL、File 等）并不能很好地满⾜各种底 层资源的访问需求，⽐如缺少从类路径或者 Web 容器的上下⽂中获取资源的操作类。鉴于此，Spring 设计了⼀个 Resource 接⼝，它为应⽤提供了更强的底层资源访问能⼒。 该接⼝拥有对应不同资源类型的实现类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Source code recreated from a .class file by IntelliJ IDEA</span></span><br><span class="line"><span class="comment">// (powered by FernFlower decompiler)</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> org.springframework.core.io;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"><span class="keyword">import</span> java.net.URL;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Resource</span> <span class="keyword">extends</span> <span class="title class_">InputStreamSource</span> &#123;</span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">exists</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">isReadable</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">isOpen</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    URL <span class="title function_">getURL</span><span class="params">()</span> <span class="keyword">throws</span> IOException;</span><br><span class="line"></span><br><span class="line">    URI <span class="title function_">getURI</span><span class="params">()</span> <span class="keyword">throws</span> IOException;</span><br><span class="line"></span><br><span class="line">    File <span class="title function_">getFile</span><span class="params">()</span> <span class="keyword">throws</span> IOException;</span><br><span class="line"></span><br><span class="line">    <span class="type">long</span> <span class="title function_">contentLength</span><span class="params">()</span> <span class="keyword">throws</span> IOException;</span><br><span class="line"></span><br><span class="line">    <span class="type">long</span> <span class="title function_">lastModified</span><span class="params">()</span> <span class="keyword">throws</span> IOException;</span><br><span class="line"></span><br><span class="line">    Resource <span class="title function_">createRelative</span><span class="params">(String var1)</span> <span class="keyword">throws</span> IOException;</span><br><span class="line"></span><br><span class="line">    String <span class="title function_">getFilename</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    String <span class="title function_">getDescription</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>Resource 接⼝定义了⼀系列访问资源的⽅法:</p>
+<ul>
+<li>boolean existsO：资源是否存在。</li>
+<li>boolean isOpen（）：资源是否打开。</li>
+<li>URL getURL（ throws IOException：如果底层资源可以表⽰成 URL，则该⽅法返回对应的URL 对象。</li>
+<li>File getFile（ throws IOException：如果底层资源对应⼀个⽂件，则该⽅法返回对应的 File 对象。</li>
+<li>InputStream getlnputStream（） throws IOException： 返回资源对应的输⼊流。</li>
+</ul>
+<p>Resource 在 Spring 框架中起着不可或缺的作⽤，Spring 框架使⽤ Resource 装载各种 资源，包括配置⽂件资源、国际化属性⽂件资源等。下⾯我们来了解⼀下 Resource 的具体实现类【<span style="color:cadetBlue">从IDEA中导出的mermaid图，这里的实线继承，虚线实线接口</span>】：</p>
+<pre class="mermaid">
+
+classDiagram
+direction BT
+class AbstractFileResolvingResource {
+
++ contentLength() long
++ lastModified() long
++ exists() boolean
+
+# customizeConnection(URLConnection) void
+
+# customizeConnection(HttpURLConnection) void
+
+# getFile(URI) File
+
+   File file
+   File fileForLastModifiedCheck
+   boolean readable
+}
+class AbstractResource {
+
++ equals(Object) boolean
++ exists() boolean
++ toString() String
++ hashCode() int
++ lastModified() long
++ contentLength() long
++ createRelative(String) Resource
+   File file
+   File fileForLastModifiedCheck
+   boolean open
+   URI URI
+   URL URL
+   String filename
+   boolean readable
+}
+class BeanDefinitionResource {
++ exists() boolean
++ equals(Object) boolean
++ hashCode() int
+   String description
+   InputStream inputStream
+   boolean readable
+   BeanDefinition beanDefinition
+}
+class ByteArrayResource {
++ hashCode() int
++ equals(Object) boolean
++ exists() boolean
++ contentLength() long
+   InputStream inputStream
+   String description
+   byte[] byteArray
+}
+class ClassPathResource {
++ hashCode() int
+
+# resolveURL() URL
+
++ equals(Object) boolean
++ createRelative(String) Resource
++ exists() boolean
+   String description
+   URL URL
+   String filename
+   ClassLoader classLoader
+   InputStream inputStream
+   String path
+}
+class ContextResource {
+&lt;&lt;Interface&gt;&gt;
+   String pathWithinContext
+}
+class DescriptiveResource {
++ exists() boolean
++ equals(Object) boolean
++ hashCode() int
+   InputStream inputStream
+   String description
+   boolean readable
+}
+class FileSystemResource {
++ createRelative(String) Resource
++ equals(Object) boolean
++ exists() boolean
++ hashCode() int
++ contentLength() long
+   File file
+   String description
+   OutputStream outputStream
+   boolean writable
+   URI URI
+   URL URL
+   String filename
+   InputStream inputStream
+   boolean readable
+   String path
+}
+class InputStreamResource {
++ equals(Object) boolean
++ exists() boolean
++ hashCode() int
+   InputStream inputStream
+   String description
+   boolean open
+}
+class InputStreamSource {
+&lt;&lt;Interface&gt;&gt;
+   InputStream inputStream
+}
+class PathResource {
++ exists() boolean
++ lastModified() long
++ hashCode() int
++ contentLength() long
++ equals(Object) boolean
++ createRelative(String) Resource
+   File file
+   String description
+   OutputStream outputStream
+   boolean writable
+   URI URI
+   URL URL
+   String filename
+   InputStream inputStream
+   boolean readable
+   String path
+}
+class Resource {
+&lt;&lt;Interface&gt;&gt;
++ contentLength() long
++ exists() boolean
++ lastModified() long
++ createRelative(String) Resource
+   File file
+   String description
+   boolean open
+   URI URI
+   URL URL
+   String filename
+   boolean readable
+}
+class UrlResource {
+
++ getCleanedUrl(URL, String?) URL
+
++ equals(Object) boolean
++ hashCode() int
++ createRelative(String) Resource
+   File file
+   String description
+   URI URI
+   URL URL
+   String filename
+   InputStream inputStream
+}
+class VfsResource {
++ createRelative(String) Resource
++ equals(Object) boolean
++ hashCode() int
++ exists() boolean
++ lastModified() long
++ contentLength() long
+   File file
+   String description
+   URI URI
+   URL URL
+   String filename
+   InputStream inputStream
+   boolean readable
+}
+class WritableResource {
+&lt;&lt;Interface&gt;&gt;
+   OutputStream outputStream
+   boolean writable
+}
+
+AbstractFileResolvingResource  --&gt;  AbstractResource
+AbstractResource  ..&gt;  Resource
+BeanDefinitionResource  --&gt;  AbstractResource
+ByteArrayResource  --&gt;  AbstractResource
+ClassPathResource  --&gt;  AbstractFileResolvingResource
+ContextResource  --&gt;  Resource
+DescriptiveResource  --&gt;  AbstractResource
+FileSystemResource  --&gt;  AbstractResource
+FileSystemResource  ..&gt;  WritableResource
+InputStreamResource  --&gt;  AbstractResource
+PathResource  --&gt;  AbstractResource
+PathResource  ..&gt;  WritableResource
+Resource  --&gt;  InputStreamSource
+UrlResource  --&gt;  AbstractFileResolvingResource
+VfsResource  --&gt;  AbstractResource
+WritableResource  --&gt;  Resource
+</pre>
+
+<p>简略版：</p>
+<pre class="mermaid">
+
+classDiagram
+direction BT
+class AbstractFileResolvingResource
+class AbstractResource
+class BeanDefinitionResource
+class ByteArrayResource
+class ClassPathResource
+class ContextResource {
+&lt;&lt;Interface&gt;&gt;
+
+}
+class DescriptiveResource
+class FileSystemResource
+class InputStreamResource
+class InputStreamSource {
+&lt;&lt;Interface&gt;&gt;
+
+}
+class PathResource
+class Resource {
+&lt;&lt;Interface&gt;&gt;
+
+}
+class UrlResource
+class VfsResource
+class WritableResource {
+&lt;&lt;Interface&gt;&gt;
+
+}
+
+AbstractFileResolvingResource  --&gt;  AbstractResource
+AbstractResource  ..&gt;  Resource
+BeanDefinitionResource  --&gt;  AbstractResource
+ByteArrayResource  --&gt;  AbstractResource
+ClassPathResource  --&gt;  AbstractFileResolvingResource
+ContextResource  --&gt;  Resource
+DescriptiveResource  --&gt;  AbstractResource
+FileSystemResource  --&gt;  AbstractResource
+FileSystemResource  ..&gt;  WritableResource
+InputStreamResource  --&gt;  AbstractResource
+PathResource  --&gt;  AbstractResource
+PathResource  ..&gt;  WritableResource
+Resource  --&gt;  InputStreamSource
+UrlResource  --&gt;  AbstractFileResolvingResource
+VfsResource  --&gt;  AbstractResource
+WritableResource  --&gt;  Resource
+</pre>
+
+<ul>
+<li>WritableResource： 可写资源接口，是Spring 3.1 版本新加的接口，有两个实现类，即FileSystemResource 和 athResource，其中 PathResource 是Spring 4.0提供的实现类。</li>
+<li>ByteArrayResource： ⼆进制数组表⽰的资源，⼆进制数组资源可以在内存中通过程序构造</li>
+<li>ClassPathResource：类路径下的资源，资源以相对于类路径的⽅式表⽰，如代码一下示例代码：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.smart.resource;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.ByteArrayOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.core.io.*;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FileSourceExample</span> &#123;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">   <span class="type">String</span> <span class="variable">filePath</span> <span class="operator">=</span> <span class="string">&quot;/Users/xzc/Documents/java-relative/SpringStudy/SpringLearn4.x/Spring4x/chapter4/src/main/resources/conf/file1.txt&quot;</span>;</span><br><span class="line">   <span class="comment">//①.使⽤系统⽂件路径方式加载⽂件</span></span><br><span class="line">   <span class="type">WritableResource</span> <span class="variable">res1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PathResource</span>(filePath);</span><br><span class="line">    <span class="comment">//②.使⽤类路径方式加载⽂件</span></span><br><span class="line">   <span class="type">Resource</span> <span class="variable">res2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathResource</span>(<span class="string">&quot;conf/file1.txt&quot;</span>);</span><br><span class="line"></span><br><span class="line">   <span class="comment">//③.使⽤WritableResource 接⼝写资源⽂件</span></span><br><span class="line">   <span class="type">OutputStream</span> <span class="variable">stream1</span> <span class="operator">=</span> res1.getOutputStream();</span><br><span class="line">   stream1.write(<span class="string">&quot;欢迎光临\n小春论坛&quot;</span>.getBytes());</span><br><span class="line">   stream1.close();</span><br><span class="line">   </span><br><span class="line">   <span class="comment">//④.使⽤Resource 接⼝读资源⽂件</span></span><br><span class="line">   <span class="type">InputStream</span> <span class="variable">ins1</span> <span class="operator">=</span> res1.getInputStream();</span><br><span class="line">   <span class="type">InputStream</span> <span class="variable">ins2</span> <span class="operator">=</span> res2.getInputStream();</span><br><span class="line"></span><br><span class="line">   <span class="type">ByteArrayOutputStream</span> <span class="variable">baos</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ByteArrayOutputStream</span>();</span><br><span class="line">   <span class="type">int</span> i;</span><br><span class="line">   <span class="keyword">while</span>((i=ins1.read())!=-<span class="number">1</span>)&#123;</span><br><span class="line">    baos.write(i);</span><br><span class="line">   &#125;</span><br><span class="line">   System.out.println(baos.toString());</span><br><span class="line"></span><br><span class="line">            System.out.println(<span class="string">&quot;res1:&quot;</span>+res1.getFilename());</span><br><span class="line">            System.out.println(<span class="string">&quot;res2:&quot;</span>+res2.getFilename());</span><br><span class="line">  &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">   e.printStackTrace();</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>FileSystemResource：⽂件系统资源，资源以⽂件系统路径的⽅式表⽰，如<code>D:/conf/bean.xml</code> 等。</li>
+<li>InputStreamResource：以输⼊流返回表⽰的资源。</li>
+<li>ServletContextResource：为访问 Web 容器上下⽂中的资源⽽设计的类，负责以相对于 Web 应⽤根⽬录的路径加载资源。它⽀持以流和 URL 的⽅式访问，在WAR 解包的情况下，也可以通过 File ⽅式访问。该类还可以直接从JAR 包中访问资源。</li>
+<li>UriResource: URL 封装了 java.net.URL，它使⽤户能够访问任何可以通过 URL表⽰的资源，如⽂件系统的资源、HTTP 资源、FTP 资源等。</li>
+<li>PathResource: Spring 4.0提供的读取资源⽂件的新类。Path 封装了 java.net.URL、<br>java.nio.file.Path（Java 7.0提供）、⽂件系统资源，它使⽤户能够访问任何可以通过 URL、Path、系统⽂件路径表⽰的资源，如⽂件系统的资源、HTTP 资源、FTP 资源等。</li>
+</ul>
+<p>有了这个抽象的资源类后，就可以将 Spring 的配置信息放置在任何地⽅（如数据库、LDAP 中），只要最终可以通过 Resource 接口返回配置信息即可。</p>
+<p>假设有⼀个⽂件位于 Web 应⽤的类路径下，⽤户可以通过以下⽅式对这个⽂件资源进⾏访问：</p>
+<ul>
+<li>通过 FileSystemResource 以⽂件系统绝对路径的⽅式进⾏访问。</li>
+<li>通过 ClassPathResource 以类路径的⽅式进⾏访问。</li>
+<li>通过 ServletContextResource 以相对于 Web 应⽤根⽬录的⽅式进⾏访问。</li>
+</ul>
+<p>相⽐于通过JDK 的File 类访问⽂件资源的⽅式，Spring 的Resource 实现类⽆疑提<br>供了更加灵活便捷的访问⽅式，⽤户可以根据实际情况选择适合的 Resource 实现类访<br>问资源。以上代码就是分别通过 FileSystemResource 和 ClassPathResource 访问同⼀个⽂件资源，</p>
+<p>在获取资源后，⽤户就可以通过Resource 接⼝定义的多个⽅法访问⽂件的数据和其<br>他信息。如可以通过 getFileName（）⽅法获取⽂件名，通过 getFile（）⽅法获取资源对应的<br>File 对象，通过 getinputStream（⽅法直接获取⽂件的输⼊流。通过 WritableResource 接<br>口定义的多个⽅法向⽂件写数据，通过 getOutputStream（）⽅法直接获取⽂件的输出流。此外，还可以通过 createRelative（String relativePath）在资源相对地址上创建新的⽂件。</p>
+<p>在 Web 应⽤中，⽤户还可以通过 ServletContextResource 以相对于 Web 应⽤根⽬录<br>的⽅式访问⽂件资源，如代码：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=utf-8&quot;</span></span><br><span class="line">    pageEncoding=<span class="string">&quot;utf-8&quot;</span>%&gt;</span><br><span class="line">&lt;jsp:directive.page <span class="keyword">import</span>=<span class="string">&quot;org.springframework.web.context.support.ServletContextResource&quot;</span>/&gt;</span><br><span class="line">&lt;jsp:directive.page <span class="keyword">import</span>=<span class="string">&quot;org.springframework.core.io.Resource&quot;</span>/&gt;</span><br><span class="line">&lt;jsp:directive.page <span class="keyword">import</span>=<span class="string">&quot;org.springframework.web.util.WebUtils&quot;</span>/&gt;</span><br><span class="line">&lt;%</span><br><span class="line"><span class="comment">//获取ServletContext对象:文件地址相对于Web应用根目录</span></span><br><span class="line">   <span class="type">Resource</span> <span class="variable">res3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ServletContextResource</span>(application,<span class="string">&quot;/WEB-INF/classes/conf/file1.txt&quot;</span>);</span><br><span class="line">   out.print(res3.getFilename()+<span class="string">&quot;&lt;br/&gt;&quot;</span>);</span><br><span class="line">   out.print(WebUtils.getTempDir(application).getAbsolutePath());</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+<p>对于位于远程服务器（Web 服务器或FTP服务器）的⽂件资源，⽤户可以⽅便地通<br>过 UriResource 进⾏访问。资源加载时默认采⽤系统编码读取资源内容。如果资源⽂件采⽤特殊的编码格式，那么可以通过 EncodedResource 对资源进⾏编码，以保证资源内容操作的正确性，如代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.smart.resource;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.io.ClassPathResource;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.io.Resource;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.io.support.EncodedResource;</span><br><span class="line"><span class="keyword">import</span> org.springframework.util.FileCopyUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">EncodedResourceExample</span> &#123;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Throwable  &#123;</span><br><span class="line">    <span class="type">Resource</span> <span class="variable">res</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathResource</span>(<span class="string">&quot;conf/file1.txt&quot;</span>);</span><br><span class="line">    <span class="type">EncodedResource</span> <span class="variable">encRes</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">EncodedResource</span>(res,<span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">    <span class="type">String</span> <span class="variable">content</span>  <span class="operator">=</span> FileCopyUtils.copyToString(encRes.getReader());</span><br><span class="line">    System.out.println(content);  </span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="资源加载"><a href="#资源加载" class="headerlink" title="资源加载"></a>资源加载</h3><p>为了访问不同类型的资源，必须使⽤相应的 Resource 实现类，这是⽐较麻烦的。是否可以在不显式使⽤ Resource 实现类的情况下，仅通过资源地址的特殊标识就可以访问相应的资源呢？Spring 提供了⼀个强⼤的加载资源的机制，不但能够通过“classpath：”、 “file：” 等资源地址前缀识别不同的资源类型，还⽀持 Ant 风格带通配符的资源地址。</p>
+<ol>
+<li>资源地址表达式</li>
+</ol>
+<p>⾸先来了解⼀下 Spring ⽀持哪些资源类型的地址前缀，如表：</p>
+<table>
+<thead>
+<tr>
+<th>地址前缀</th>
+<th>示例</th>
+<th>对应的资源类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>classpath</td>
+<td>classpath:com&#x2F;smart&#x2F;beanfactory&#x2F;beans.xml</td>
+<td>从类路径中加载资源，classpath:和classpath:&#x2F;&#x2F;是等价的，都是相对于类的根路径。资源文件可以在标准的文件系统重，也可以在JAR或ZIP的类包中</td>
+</tr>
+<tr>
+<td>file:</td>
+<td>file:&#x2F;conf&#x2F;com&#x2F;smart&#x2F;beanfactory&#x2F;beans.xml</td>
+<td>使⽤ UriResource 从⽂件系统⽬录中装载资源，可采⽤绝对或相对路径</td>
+</tr>
+<tr>
+<td>http:</td>
+<td><a target="_blank" rel="noopener" href="http://www.javass.cn/beans.xml">http://www.javass.cn/beans.xml</a></td>
+<td>使⽤ UriResource 从 Web 服务器中装载资源</td>
+</tr>
+<tr>
+<td>ftp:</td>
+<td><a href="ftp://ftp.javass.cn/beans.xml">ftp://ftp.javass.cn/beans.xml</a></td>
+<td>使⽤ UriResource 从 FTP 服务器中装载资源</td>
+</tr>
+<tr>
+<td>没有前缀</td>
+<td>&#x2F;com&#x2F;smart&#x2F;beanfactory&#x2F;beans.xml</td>
+<td>根据ApplicationContext的具体实现类型采用对应的Resource</td>
+</tr>
+</tbody></table>
+<p>其中，和“classpath：”对应的还有另⼀种⽐较难理解的“classpath<em>：”前缀。假设有多个JAR 包或⽂件系统类路径都拥有⼀个相同的包名（如 com.smart）。“classpath：” 只会在第⼀个加载的com.smart 包的类路径下查找，⽽“classpath</em>：”会扫描所有这些JAR 包及类路径下出现的 com.smart类路径。 这对于分模块打包的应⽤⾮常有⽤。假设⼀个名为 smart 的应⽤共分成3个模块， ⼀个模块对应⼀个配置⽂件，分别是 modulel.xml、module2.xml 及 module4.xml，都放 到com.smart ⽬录下，每个模块单独打成JAR包。使⽤ <em>“classpath<em>：com&#x2F;smart&#x2F;module</em>.xml”</em> 可以成功加载这3个模块的配置⽂件，⽽使⽤ <em>“classpath:com&#x2F;smart&#x2F;module*.xml”</em> 只会加载⼀个模块的配置⽂件。</p>
+<p>Ant风格的资源地址⽀持3种匹配符。</p>
+<ul>
+<li>？：匹配⽂件名中的⼀个字符。</li>
+<li>*：匹配⽂件名中的任意字符。</li>
+<li>**：匹配多层路径。</li>
+</ul>
+<p>下⾯是⼏个 Ant 风格的资源路径的⽰例。</p>
+<ul>
+<li>classpath:com&#x2F;t?st.xml： 匹配 com类路径下的 com&#x2F;test.xml、com&#x2F;tast.xml 或者com&#x2F;txst.xml ⽂件。</li>
+<li>file:D:&#x2F;conf&#x2F;*.xml：匹配⽂件系统 D:&#x2F;conf ⽬录下所有以.xml为后缀的⽂件。</li>
+<li>classpath:com&#x2F;**&#x2F;test.xml：匹配com类路径下（当前⽬录及其⼦孙⽬录）的 test.xml⽂件。</li>
+<li>classpath:org&#x2F;springframework&#x2F;**&#x2F;*、xml：匹配类路径 org&#x2F;springframework 下所有 以.xml 为后缀的⽂件。</li>
+<li>classpath:org&#x2F;**&#x2F;servlet&#x2F;bla.xml： 不仅匹配类路径 org&#x2F;springframework&#x2F;servlet&#x2F;bla. xml，也匹配 org&#x2F;springframework&#x2F;testing&#x2F;servlet&#x2F;bla.xml，还匹配 org&#x2F;servlet&#x2F;bla.xml。</li>
+</ul>
+<ol>
+<li>资源加载器<br>Spring 定义了⼀套资源加载的接⼜，并提供了实现类：</li>
+</ol>
+<pre class="mermaid">
+
+
+classDiagram
+direction TB
+class ResourceLoader {
+&lt;&lt;Interface&gt;&gt;
++ getResource(String) Resource
+}
+class ResourcePatternResolver {
+&lt;&lt;Interface&gt;&gt;
++ getResources(String) Resource[]
+}
+class PathMatchingResourcePatternResolver
+class Resouce{
+&lt;&lt;Interface&gt;&gt;
++  getFile() : File
++  getURI() : URI
+}
+ResourceLoader --&gt; Resouce
+ResourceLoader &lt;|-- ResourcePatternResolver
+ResourcePatternResolver &lt;|.. PathMatchingResourcePatternResolver
+
+</pre>
+
+<p>ResourceLoader 接⼝仅有⼀个 getResource（String location）⽅法，可以根据⼀个资源<br>地址加载⽂件资源。不过，资源地址仅⽀持带资源类型前缀的表达式，不⽀持Ant⻛格的资源路径表达式。ResourcePatterResolver 扩展 ResourceLoader 接⼝，定义了⼀个新的接⼝⽅法 getResources（String locationPattern），该⽅法⽀持带资源类型前缀及Ant⻛格的资源路径表达式。PathMatchingResourcePatterResolver 是 Spring 提供的标准实现类，<br>来看⼀个例⼦，如代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.smart.resource;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.io.Resource;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.io.support.PathMatchingResourcePatternResolver;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.io.support.ResourcePatternResolver;</span><br><span class="line"><span class="keyword">import</span> org.testng.annotations.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.testng.Assert.*;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PatternResolverTest</span>｛</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">getResources</span><span class="params">()</span> <span class="keyword">throws</span> Throwable &#123;</span><br><span class="line">        <span class="type">ResourcePatternResolver</span> <span class="variable">resolver</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PathMatchingResourcePatternResolver</span>();</span><br><span class="line">        <span class="comment">//加载所有累不路径下的以xml为后缀的文件</span></span><br><span class="line">        Resource[] resources = resolver.getResources(<span class="string">&quot;classpath*:com/smart/**/*.xml&quot;</span>);</span><br><span class="line">        assertNotNull(resources);</span><br><span class="line">        <span class="keyword">for</span>(Resource resource:resources)&#123;</span><br><span class="line">            System.out.println(resource.getDescription());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由于资源路径是“classpath*：”，所以 PathMatchingResourcePatternResolver 将扫描所有类路径下及JAR 包中对应 com.smart类包下的路径，读取所有以.xml 后缀的⽂件资源。</p>
+<p><span style="color:orange">注意：</span></p>
+<p>⽤ Resource 操作⽂件时，如果资源配置⽂件在项⽬发布时会被打包到JAR 中，那么不能使⽤ Resource#getFile（）⽅法，否则会抛出 FileNotFoundException。但可以使⽤<br>Resource#getlnputStream()⽅法读取。</p>
+<p>错误的读取⽅式：</p>
+<p><code>（new DefaultResourceloader（））.getResource（&quot;classpath:conf/sys.properties&quot;）. getFile（）</code></p>
+<p>正确的读取⽅式：</p>
+<p><code>（new DefaultResourceloader（））.getResource（&quot;classpath:conf/sys.properties&quot;）. getInputStream（）</code></p>
+<p>这个问题在实际的项⽬开发过程中很容易被忽视，因为在项⽬开发时，资源配置⽂ 件⼀般是在⽂件夹下的，所以 Resource#getFile（是可以正常⼯作的。但在发布时，如果 资源配置⽂件被打包到JAR 中，这时 getFile（就⽆法读取了，从⽽造成部署实施的时候 出现意想不到的问题。因此，我们建议尽量以流的⽅式读取，避免环境不同造成的问题。</p>
+<h2 id="BeanFactory和ApplicationContext"><a href="#BeanFactory和ApplicationContext" class="headerlink" title="BeanFactory和ApplicationContext"></a>BeanFactory和ApplicationContext</h2><p>TODO</p>
 
     </div>
 
@@ -515,13 +897,13 @@ LiuDeHua ..|&gt; GeLi
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">28k</span>
+    <span title="站点总字数">31k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:41</span>
+    <span title="站点阅读时长">1:51</span>
   </span>
 </div>
 <div class="busuanzi-count">
