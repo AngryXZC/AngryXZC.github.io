@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://angryxzc.github.io/images/spring/Spring4.x_%E4%BC%81%E4%B8%9A%E5%BC%80%E5%8F%91%E5%AE%9E%E6%88%98/%E7%B1%BB%E5%AE%9E%E4%BE%8B-%E7%B1%BB%E6%8F%8F%E8%BF%B0-%E8%A3%85%E8%BD%BD%E5%99%A8.png">
 <meta property="article:published_time" content="2024-05-14T01:07:08.000Z">
-<meta property="article:modified_time" content="2024-05-20T09:10:09.703Z">
+<meta property="article:modified_time" content="2024-05-23T08:36:08.811Z">
 <meta property="article:author" content="星之辰">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="Spring">
@@ -117,7 +117,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#IoC%E5%AE%B9%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">IoC容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IoC%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">IoC概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E5%AE%9E%E4%BE%8B%E7%90%86%E8%A7%A3IoC%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.</span> <span class="nav-text">通过实例理解IoC概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">2.1.1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E7%9A%84%E6%83%B3%E6%B3%95"><span class="nav-number">2.1.2.</span> <span class="nav-text">直接的想法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%901"><span class="nav-number">2.1.3.</span> <span class="nav-text">问题分析1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E8%A7%92%E8%89%B2%E7%BC%96%E6%8E%92%E5%89%A7%E6%9C%AC"><span class="nav-number">2.1.4.</span> <span class="nav-text">通过角色编排剧本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%902"><span class="nav-number">2.1.5.</span> <span class="nav-text">问题分析2</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IoC%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">IoC的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E5%AE%B9%E5%99%A8%E5%AE%8C%E6%88%90%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%E6%B3%A8%E5%85%A5"><span class="nav-number">2.3.</span> <span class="nav-text">通过容器完成依赖关系注入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">3.</span> <span class="nav-text">相关Java基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E5%AE%9E%E4%BE%8B"><span class="nav-number">3.1.</span> <span class="nav-text">简单实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E8%A3%85%E8%BD%BD%E5%99%A8ClassLoader"><span class="nav-number">3.2.</span> <span class="nav-text">类装载器ClassLoader</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%BB%E8%A3%85%E8%BD%BD%E5%99%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6"><span class="nav-number">3.2.1.</span> <span class="nav-text">类装载器的工作机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ClassLoader-%E7%9A%84%E9%87%8D%E8%A6%81%E2%BD%85%E6%B3%95"><span class="nav-number">3.2.2.</span> <span class="nav-text">ClassLoader 的重要⽅法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6"><span class="nav-number">3.3.</span> <span class="nav-text">Java 反射机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%88%A9%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">资源访问利器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E6%8A%BD%E8%B1%A1%E6%8E%A5%E5%8F%A3"><span class="nav-number">4.1.</span> <span class="nav-text">资源抽象接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD"><span class="nav-number">4.2.</span> <span class="nav-text">资源加载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BeanFactory%E5%92%8CApplicationContext"><span class="nav-number">5.</span> <span class="nav-text">BeanFactory和ApplicationContext</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#IoC%E5%AE%B9%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">IoC容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IoC%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">IoC概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E5%AE%9E%E4%BE%8B%E7%90%86%E8%A7%A3IoC%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.</span> <span class="nav-text">通过实例理解IoC概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">2.1.1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E7%9A%84%E6%83%B3%E6%B3%95"><span class="nav-number">2.1.2.</span> <span class="nav-text">直接的想法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%901"><span class="nav-number">2.1.3.</span> <span class="nav-text">问题分析1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E8%A7%92%E8%89%B2%E7%BC%96%E6%8E%92%E5%89%A7%E6%9C%AC"><span class="nav-number">2.1.4.</span> <span class="nav-text">通过角色编排剧本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%902"><span class="nav-number">2.1.5.</span> <span class="nav-text">问题分析2</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IoC%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.2.</span> <span class="nav-text">IoC的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E5%AE%B9%E5%99%A8%E5%AE%8C%E6%88%90%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%E6%B3%A8%E5%85%A5"><span class="nav-number">2.3.</span> <span class="nav-text">通过容器完成依赖关系注入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3Java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">3.</span> <span class="nav-text">相关Java基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E5%AE%9E%E4%BE%8B"><span class="nav-number">3.1.</span> <span class="nav-text">简单实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E8%A3%85%E8%BD%BD%E5%99%A8ClassLoader"><span class="nav-number">3.2.</span> <span class="nav-text">类装载器ClassLoader</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%BB%E8%A3%85%E8%BD%BD%E5%99%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6"><span class="nav-number">3.2.1.</span> <span class="nav-text">类装载器的工作机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ClassLoader-%E7%9A%84%E9%87%8D%E8%A6%81%E2%BD%85%E6%B3%95"><span class="nav-number">3.2.2.</span> <span class="nav-text">ClassLoader 的重要⽅法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6"><span class="nav-number">3.3.</span> <span class="nav-text">Java 反射机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E8%AE%BF%E9%97%AE%E5%88%A9%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">资源访问利器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E6%8A%BD%E8%B1%A1%E6%8E%A5%E5%8F%A3"><span class="nav-number">4.1.</span> <span class="nav-text">资源抽象接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E5%8A%A0%E8%BD%BD"><span class="nav-number">4.2.</span> <span class="nav-text">资源加载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BeanFactory%E5%92%8CApplicationContext"><span class="nav-number">5.</span> <span class="nav-text">BeanFactory和ApplicationContext</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BeanFactory%E4%BB%8B%E7%BB%8D"><span class="nav-number">5.1.</span> <span class="nav-text">BeanFactory介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#BeanFactory-%E7%9A%84%E7%B1%BB%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-number">5.1.1.</span> <span class="nav-text">BeanFactory 的类体系结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96BeanFactory"><span class="nav-number">5.1.2.</span> <span class="nav-text">初始化BeanFactory</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ApplicationContext%E4%BB%8B%E7%BB%8D"><span class="nav-number">5.2.</span> <span class="nav-text">ApplicationContext介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ApplicationContext%E7%9A%84%E7%B1%BB%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-number">5.2.1.</span> <span class="nav-text">ApplicationContext的类体系结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WebApplicationContext-%E7%B1%BB%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-number">5.2.2.</span> <span class="nav-text">WebApplicationContext 类体系结构</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -204,7 +204,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-20 17:10:09" itemprop="dateModified" datetime="2024-05-20T17:10:09+08:00">2024-05-20</time>
+      <time title="修改时间：2024-05-23 16:36:08" itemprop="dateModified" datetime="2024-05-23T16:36:08+08:00">2024-05-23</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -230,14 +230,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>7.8k</span>
+      <span>11k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>28 分钟</span>
+      <span>38 分钟</span>
     </span>
 </div>
 
@@ -811,6 +811,7 @@ classDiagram
 direction TB
 class ResourceLoader {
 &lt;&lt;Interface&gt;&gt;
+
 + getResource(String) Resource
 }
 class ResourcePatternResolver {
@@ -820,8 +821,8 @@ class ResourcePatternResolver {
 class PathMatchingResourcePatternResolver
 class Resouce{
 &lt;&lt;Interface&gt;&gt;
-+  getFile() : File
-+  getURI() : URI
++ getFile() : File
++ getURI() : URI
 }
 ResourceLoader --&gt; Resouce
 ResourceLoader &lt;|-- ResourcePatternResolver
@@ -840,7 +841,207 @@ ResourcePatternResolver &lt;|.. PathMatchingResourcePatternResolver
 <p>正确的读取⽅式：</p>
 <p><code>（new DefaultResourceloader（））.getResource（&quot;classpath:conf/sys.properties&quot;）. getInputStream（）</code></p>
 <p>这个问题在实际的项⽬开发过程中很容易被忽视，因为在项⽬开发时，资源配置⽂ 件⼀般是在⽂件夹下的，所以 Resource#getFile（是可以正常⼯作的。但在发布时，如果 资源配置⽂件被打包到JAR 中，这时 getFile（就⽆法读取了，从⽽造成部署实施的时候 出现意想不到的问题。因此，我们建议尽量以流的⽅式读取，避免环境不同造成的问题。</p>
-<h2 id="BeanFactory和ApplicationContext"><a href="#BeanFactory和ApplicationContext" class="headerlink" title="BeanFactory和ApplicationContext"></a>BeanFactory和ApplicationContext</h2><p>TODO</p>
+<h2 id="BeanFactory和ApplicationContext"><a href="#BeanFactory和ApplicationContext" class="headerlink" title="BeanFactory和ApplicationContext"></a>BeanFactory和ApplicationContext</h2><p>Spring 通过⼀个配置⽂件描述 Bean 及 Bean 之间的依赖关系，利⽤Java 语⾔的反 射功能实例化 Bean 并建⽴ Bean 之间的依赖关系。Spring 的IoC 容器在完成这些底层⼯ 作的基础上，还提供了 Bean 实例缓存、⽣命周期管理、Bean 实例代理、事件发布、资源装载等⾼级服务。</p>
+<p>Bean ⼯⼚ （com.springframe work.beans.factory.BeanFactory） 是Spring 框架最核⼼的 接⼜，它提供了⾼级 IoC 的配置机制。BeanFactory 使管理不同类型的 Java 对象成为可 能，应⽤上下⽂ （com.springframework.context.ApplicationContext） 建⽴在 BeanFactory 基础之上，提供了更多⾯向应⽤的功能，它提供了国际化⽀持和框架事件体系，更易于 创建实际应⽤。我们⼀般称 BeanFactory 为 IoC 容器，⽽称 ApplicationContext 为应⽤上 下⽂。但有时为了⾏⽂⽅便，我们也将 ApplicationContext 称为 Spring 容器。</p>
+<p>对于⼆者的⽤途，我们可以进⾏简单的划分：BeanFactory 是 Spring 框架的基础设施，⾯向 Spring 本⾝；ApplicationContext ⾯向使⽤ Spring 框架的开发者，⼏乎所有的应⽤场合都可以直接使⽤ ApplicationContext ⽽⾮底层的 BeanFactory。</p>
+<h3 id="BeanFactory介绍"><a href="#BeanFactory介绍" class="headerlink" title="BeanFactory介绍"></a>BeanFactory介绍</h3><p>诚如其名，BeanFactory是⼀个类⼯⼚，但和传统的类⼯⼚不同，传统的类⼯⼚仅负责构造⼀个或⼏个类的实例；⽽ BeanFactory 是类的通⽤⼯⼚，它可以创建并管理各种类的对象。这些可被创建和管理的对象本⾝没有什么特别之处，仅是⼀个POJO,Spring称这些被创建和管理的Java 对象 Bean。我们知道JavaBean 是要满⾜⼀定规范的，如：</p>
+<ul>
+<li>必须提供⼀个默认不带参的构造函数、</li>
+<li>不依赖于某⼀特定的容器等，</li>
+</ul>
+<p>但Spring 中所说的Bean ⽐ JavaBean更宽泛⼀些，所有可以被 Spring 容器实例化并管理的Java 类都可以成为Bean。</p>
+<h4 id="BeanFactory-的类体系结构"><a href="#BeanFactory-的类体系结构" class="headerlink" title="BeanFactory 的类体系结构"></a>BeanFactory 的类体系结构</h4><p>Spring 为 BeanFactory 提供了多种实现，最常⽤的是 XmlBeanFactory，但在 Spring 3.2中已被废弃，建议使⽤ XmlBeanDeﬁnitionReader、DefaultListableBeanFactory 替代。BeanFactory 的类继承体系设计优雅，堪称经典。通过继承体系，我们可以很容易地了解到 BeanFactory 具有哪些功能，如图:</p>
+<pre class="mermaid">
+
+classDiagram
+direction BT
+class AbstractAutowireCapableBeanFactory
+class AbstractBeanFactory
+class AutowireCapableBeanFactory {
+&lt;&lt;Interface&gt;&gt;
+
+}
+class BeanDefinitionRegistry {
+&lt;&lt;Interface&gt;&gt;
+
+}
+class BeanFactory {
+&lt;&lt;Interface&gt;&gt;
+
+}
+class ConfigurableBeanFactory {
+&lt;&lt;Interface&gt;&gt;
+
+}
+class ConfigurableListableBeanFactory {
+&lt;&lt;Interface&gt;&gt;
+
+}
+class DefaultListableBeanFactory
+class DefaultSingletonBeanRegistry
+class HierarchicalBeanFactory {
+&lt;&lt;Interface&gt;&gt;
+
+}
+class ListableBeanFactory {
+&lt;&lt;Interface&gt;&gt;
+
+}
+class SingletonBeanRegistry {
+&lt;&lt;Interface&gt;&gt;
+
+}
+class XmlBeanFactory
+
+AbstractAutowireCapableBeanFactory  --&gt;  AbstractBeanFactory
+AbstractAutowireCapableBeanFactory  ..&gt;  AutowireCapableBeanFactory
+AbstractBeanFactory &quot;1&quot; *--&gt; &quot;parentBeanFactory 1&quot; BeanFactory
+AbstractBeanFactory  --&gt;  DefaultSingletonBeanRegistry
+ConfigurableBeanFactory  --&gt;  HierarchicalBeanFactory
+ConfigurableListableBeanFactory  --&gt;  ConfigurableBeanFactory
+ConfigurableListableBeanFactory  --&gt;  ListableBeanFactory
+DefaultListableBeanFactory  --&gt;  AbstractAutowireCapableBeanFactory
+DefaultListableBeanFactory  ..&gt;  BeanDefinitionRegistry
+DefaultListableBeanFactory  ..&gt;  ConfigurableListableBeanFactory
+DefaultSingletonBeanRegistry  ..&gt;  SingletonBeanRegistry
+HierarchicalBeanFactory  --&gt;  BeanFactory
+ListableBeanFactory  --&gt;  BeanFactory
+XmlBeanFactory  --&gt;  DefaultListableBeanFactory
+</pre>
+
+<p>BeanFactory 接口位于类结构树的顶端，它最主要的⽅法就是 getBean（StringbeanName），该⽅法从容器中返回特定名称的 Bean。BeanFactory 的功能通过其他接口得到不断扩展。下⾯对图中涉及的其他接口分别进⾏说明。</p>
+<ul>
+<li>ListableBeanFactory：该接口定义了访问容器中 Bean 基本信息的若⼲⽅法，如查看 Bean 的个数、获取某⼀类型 Bean的配置名、查看容器中是否包括某⼀Bean 等。</li>
+<li>HierarchicalBeanFactory：⽗⼦级联IoC 容器的接⼜，⼦容器可以通过接口⽅法访问⽗容器。</li>
+<li>ConfigurableBeanFactory：这是⼀个重要的接口，增强了IoC 容器的可定制性。它定义了设置类装载器、属性编辑器、容器初始化后置处理器等⽅法。</li>
+<li>AutowireCapableBeanFactory： 定义了将容器中的 Bean按某种规则（如按名字匹配、按类型匹配等）进⾏⾃动装配的⽅法。</li>
+<li>SingletonBeanRegistry：定义了允许在运⾏期向容器注册单实例Bean的⽅法。</li>
+<li>BeanDefinitionRegistry: Spring 配置⽂件中每⼀个<code>&lt;bean&gt;</code>节点元素在Spring 容器⾥都通过⼀个 BeanDefinition 对象表⽰，它描述了 Bean 的配置信息。⽽BeanDefinition Registry 接口提供了向容器⼿⼯注册 BeanDefinition 对象的⽅法。</li>
+</ul>
+<h4 id="初始化BeanFactory"><a href="#初始化BeanFactory" class="headerlink" title="初始化BeanFactory"></a>初始化BeanFactory</h4><p>下⾯使⽤Spring 配置⽂件为 Car 提供配置信息，然后通过 BeanFactory 装载配置⽂件，启动 Spring IoC 容器。Spring 配置⽂件如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;？xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;？&gt;</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag"></span></span><br><span class="line"><span class="tag"><span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w4.org/2001/XMLSchema-instance&quot;</span> <span class="attr">xmlns:p</span>=<span class="string">&quot;http://www.springframework.org/schema/p&quot;</span> <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">&lt;beanid=&quot;car1&quot; class=&quot;com.smart.Car&quot;</span><br><span class="line"></span><br><span class="line">p:brand=&quot;红旗CA72&quot; p:coloz=&quot;⿊⾊&quot;</span><br><span class="line"></span><br><span class="line">PimaxSpeed=&quot;200&quot; /&gt;</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>下⾯通过 XmlBeanDefinitionReader、DefaultListableBeanFactory 实现类启动 SpringIoC 容器，如代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.smart.beanfactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.support.DefaultListableBeanFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.xml.XmlBeanDefinitionReader; </span><br><span class="line"><span class="keyword">import</span> org.springframework.core.io.Resource;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.io.support.PathMatchingResourcePatternResolver; <span class="keyword">import</span> org.springframework.core.io.support.ResourcePatternResolver;</span><br><span class="line"><span class="keyword">import</span> com.smart.Car;</span><br><span class="line"><span class="keyword">import</span> org.testng.annotations.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.testng.Assert.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BeanFactoryTest</span>&#123;</span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> getBean（） <span class="keyword">throws</span> Throwable&#123;</span><br><span class="line"></span><br><span class="line"><span class="type">ResourcePatternResolver</span> <span class="variable">resolver</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PathMatchingResourcePatternResolver</span>();</span><br><span class="line"><span class="type">Resource</span> <span class="variable">res</span> <span class="operator">=</span> resolver.getResource （<span class="string">&quot;classpath: com/smart/beanfactory/beans.</span></span><br><span class="line"><span class="string">xml&quot;</span>）;</span><br><span class="line">System.out.println(res.getURL());</span><br><span class="line"><span class="comment">//被废弃，不建议使⽤</span></span><br><span class="line"><span class="comment">//BeanFactory bf - new XmlBeanFactory （res）：</span></span><br><span class="line"></span><br><span class="line">DefaultListableBeanFactory factory= <span class="keyword">new</span> <span class="title class_">DefaultListableBeanFactory</span>();</span><br><span class="line"><span class="type">XmlBeanDefinitionReader</span> <span class="variable">reader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">XmlBeanDefinitionReader</span>(factory)：</span><br><span class="line"></span><br><span class="line">reader. loadBeanDefinitions(res)；</span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">&quot;init BeanFactory.&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="type">Car</span> <span class="variable">car</span> <span class="operator">=</span> factory.getBean(<span class="string">&quot;car&quot;</span>，Car.class);</span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">&quot;car bean is ready for use！&quot;</span>)；</span><br><span class="line"></span><br><span class="line">car.introduce();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>XmlBeanDefinitionReader 通过 Resource 装载 Spring 配置信息并启动IOC 容器，然后就可以通过 BeanFactory#getBean（beanName）⽅法从 IoC 容器中获取 Bean。通过BeanFactory 启动IoC 容器时，并不会初始化配置⽂件中定义的Bean，初始化动作发⽣在第⼀个调⽤时。对于单实例（singleton）的Bean 来说，BeanFactory 会缓存Bean实例，所以第⼆次使⽤ getBean（）获取 Bean 时，将直接从IoC容器的缓存中获取 Bean实例。</p>
+<p>Spring 在 DefaultSingletonBeanRegistry 类中提供了⼀个⽤于缓存单实例Bean的缓存器，它是⼀个⽤ HashMap 实现的缓存器，单实例的 Bean以 beanName 为键保存在这个HashMap 中。</p>
+<p>值得⼀提的是，在初始化 BeanFactory 时，必须为其提供⼀种⽇志框架，我们使⽤Log4J，即在类路径下提供Log4J配置⽂件，这样启动 Spring 容器才不会报错。</p>
+<h3 id="ApplicationContext介绍"><a href="#ApplicationContext介绍" class="headerlink" title="ApplicationContext介绍"></a>ApplicationContext介绍</h3><p>如果说 BeanFactory 是Spring 的“⼼脏”，那么 ApplicationContext 就是完整的“身躯”了。ApplicationContext 由BeanFactory 派⽣⽽来，提供了更多⾯向实际应⽤的功能。在 BeanFactory 中，很多功能需要以编程的⽅式实现，⽽在 ApplicationContext 中则可以通过配置的⽅式实现。</p>
+<h4 id="ApplicationContext的类体系结构"><a href="#ApplicationContext的类体系结构" class="headerlink" title="ApplicationContext的类体系结构"></a>ApplicationContext的类体系结构</h4><p>ApplicationContext的主要实现类是ClassPathXmlApplicationContext和FileSystemXmlApplicationContext，前者默认从类路径加载配置⽂件，后者默认从⽂件系统中装载配置⽂件。下⾯了解⼀下 ApplicationContext 的类继承体系，如图：</p>
+<pre class="mermaid">
+
+classDiagram
+direction BT
+class AbstractApplicationContext
+class AbstractRefreshableApplicationContext
+class AbstractRefreshableConfigApplicationContext
+class AbstractXmlApplicationContext
+class AnnotationConfigApplicationContext
+class ApplicationContext {
+&lt;&lt;Interface&gt;&gt;
+
+}
+class ApplicationEventPublisher {
+&lt;&lt;Interface&gt;&gt;
+
+}
+class BeanFactory {
+&lt;&lt;Interface&gt;&gt;
+
+}
+class ClassPathXmlApplicationContext
+class ConfigurableApplicationContext {
+&lt;&lt;Interface&gt;&gt;
+
+}
+class FileSystemXmlApplicationContext
+class GenericApplicationContext
+class GenericGroovyApplicationContext
+class HierarchicalBeanFactory {
+&lt;&lt;Interface&gt;&gt;
+
+}
+class Lifecycle {
+&lt;&lt;Interface&gt;&gt;
+
+}
+class ListableBeanFactory {
+&lt;&lt;Interface&gt;&gt;
+
+}
+class MessageSource {
+&lt;&lt;Interface&gt;&gt;
+
+}
+class ResourceLoader {
+&lt;&lt;Interface&gt;&gt;
+
+}
+class ResourcePatternResolver {
+&lt;&lt;Interface&gt;&gt;
+
+}
+
+AbstractApplicationContext  ..&gt;  ConfigurableApplicationContext 
+AbstractApplicationContext  ..&gt;  ResourceLoader 
+AbstractRefreshableApplicationContext  --&gt;  AbstractApplicationContext 
+AbstractRefreshableConfigApplicationContext  --&gt;  AbstractRefreshableApplicationContext 
+AbstractXmlApplicationContext  --&gt;  AbstractRefreshableConfigApplicationContext 
+AnnotationConfigApplicationContext  --&gt;  GenericApplicationContext 
+ApplicationContext  --&gt;  ApplicationEventPublisher 
+ApplicationContext  --&gt;  HierarchicalBeanFactory 
+ApplicationContext  --&gt;  ListableBeanFactory 
+ApplicationContext  --&gt;  MessageSource 
+ApplicationContext  --&gt;  ResourcePatternResolver 
+ClassPathXmlApplicationContext  --&gt;  AbstractXmlApplicationContext 
+ConfigurableApplicationContext  --&gt;  ApplicationContext 
+ConfigurableApplicationContext  --&gt;  Lifecycle 
+FileSystemXmlApplicationContext  --&gt;  AbstractXmlApplicationContext 
+GenericApplicationContext  --&gt;  AbstractApplicationContext 
+GenericGroovyApplicationContext  --&gt;  GenericApplicationContext 
+HierarchicalBeanFactory  --&gt;  BeanFactory 
+ListableBeanFactory  --&gt;  BeanFactory 
+ResourcePatternResolver  --&gt;  ResourceLoader
+</pre>
+
+<p>从图中可以看出，ApplicationContext 继承了 HierarchicalBeanFactory 和 ListableBeanFactory 接口，在此基础上，还通过多个其他的接口扩展了 BeanFactory 的功<br>能。这些接⼝如下。</p>
+<ul>
+<li>ApplicationEventPublisher： 让容器拥有发布应⽤上下⽂事件的功能，包括容器启动事件、关闭事件等。实现了 ApplicationListener 事件监听接口的 Bean 可以接收到容器事件，并对事件进⾏响应处理。在 ApplicationContext 抽象实现类 AbstractApplicationContext 中存在⼀个 ApplicationEventMulticaster，它负责保存所有的监听器，以便在容器产⽣上下⽂事件时通知这些事件监听者。</li>
+<li>MessageSource：为应⽤提供il8n 国际化消息访问的功能。</li>
+<li>ResourcePatterResolver： 所有 ApplicationContext 实现类都实现了类似于PathMatchingResourcePatternResolver 的功能，可以通过带前缀的 Ant 风格的资源⽂件路径装载 Spring 的配置⽂件。</li>
+<li>LifeCycle：该接口提供了 start()和stop()两个⽅法，主要⽤于控制异步处理过程。在具体使⽤时，该接口同时被 ApplicationContext 实现及具体 Bean实现， ApplicationContext 会将 start&#x2F;stop 的信息传递给容器中所有实现了该接口的Bean，以达到管理和控制JMX、任务调度等⽬的。</li>
+</ul>
+<p>ConfigurableApplicationContext 扩展于 ApplicationContext，它新增了两个主要的⽅法：refresh（）和 close（），让 ApplicationContext 具有启动、刷新和关闭应⽤上下⽂的能⼒。在应⽤上下⽂关闭的情况下调⽤ refresh()即可启动应⽤上下⽂，在已经启动的状态下调⽤ refresh()则可清除缓存并重新装载配置信息，⽽调⽤close()则可关闭应⽤上下⽂。这些接口⽅法为容器的控制管理带来了便利，但作为开发者，我们并不需要过多关⼼这些⽅法。</p>
+<p>和 BeanFactory 初始化相似，ApplicationContext 的初始化也很简单。如果配置⽂件放置在类路径下，则可以优先考虑使⽤ClassPathXmlApplicationContext 实现类。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ApplicationContext ctx =</span><br><span class="line"></span><br><span class="line">new ClassPathXmlApplicationContext （&quot;com/smart/context/beans .xm1&quot;）；</span><br></pre></td></tr></table></figure>
+
+<p>对于 ClassPathXmlApplicationContext 来说，“com&#x2F;smart&#x2F;context&#x2F;beans.xml” 等同于“classpath: com&#x2F;smart&#x2F;context&#x2F;beans.xml”。</p>
+<p>还可以指定⼀组配置⽂件，Spring 会⾃动将多个配置⽂件在内存中“整合”成⼀个<br>配置⽂件，如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ApplicationContext ctx = new ClassPathXmlApplicationContext（</span><br><span class="line"></span><br><span class="line">new String［］！&quot;conf/beans1.xml&quot;，&quot;conf/beans2.xml&quot;））；</span><br></pre></td></tr></table></figure>
+
+<p>当然，FileSystemXmlApplicationContext 和 ClassPathXmlApplicationContext 都可以显式使⽤带资源类型前缀的路径，它们的区别在于如果不显式指定资源类型前缀，则分别将路径解析为⽂件系统路径和类路径。</p>
+<p>在获取 ApplicationContext 实例后，就可以像 BeanFactory⼀样调⽤ getBean（beanName）返回Bean 了。ApplicationContext 的初始化和 BeanFactory 有⼀个重⼤的区别：</p>
+<ul>
+<li>BeanFactory在初始化容器时，并未实例化 Bean，直到第⼀次访问某个 Bean 时才实例化⽬标 Bean；</li>
+<li>⽽ ApplicationContext 则在初始化应⽤上下⽂时就实例化所有单实例的 Bean。</li>
+</ul>
+<p>因此，ApplicationContext 的初始化时间会⽐ BeanFactory 稍长⼀些，不过稍后的调⽤则没有“第⼀次惩罚”的问题。</p>
+<p>Spring ⽀持基于类注解的配置⽅式，主要功能来⾃ Spring的⼀个名为 JavaConfig 的⼦项⽬。JavaConfig 现已升级为 Spring 核⼼框架的⼀部分。⼀个标注@Configuration 注解的 POJO 即可提供 Spring 所需的Bean配置信息，如代码所⽰:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.smart.context;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.smart.Car;</span><br><span class="line"></span><br><span class="line"><span class="comment">//①表示是一个配置信息提供类</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Beans</span> &#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">//②定义了一个Bean</span></span><br><span class="line"> <span class="meta">@Bean(name = &quot;car&quot;)</span></span><br><span class="line"> <span class="keyword">public</span> Car <span class="title function_">buildCar</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="type">Car</span> <span class="variable">car</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Car</span>();</span><br><span class="line">  car.setBrand(<span class="string">&quot;红旗CA72&quot;</span>);</span><br><span class="line">  car.setMaxSpeed(<span class="number">200</span>);</span><br><span class="line">  <span class="keyword">return</span> car;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>和基于 XML ⽂件的配置⽅式相⽐，类注解的配置⽅式可以很容易地让开发者控制Bean 的初始化过程，⽐基于XML ⽂件的配置⽅式更加灵活。</p>
+<p>Spring 为基于注解类的配置提供了专门的 ApplicationContext 实现类：<br>AnnotationConfigApplicationContext。来看⼀个使⽤AnnotationConfigApplicationContext<br>启动 Spring 容器的⽰例，如代码所⽰:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.smart.context;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.AnnotationConfigApplicationContext;</span><br><span class="line"><span class="keyword">import</span> com.smart.Car;<span class="keyword">import</span> <span class="keyword">static</span> org.testng.Assert.*;</span><br><span class="line"><span class="keyword">import</span> org.testng.annotations.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AnnotationApplicationContextTest</span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span> <span class="keyword">public</span> <span class="keyword">void</span> getBean（）&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">//①通过⼀个带@Configuration的POJO装载Bean配置</span></span><br><span class="line"></span><br><span class="line"><span class="type">ApplicationContext</span> <span class="variable">ctx</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AnnotationConfigApplicationContext</span>(Beans.class);</span><br><span class="line"><span class="type">Car</span> <span class="variable">car</span> <span class="operator">=</span>ctx.getBean （<span class="string">&quot;car&quot;</span>， Car.class）；</span><br><span class="line">assertNotNul1(car);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Annotation ConfigApplicationContext 将加载 Beans.class 中的 Bean 定义并调⽤<br>Beans.class 中的⽅法实例化 Bean，启动容器并装配 Bean。关于使⽤ JavaConfig 配置⽅<br>式的详细内容，将在第5章详细介绍。</p>
+<p>Spring 4.0 ⽀持使⽤ <a target="_blank" rel="noopener" href="https://groovy-lang.org/documentation.html">Groovy DSL</a> 来进⾏Bean定义配置。其与基于XML ⽂件的配<br>置类似，只不过基于 Groovy 脚本语⾔，可以实现复杂、灵活的 Bean 配置逻辑，来看⼀<br>个例⼦，如代码:</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.smart.context;</span><br><span class="line"><span class="keyword">import</span> com.smart.Car;</span><br><span class="line">beans&#123;</span><br><span class="line">    car（Car）&#123;<span class="comment">//①名字（类型）</span></span><br><span class="line">    brand =<span class="string">&quot;红旗CA72&quot;</span> <span class="comment">//②注⼊属性</span></span><br><span class="line">    maxSpeed = <span class="string">&quot;200&quot;</span></span><br><span class="line">    color = <span class="string">&quot;red&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>基于 Groovy的配置⽅式可以很容易地让开发者配置复杂Bean 的初始化过程，⽐基于 XML ⽂件、注解的配置⽅式更加灵活。Spring 为基于 Groovy 的配置提供了专⻔的 ApplicationContext 实现类：<br>GenericGroovyApplicationContext。来看⼀个如何使⽤ GenericGroovyApplicationContext启动 Spring 容器的⽰例，如代码清单所⽰：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.smart.context;</span><br><span class="line"><span class="keyword">import</span> com.smart.Car;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.support.GenericGroovyApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.testng.annotations.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.testng.Assert.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">GroovyApplicationContextTest</span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span> </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">getBean</span><span class="params">()</span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="type">ApplicationContext</span> <span class="variable">ctx</span> <span class="operator">=</span> <span class="keyword">new</span></span><br><span class="line"><span class="title class_">GenericGroovyApplicationContext</span> (<span class="string">&quot;classpath:com/smart/context/groovy-beans.groovy&quot;</span>);</span><br><span class="line"><span class="type">Car</span> <span class="variable">car</span> <span class="operator">=</span> (Car) ctx.getBean(<span class="string">&quot;car&quot;</span>);</span><br><span class="line">assertNotNull(car);</span><br><span class="line">assertEquals(car.getColor()， <span class="string">&quot;red&quot;</span>);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="WebApplicationContext-类体系结构"><a href="#WebApplicationContext-类体系结构" class="headerlink" title="WebApplicationContext 类体系结构"></a>WebApplicationContext 类体系结构</h4><p>TODO</p>
 
     </div>
 
@@ -897,13 +1098,13 @@ ResourcePatternResolver &lt;|.. PathMatchingResourcePatternResolver
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">31k</span>
+    <span title="站点总字数">33k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:51</span>
+    <span title="站点阅读时长">2:01</span>
   </span>
 </div>
 <div class="busuanzi-count">
