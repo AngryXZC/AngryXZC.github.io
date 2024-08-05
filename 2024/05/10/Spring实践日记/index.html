@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"angryxzc.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="各种渠道打探的Spring知识">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring实践日记">
+<meta property="og:url" content="http://angryxzc.github.io/2024/05/10/Spring%E5%AE%9E%E8%B7%B5%E6%97%A5%E8%AE%B0/index.html">
+<meta property="og:site_name" content="星之辰的博客">
+<meta property="og:description" content="各种渠道打探的Spring知识">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://angryxzc.github.io/images/spring/Spring4.xRunTime.png">
+<meta property="og:image" content="http://angryxzc.github.io/images/spring/IOC_two_ways.png">
+<meta property="og:image" content="http://angryxzc.github.io/images/spring/controller%E6%B3%A8%E8%A7%A3%E5%AF%B9component%E5%AE%9E%E7%8E%B0.png">
+<meta property="og:image" content="http://angryxzc.github.io/images/spring/sbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
+<meta property="og:image" content="http://angryxzc.github.io/images/spring/%E6%8C%87%E5%AE%9A%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%B9%E6%B3%95%E5%92%8C%E9%94%80%E6%AF%81%E6%96%B9%E6%B3%95.png">
+<meta property="og:image" content="http://angryxzc.github.io/images/spring/%E5%90%84%E7%A7%8DAware%E6%8E%A5%E5%8F%A3.png">
+<meta property="og:image" content="http://angryxzc.github.io/images/spring/Bean%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
+<meta property="article:published_time" content="2024-05-10T13:00:41.000Z">
+<meta property="article:modified_time" content="2024-05-11T07:50:29.671Z">
+<meta property="article:author" content="星之辰">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Spring">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://angryxzc.github.io/images/spring/Spring4.xRunTime.png">
+
+
+<link rel="canonical" href="http://angryxzc.github.io/2024/05/10/Spring%E5%AE%9E%E8%B7%B5%E6%97%A5%E8%AE%B0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://angryxzc.github.io/2024/05/10/Spring%E5%AE%9E%E8%B7%B5%E6%97%A5%E8%AE%B0/","path":"2024/05/10/Spring实践日记/","title":"Spring实践日记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Spring实践日记 | 星之辰的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">星之辰的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">What I cannot create, I do not understand-Feynman Diagram</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8ESpring%E7%9A%84%E4%B8%80%E4%BA%9B%E8%B5%84%E6%BA%90"><span class="nav-number">1.</span> <span class="nav-text">关于Spring的一些资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IOC%E5%AE%B9%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">IOC容器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IOC%E5%AE%B9%E5%99%A8%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F%EF%BC%88IDEA%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">IOC容器的两种实现方式（IDEA）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="nav-number">2.2.</span> <span class="nav-text">依赖注入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bean%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">2.3.</span> <span class="nav-text">Bean的定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#id%E5%B1%9E%E6%80%A7"><span class="nav-number">2.4.</span> <span class="nav-text">id属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#class%E5%B1%9E%E6%80%A7"><span class="nav-number">2.5.</span> <span class="nav-text">class属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#depends-on"><span class="nav-number">2.6.</span> <span class="nav-text">depends-on</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Autowired"><span class="nav-number">2.7.</span> <span class="nav-text">Autowired</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Qualiter"><span class="nav-number">2.8.</span> <span class="nav-text">Qualiter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Primary"><span class="nav-number">2.9.</span> <span class="nav-text">Primary</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Lazy-%E6%87%92%E5%8A%A0%E8%BD%BD"><span class="nav-number">2.10.</span> <span class="nav-text">Lazy(懒加载)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scope-%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">2.11.</span> <span class="nav-text">scope(作用域)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#singleton"><span class="nav-number">2.12.</span> <span class="nav-text">singleton</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#prototype"><span class="nav-number">2.13.</span> <span class="nav-text">prototype</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bean%E7%9A%84%E5%AE%B9%E5%99%A8%E6%B3%A8%E8%A7%A3%E9%85%8D%E7%BD%AE"><span class="nav-number">2.14.</span> <span class="nav-text">Bean的容器注解配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#ComponentScan%EF%BC%8CComponentScans"><span class="nav-number">2.14.1.</span> <span class="nav-text">ComponentScan，ComponentScans</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Component"><span class="nav-number">2.14.2.</span> <span class="nav-text">Component</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Configuration"><span class="nav-number">2.14.3.</span> <span class="nav-text">Configuration</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Import"><span class="nav-number">2.15.</span> <span class="nav-text">Import</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Controller%EF%BC%8CService%EF%BC%8CRepository"><span class="nav-number">2.16.</span> <span class="nav-text">Controller，Service，Repository</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Conditional"><span class="nav-number">2.17.</span> <span class="nav-text">Conditional</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Value"><span class="nav-number">2.18.</span> <span class="nav-text">Value</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-number">3.</span> <span class="nav-text">Bean的生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java%E6%B3%A8%E8%A7%A3"><span class="nav-number">3.1.</span> <span class="nav-text">Java注解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bean%E6%B3%A8%E8%A7%A3%E9%85%8D%E7%BD%AEinitMehod%E5%92%8CdestroyMethod"><span class="nav-number">3.2.</span> <span class="nav-text">Bean注解配置initMehod和destroyMethod</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%9Eweb%E5%BA%94%E7%94%A8%E4%B8%8B%E4%BC%98%E9%9B%85%E7%9A%84%E5%85%B3%E9%97%ADIOC"><span class="nav-number">3.3.</span> <span class="nav-text">非web应用下优雅的关闭IOC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Aware%E6%8E%A5%E5%8F%A3"><span class="nav-number">3.4.</span> <span class="nav-text">Aware接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E6%80%BB%E7%BB%93"><span class="nav-number">3.5.</span> <span class="nav-text">Bean的生命周期总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">星之辰</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://angryxzc.github.io/2024/05/10/Spring%E5%AE%9E%E8%B7%B5%E6%97%A5%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="星之辰">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星之辰的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Spring实践日记 | 星之辰的博客">
+      <meta itemprop="description" content="各种渠道打探的Spring知识">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring实践日记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-05-10 21:00:41" itemprop="dateCreated datePublished" datetime="2024-05-10T21:00:41+08:00">2024-05-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-05-11 15:50:29" itemprop="dateModified" datetime="2024-05-11T15:50:29+08:00">2024-05-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">各种渠道打探的Spring知识</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="关于Spring的一些资源"><a href="#关于Spring的一些资源" class="headerlink" title="关于Spring的一些资源"></a>关于Spring的一些资源</h3><ul>
+<li>官网上有个快速构建Spring项目的工具，可以快速构建Spring项目，<a target="_blank" rel="noopener" href="https://start.spring.io/">点这里</a>。</li>
+<li>github源码：<a target="_blank" rel="noopener" href="https://github.com/spring-projects">点这里</a></li>
+<li>Spring4.x官网上的架构图：</li>
+<li><img src="/images/spring/Spring4.xRunTime.png" alt="alt text"></li>
+</ul>
+<h3 id="IOC容器"><a href="#IOC容器" class="headerlink" title="IOC容器"></a>IOC容器</h3><p>IoC（Inversion of Control，控制反转）就是把原来代码里需要实现的对象创建、依赖，反转给容器来帮忙实现。我们需要创建一个容器，同时需要一种描述来让容器知道要创建的对象与对象的关系。这个描述最具体的表现就是我们所看到的配置文件。<br>org.springframework.beans和org.springframework.context包是 Spring Framework 的 IoC 容器的基础。该 <a target="_blank" rel="noopener" href="https://docs.spring.io/spring-framework/docs/5.3.23/javadoc-api/org/springframework/beans/factory/BeanFactory.html">BeanFactory</a>接口提供了一种高级配置机制，能够管理任何类型的对象。 <a target="_blank" rel="noopener" href="https://docs.spring.io/spring-framework/docs/5.3.23/javadoc-api/org/springframework/context/ApplicationContext.html">ApplicationContext</a> 是BeanFactory的子接口。</p>
+<h4 id="IOC容器的两种实现方式（IDEA）"><a href="#IOC容器的两种实现方式（IDEA）" class="headerlink" title="IOC容器的两种实现方式（IDEA）"></a>IOC容器的两种实现方式（IDEA）</h4><p>现在我们已经知道ApplicationContext是BeanFactory的子接口，并且也知道BeanFactory是用来管理容器的，由此得知ApplicationContext也是管理容器的，再推出ApplicationContext的实现类也是同样的作用。</p>
+<ul>
+<li>IDEA向下查看实现类快捷键：ctrl+h（MAC上control+h）</li>
+<li>IDEA向上查看接口和继承快捷键：CTRL+Alt+U</li>
+</ul>
+<p><img src="/images/spring/IOC_two_ways.png" alt="spring实现IOC的两种方式"></p>
+<p>一般情况下，我们实现容器管理的方式大致分为XML和注解两种。XML是早年我们比较常用的方式，注解是我们现在流行使用的方式。</p>
+<h4 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h4><p>DI（Dependency Injection，依赖注入）就是指对象被动接受依赖类而不自己主动去找，换句话说，就是指对象不是从容器中查找它依赖的类，而是在容器实例化对象时主动将它依赖的类注入给它。</p>
+<p>DI依赖注入主要方式：构造函数，setter，接口（废弃）</p>
+<h4 id="Bean的定义"><a href="#Bean的定义" class="headerlink" title="Bean的定义"></a>Bean的定义</h4><p>IOC容器管理的就是Bean对象，但是这些对象也是各不相同，所以需要使用一些元数据定义，这样才能让我们区分对象的不同。举个生活中的例子：一般我们家里买汽车，虽然汽车都是一个车身+4个轮子组成，但是细分下来里面很多的配置都是不太一样的。品牌，引擎，型号等等。bean对象也是如此。</p>
+<h4 id="id属性"><a href="#id属性" class="headerlink" title="id属性"></a>id属性</h4><p>每个注册到IOC容器的对象都需要一个唯一标识来对其他对象进行区分，例如车编号或身份证ID一样。我们一般获取bean的方式都是通过id来进行获取。当然，除了id以外，也可以使用其他的方式获取Bean，例如name，alias（别名）。name可以使用id属性不能使用的一些字符，如斜杠（&#x2F;），而且可以通过逗号，空格或冒号分割指定多个name，alias跟name使用方式基本一致。</p>
+<p><span style="color:pink"> 注：若是指定@Bean注解，id为方法名，若是未指定，id默认为class类名，但首字母小写。</span></p>
+<h4 id="class属性"><a href="#class属性" class="headerlink" title="class属性"></a>class属性</h4><p>一般情况下，我们在注入的时候都需要指定Class，也就是我们当前的类（包名+类名）。</p>
+<h4 id="depends-on"><a href="#depends-on" class="headerlink" title="depends-on"></a>depends-on</h4><p>一般情况下，我们对象之间都有依赖关系，比如我们在实例化对象A时，若对象A中有成员属性对象B，那么会先实例化对象B，之后再实例化对象A，这样最终实例化出来的对象A是一个完整对象。<br>xml里的配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;A&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.test.A&quot;</span> <span class="attr">depends-on</span>=<span class="string">&quot;B&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;b&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;B&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;B&quot;</span> <span class="attr">class</span>=<span class="string">&quot;com.test.B&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Java里的实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">A</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">A</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;A对象初始化....&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">B</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">B</span><span class="params">()</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;B对象初始化....&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="meta">@DependsOn(value = &quot;b&quot;)</span></span><br><span class="line"><span class="keyword">public</span> A <span class="title function_">a</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">A</span>();</span><br><span class="line">&#125;</span><br><span class="line">---ApplicationConfig.java</span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> B <span class="title function_">b</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">B</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Autowired"><a href="#Autowired" class="headerlink" title="Autowired"></a>Autowired</h4><p>指定bean之间的依赖关系。Spring提供了4种自动注入的模式：no，byName，byType，constructor。一般来讲我们常用的就是@Autowired注解，Autowired注解是按照类型进行匹配。</p>
+<p>当Spring根据注解Autowired在IOC容器中查找对应的对象实例，如果只有一个，那么就进行依赖注入。若存在多个的情况，如若不指定进一步匹配的方式，则会直接报错。</p>
+<p><span style="color:pink">注：Autowired不但可以指定成员属性，还可以指定构造器，方法。</span></p>
+<h4 id="Qualiter"><a href="#Qualiter" class="headerlink" title="Qualiter"></a>Qualiter</h4><p>Qualiter注解是byName的方式，即当Autowired注解无法在多个实例对象中选取对应的实例，那么就通过Qualiter注解指定某个对象实例。</p>
+<h4 id="Primary"><a href="#Primary" class="headerlink" title="Primary"></a>Primary</h4><p>Primary指的是Bean注入的优先级，优先注入。同样也解决了IOC存在多个实例而无法抉择的问题。</p>
+<h4 id="Lazy-懒加载"><a href="#Lazy-懒加载" class="headerlink" title="Lazy(懒加载)"></a>Lazy(懒加载)</h4><p>一般情况下，IOC容器会初始化所有的单例Bean，但是有时候我们并不是很迫切的需要这个bean，而且每次启动会把所有的单例Bean都加载，也会占据我们的内存资源和启动时间。所以我们可以设置延迟启动Bean对象</p>
+<h4 id="scope-作用域"><a href="#scope-作用域" class="headerlink" title="scope(作用域)"></a>scope(作用域)</h4><p>Spring容器最初提供了两种bean的scope：singleton和prototype，但是发布2.0版本以后又引入了另外三种：request，session和global session，但这三种类型只能在Web应用中使用。所以我们使用最多的就是最初的两种。注：Spring也提供自定义范围作用域。</p>
+<h4 id="singleton"><a href="#singleton" class="headerlink" title="singleton"></a>singleton</h4><p>容器默认Scope。表示在IOC容器中只存在一个实例，所有对该对象的应用都共享这个实例。从IOC容器启动，该对象实例初始化后直到IOC容器销毁退出</p>
+<h4 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a>prototype</h4><p>容器每次在接到该类型对象的请求时，每次都会生成一个新的对象给请求方。IOC容器只负责对象实例化和属性配置等工作，一旦生成完毕后，IOC容器不再管理该对象的生命周期。</p>
+<h4 id="Bean的容器注解配置"><a href="#Bean的容器注解配置" class="headerlink" title="Bean的容器注解配置"></a>Bean的容器注解配置</h4><h5 id="ComponentScan，ComponentScans"><a href="#ComponentScan，ComponentScans" class="headerlink" title="ComponentScan，ComponentScans"></a>ComponentScan，ComponentScans</h5><p>@ComponentScan跟@ComponentScans的作用就是扫描路径包下是否包含Component注解的Bean对象，若有的情况下，将其注入到IOC容器中。<br>ComponentScan跟ComponentScans的区别在于，ComponentScan只能扫描一个路径包下的Bean对象，ComponentScans可以扫描多个。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ComponentScan(&quot;com.siki.entity&quot;)</span></span><br><span class="line"><span class="meta">@ComponentScans(&#123;@ComponentScan(&quot;com.siki.entity01&quot;),@ComponentScan(&quot;com.siki.entity02&quot;)&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ApplicationConfig</span> &#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="Component"><a href="#Component" class="headerlink" title="Component"></a>Component</h5><p>Component注解表示将当前类注入到IOC容器中去。IOC容器在启动的时候会进行范围扫描，若检测到该类上带有Component注解，则会将该类进行注入。</p>
+<h5 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h5><p>@Configuration注解一般标注在类上，它也包含Component注解，所以也可以当作一个Bean注入到IOC容器中去。功能相当于XML配置文件，其中包含各种Bean的配置类。<br>注：@Configuration注解对类的配置有要求，不可以是final类型，不可以是匿名类。</p>
+<h4 id="Import"><a href="#Import" class="headerlink" title="Import"></a>Import</h4><p>xml形式中的<code>&lt;import&gt;&lt;/import&gt;</code>标签。一般情况下，我们根据不同的模块功能或分层的关系，会将配置信息分门别类。在主配置中若想将其他依赖的配置一起加载，则使用Import注解。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span> TODO</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span> Jay</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span> 2022/11/9 9:37</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Import(ApplicationConfig02.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ApplicationConfig01</span> &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span> TODO</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span> Jay</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span> 2022/11/9 9:38</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ApplicationConfig02</span> &#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">user</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">        user.setAge(<span class="number">18</span>);</span><br><span class="line">        user.setName(<span class="string">&quot;J老师&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span> TODO</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span> Jay</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span> 2022/11/9 9:39</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test06</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">ApplicationContext</span> <span class="variable">context</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AnnotationConfigApplicationContext</span>(ApplicationConfig01.class);</span><br><span class="line">        <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> context.getBean(<span class="string">&quot;user&quot;</span>, User.class);</span><br><span class="line">        System.out.println(<span class="string">&quot;name:&quot;</span>+user.getName()+<span class="string">&quot;\tage:&quot;</span>+user.getAge());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Controller，Service，Repository"><a href="#Controller，Service，Repository" class="headerlink" title="Controller，Service，Repository"></a>Controller，Service，Repository</h4><p>Controller，Service，Respository三个注解跟Component注解类似，只不过是针对更为具体的场景。Controller表示控制层，Service表示服务层，Respository表示持久层。<br><img src="/images/spring/controller%E6%B3%A8%E8%A7%A3%E5%AF%B9component%E5%AE%9E%E7%8E%B0.png" alt="controller注解对component实现"></p>
+<h4 id="Conditional"><a href="#Conditional" class="headerlink" title="Conditional"></a>Conditional</h4><p>@Conditional注解是Spring4新提供的注解，作用是按照一定的条件进行判断，选择将Bean注入到容器中去。</p>
+<h4 id="Value"><a href="#Value" class="headerlink" title="Value"></a>Value</h4><p>@Value通常用于注入外部属性。一般是注入成员属性，或者利用构造器进行注入。<br><span style="color:pink">注：无法注入静态成员属性</span></p>
+<h3 id="Bean的生命周期"><a href="#Bean的生命周期" class="headerlink" title="Bean的生命周期"></a>Bean的生命周期</h3><p>前面我们已经基本的了解了IOC容器（控制反转与依赖注入）的基本原理，也知道IOC容器其实就是管理Bean的，但是在管理的过程中，Bean是怎么从创建到销毁的过程我们还不得而知。</p>
+<pre><code> Spring Bean的生命周期的过程为：创建Bean对象 --&gt;填充Bean的成员属性（依赖注入）--&gt;初始化Bean（执行初始化方法）--&gt;销毁Bean对象。
+</code></pre>
+<p><img src="/images/spring/sbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" alt="bean的生命周期"></p>
+<h4 id="Java注解"><a href="#Java注解" class="headerlink" title="Java注解"></a>Java注解</h4><p>事实上，Java有一些注解也可以对Java Bean的生命周期进行增强，例如：@PostConstruct（表示执行初始化方法），@PreDesctroy（销毁前执行）。</p>
+<p><span style="color:pink">注：使用@PostConstruct，@PreDesctroy注解需要引入Javax的注解api依赖包</span></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.annotation<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>javax.annotation-api<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostConstruct</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">postConstruct</span><span class="params">()</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;postConstruct:执行初始化方法....&quot;</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@PreDestroy</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">preDestroy</span><span class="params">()</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;preDestroy:销毁Student对象....&quot;</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Bean注解配置initMehod和destroyMethod"><a href="#Bean注解配置initMehod和destroyMethod" class="headerlink" title="Bean注解配置initMehod和destroyMethod"></a>Bean注解配置initMehod和destroyMethod</h4><p>@Configuration配置类中用@Bean注解也可以执行初始化方法和对象销毁前执行的方法。<br><img src="/images/spring/%E6%8C%87%E5%AE%9A%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%B9%E6%B3%95%E5%92%8C%E9%94%80%E6%AF%81%E6%96%B9%E6%B3%95.png" alt="指定初始化方法和销毁方法"></p>
+<h4 id="非web应用下优雅的关闭IOC"><a href="#非web应用下优雅的关闭IOC" class="headerlink" title="非web应用下优雅的关闭IOC"></a>非web应用下优雅的关闭IOC</h4><p><code>ConfigurableApplicationContext.registerShutdownHook</code></p>
+<h4 id="Aware接口"><a href="#Aware接口" class="headerlink" title="Aware接口"></a>Aware接口</h4><p>实现Aware接口可以在Bean依赖注入的时候将Spring的资源注入到Bean对象中去。从而Bean对象也可以获取到Spring的内部资源。<br>BeanNameAware，BeanClassLoaderAware，BeanFactoryAware在初始化Bean时执行<br>剩下的接口是通过后置处理器BeanPostProcessor前初始化完成。<br><img src="/images/spring/%E5%90%84%E7%A7%8DAware%E6%8E%A5%E5%8F%A3.png" alt="source/_posts/各种Aware接口"></p>
+<h4 id="Bean的生命周期总结"><a href="#Bean的生命周期总结" class="headerlink" title="Bean的生命周期总结"></a>Bean的生命周期总结</h4><p>Bean的生命周期分为4个部分。其中初始化方法，销毁Bean对象这2部分又分为多个小部分。<br><span style="color:pink">注：Bean的生命周期中还涉及到BeanPostProcessor（后置处理器）部分，这部分跟AOP有很大的关系.</span><br><img src="/images/spring/Bean%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" alt="Bean生命周期"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/Spring/" rel="tag"># Spring</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/05/10/%E7%B2%BE%E9%80%9ASpring4.x%E4%BC%81%E4%B8%9A%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%AE%9E%E6%88%98-Chapter01/" rel="prev" title="精通Spring4.x企业应用开发实战-Chapter01">
+                  <i class="fa fa-angle-left"></i> 精通Spring4.x企业应用开发实战-Chapter01
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/05/11/%E4%BB%8A%E6%97%A5%E9%98%85%E8%AF%BB_2024-5-11/" rel="next" title="今日阅读_2024-5-11">
+                  今日阅读_2024-5-11 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">星之辰</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">64k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:54</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>-->
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true}});</script></body>
+</html>
