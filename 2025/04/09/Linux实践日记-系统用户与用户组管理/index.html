@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"angryxzc.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Linux系统与用户管理总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux实践日记-系统用户与用户组管理">
+<meta property="og:url" content="http://angryxzc.github.io/2025/04/09/Linux%E5%AE%9E%E8%B7%B5%E6%97%A5%E8%AE%B0-%E7%B3%BB%E7%BB%9F%E7%94%A8%E6%88%B7%E4%B8%8E%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="星之辰的博客">
+<meta property="og:description" content="Linux系统与用户管理总结">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-04-09T02:11:07.000Z">
+<meta property="article:modified_time" content="2025-04-09T04:58:07.446Z">
+<meta property="article:author" content="星之辰">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://angryxzc.github.io/2025/04/09/Linux%E5%AE%9E%E8%B7%B5%E6%97%A5%E8%AE%B0-%E7%B3%BB%E7%BB%9F%E7%94%A8%E6%88%B7%E4%B8%8E%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://angryxzc.github.io/2025/04/09/Linux%E5%AE%9E%E8%B7%B5%E6%97%A5%E8%AE%B0-%E7%B3%BB%E7%BB%9F%E7%94%A8%E6%88%B7%E4%B8%8E%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86/","path":"2025/04/09/Linux实践日记-系统用户与用户组管理/","title":"Linux实践日记-系统用户与用户组管理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux实践日记-系统用户与用户组管理 | 星之辰的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">星之辰的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">What I cannot create, I do not understand-Feynman Diagram</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A4%E8%AF%86-etc-passwd%E5%92%8C-etc-shadow"><span class="nav-number">1.</span> <span class="nav-text">认识&#x2F;etc&#x2F;passwd和&#x2F;etc&#x2F;shadow</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#etc-passwd-%E8%AF%B4%E6%98%8E"><span class="nav-number">1.1.</span> <span class="nav-text">&#x2F;etc&#x2F;passwd 说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#etc-shadow-%E8%AF%B4%E6%98%8E"><span class="nav-number">1.2.</span> <span class="nav-text">&#x2F;etc&#x2F;shadow 说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E5%92%8C%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">用户和用户组管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#groupadd-%E6%96%B0%E5%A2%9E%E7%94%A8%E6%88%B7%E7%BB%84"><span class="nav-number">2.1.</span> <span class="nav-text">groupadd 新增用户组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#groupdel-%E5%88%A0%E9%99%A4%E7%94%A8%E6%88%B7%E7%BB%84"><span class="nav-number">2.2.</span> <span class="nav-text">groupdel 删除用户组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useradd-%E6%96%B0%E5%A2%9E%E7%94%A8%E6%88%B7"><span class="nav-number">2.3.</span> <span class="nav-text">useradd 新增用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#userdel-%E5%88%A0%E9%99%A4%E7%94%A8%E6%88%B7"><span class="nav-number">2.4.</span> <span class="nav-text">userdel 删除用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chfn-%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="nav-number">2.5.</span> <span class="nav-text">chfn 修改用户信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81%E7%AE%A1%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">用户密码管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#passwd-%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81"><span class="nav-number">3.1.</span> <span class="nav-text">passwd 修改用户密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mkpasswd-%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81%E6%96%87%E4%BB%B6"><span class="nav-number">3.2.</span> <span class="nav-text">mkpasswd 创建用户密码文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E8%BA%AB%E4%BB%BD%E5%88%87%E6%8D%A2"><span class="nav-number">4.</span> <span class="nav-text">用户身份切换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#su-%E5%88%87%E6%8D%A2%E7%94%A8%E6%88%B7%E8%BA%AB%E4%BB%BD"><span class="nav-number">4.1.</span> <span class="nav-text">su 切换用户身份</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sudo-%E5%88%87%E6%8D%A2%E7%94%A8%E6%88%B7%E8%BA%AB%E4%BB%BD"><span class="nav-number">4.2.</span> <span class="nav-text">sudo 切换用户身份</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E5%85%81%E8%AE%B8root%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95"><span class="nav-number">4.3.</span> <span class="nav-text">不允许root远程登录</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">星之辰</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://angryxzc.github.io/2025/04/09/Linux%E5%AE%9E%E8%B7%B5%E6%97%A5%E8%AE%B0-%E7%B3%BB%E7%BB%9F%E7%94%A8%E6%88%B7%E4%B8%8E%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="星之辰">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星之辰的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Linux实践日记-系统用户与用户组管理 | 星之辰的博客">
+      <meta itemprop="description" content="Linux系统与用户管理总结">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux实践日记-系统用户与用户组管理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-04-09 10:11:07 / 修改时间：12:58:07" itemprop="dateCreated datePublished" datetime="2025-04-09T10:11:07+08:00">2025-04-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">Linux系统与用户管理总结</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="认识-etc-passwd和-etc-shadow"><a href="#认识-etc-passwd和-etc-shadow" class="headerlink" title="认识&#x2F;etc&#x2F;passwd和&#x2F;etc&#x2F;shadow"></a>认识&#x2F;etc&#x2F;passwd和&#x2F;etc&#x2F;shadow</h2><ul>
+<li><code>/etc/passwd</code>：存储用户的基本信息，包括用户名、密码占位符、用户ID、组ID、用户全名、主目录和默认shell等。</li>
+<li><code>/etc/shadow</code>：存储用户的加密密码和密码过期信息，只有root用户和特定程序可以访问。</li>
+</ul>
+<h3 id="etc-passwd-说明"><a href="#etc-passwd-说明" class="headerlink" title="&#x2F;etc&#x2F;passwd 说明"></a>&#x2F;etc&#x2F;passwd 说明</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">cat</span> /etc/passwd | <span class="built_in">head</span></span> </span><br><span class="line">root:x:0:0:root:/root:/bin/bash </span><br><span class="line">bin:x:1:1:bin:/bin:/sbin/nologin </span><br><span class="line">daemon:x:2:2:daemon:/sbin:/sbin/nologin </span><br><span class="line">adm:x:3:4:adm:/var/adm:/sbin/nologin </span><br><span class="line">lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin </span><br><span class="line">sync:x:5:0:sync:/sbin:/bin/sync </span><br><span class="line">shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown </span><br><span class="line">halt:x:7:0:halt:/sbin:/sbin/halt </span><br><span class="line">mail:x:8:12:mail:/var/spool/mail:/sbin/nologin </span><br><span class="line">operator:x:11:0:operator:/root:/sbin/nologin </span><br></pre></td></tr></table></figure>
+
+<p>&#x2F;etc&#x2F;passwd由：分割成7个字段，每个字段的具体含义如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>用户名</td>
+</tr>
+<tr>
+<td>2</td>
+<td>密码占位符（通常为x，表示密码存储在&#x2F;etc&#x2F;shadow中）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>用户ID（UID）</td>
+</tr>
+<tr>
+<td>4</td>
+<td>组ID（GID）</td>
+</tr>
+<tr>
+<td>5</td>
+<td>用户全名或描述</td>
+</tr>
+<tr>
+<td>6</td>
+<td>用户主目录</td>
+</tr>
+<tr>
+<td>7</td>
+<td>用户默认shell</td>
+</tr>
+</tbody></table>
+<h3 id="etc-shadow-说明"><a href="#etc-shadow-说明" class="headerlink" title="&#x2F;etc&#x2F;shadow 说明"></a>&#x2F;etc&#x2F;shadow 说明</h3><p>&#x2F;etc&#x2F;shadow由：分割成9个字段，每个字段的具体含义如下所示：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">~$ </span><span class="language-bash">sudo <span class="built_in">cat</span> /etc/shadow | <span class="built_in">head</span> -n 3</span></span><br><span class="line">[sudo] password for xzc: </span><br><span class="line">root:*:20135:0:99999:7:::</span><br><span class="line">daemon:*:20135:0:99999:7:::</span><br><span class="line">bin:*:20135:0:99999:7:::</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>用户名</td>
+</tr>
+<tr>
+<td>2</td>
+<td>加密密码（如果没有设置密码，则为*或!）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>上次修改密码的日期（自1970年1月1日起的天数）</td>
+</tr>
+<tr>
+<td>4</td>
+<td>密码最小使用期限（天数）默认是0即不受天数限制</td>
+</tr>
+<tr>
+<td>5</td>
+<td>密码最大使用期限（天数）默认是99999即不受天数限制</td>
+</tr>
+<tr>
+<td>6</td>
+<td>密码过期前警告期限（天数）默认是7天</td>
+</tr>
+<tr>
+<td>7</td>
+<td>密码过期后的宽限期限（天数）默认是0天</td>
+</tr>
+<tr>
+<td>8</td>
+<td>账户过期日期（自1970年1月1日起的天数）默认是0即不受天数限制</td>
+</tr>
+<tr>
+<td>9</td>
+<td>保留字段</td>
+</tr>
+</tbody></table>
+<h2 id="用户和用户组管理"><a href="#用户和用户组管理" class="headerlink" title="用户和用户组管理"></a>用户和用户组管理</h2><h3 id="groupadd-新增用户组"><a href="#groupadd-新增用户组" class="headerlink" title="groupadd 新增用户组"></a><code>groupadd</code> 新增用户组</h3><p>命令groupadd的格式为groupadd [-g GID] groupname，示例命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">groupadd grptest1</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">tail</span> -n1 /etc/group</span> </span><br><span class="line">grptest1:x:1003: </span><br></pre></td></tr></table></figure>
+
+<h3 id="groupdel-删除用户组"><a href="#groupdel-删除用户组" class="headerlink" title="groupdel 删除用户组"></a><code>groupdel</code> 删除用户组</h3><p>命令groupdel的格式为groupdel groupname，示例命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">groupdel grptest1</span></span><br><span class="line">···</span><br><span class="line"></span><br><span class="line">命令groupdel没有特殊选项，但有一种情况不能删除组，如下所示：</span><br><span class="line"></span><br><span class="line">```shell</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">groupdel <span class="built_in">test</span></span></span><br><span class="line">groupdel: group &#x27;test&#x27; is currently in use</span><br></pre></td></tr></table></figure>
+
+<p>这是因为test组下有用户，不能删除。可以使用命令<code>gpasswd -d username groupname</code>将用户从组中删除。</p>
+<h3 id="useradd-新增用户"><a href="#useradd-新增用户" class="headerlink" title="useradd 新增用户"></a><code>useradd</code> 新增用户</h3><p>命令useradd的格式为useradd [-u UID] [-g GID] [-d HOME] [-M] [-s],其中各个选项的具体含义如下所示：</p>
+<ul>
+<li>-u UID：指定用户ID，范围为0-65535，默认是1000。</li>
+<li>-g GID：指定用户组ID，范围为0-65535，默认是1000。</li>
+<li>-d HOME：指定用户主目录，默认是&#x2F;home&#x2F;username。</li>
+<li>-M：不创建用户主目录。</li>
+<li>-s：指定用户登录shell，默认是&#x2F;bin&#x2F;bash。</li>
+</ul>
+<p>如果useradd不加任何选项，直接跟用户名，则会创建一个跟用户名同名的组。当然，很多时候需要我们自己去定义uid、gid或者所属的组。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">useradd -u 1001 -g 1001 -d /home/test -s /bin/bash <span class="built_in">test</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">tail</span> -n1 /etc/passwd</span></span><br><span class="line">test:x:1001:1001::/home/test:/bin/bash</span><br></pre></td></tr></table></figure>
+
+<h3 id="userdel-删除用户"><a href="#userdel-删除用户" class="headerlink" title="userdel 删除用户"></a><code>userdel</code> 删除用户</h3><p>命令userdel的格式为userdel [-r] username，其中-r选项的作用是，当删除用户时，一并删除该用户的家目录。</p>
+<h3 id="chfn-修改用户信息"><a href="#chfn-修改用户信息" class="headerlink" title="chfn 修改用户信息"></a><code>chfn</code> 修改用户信息</h3><p>chfn（change  finger的简写）命令用于更改用户的finger信息，finger命令用于显示用户的基本信息。chfn命令的格式为chfn [-f] [-l] [-h] [-w] username，其中各个选项的具体含义如下所示：</p>
+<ul>
+<li>-f：修改用户全名。</li>
+<li>-l：修改用户的办公室电话。</li>
+<li>-h：修改用户的家庭电话。</li>
+<li>-w：修改用户的工作电话。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">chfn -f <span class="string">&quot;test user&quot;</span> <span class="built_in">test</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">finger <span class="built_in">test</span></span></span><br><span class="line">Login name: test                     In real life: test user</span><br><span class="line">Directory: /home/test               Shell: /bin/bash</span><br><span class="line">Never logged in.</span><br><span class="line">No mail.</span><br><span class="line">No Plan.</span><br></pre></td></tr></table></figure>
+
+<h2 id="用户密码管理"><a href="#用户密码管理" class="headerlink" title="用户密码管理"></a>用户密码管理</h2><h3 id="passwd-修改用户密码"><a href="#passwd-修改用户密码" class="headerlink" title="passwd 修改用户密码"></a><code>passwd</code> 修改用户密码</h3><p>为用户设置密码时，可以使用命令passwd，其格式为passwd [username]。该命令后面若不加用户名字，则是为自己设定密码。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">passwd <span class="built_in">test</span></span></span><br><span class="line">Changing password for user test.</span><br><span class="line">New password:</span><br><span class="line">Retype new password:</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br></pre></td></tr></table></figure>
+
+<h3 id="mkpasswd-创建用户密码文件"><a href="#mkpasswd-创建用户密码文件" class="headerlink" title="mkpasswd 创建用户密码文件"></a><code>mkpasswd</code> 创建用户密码文件</h3><p>mkpasswd命令用于创建用户密码文件，其格式为mkpasswd [-l] [-u] username，其中各个选项的具体含义如下所示：</p>
+<ul>
+<li>-l：创建一个本地用户密码文件。</li>
+<li>-u：创建一个远程用户密码文件。</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">mkpasswd -l <span class="built_in">test</span></span></span><br><span class="line">test:$1$2$3$4$5$6$7$8$9$0:0:0::/home/test:/bin/bash</span><br></pre></td></tr></table></figure>
+
+<h2 id="用户身份切换"><a href="#用户身份切换" class="headerlink" title="用户身份切换"></a>用户身份切换</h2><h3 id="su-切换用户身份"><a href="#su-切换用户身份" class="headerlink" title="su 切换用户身份"></a><code>su</code> 切换用户身份</h3><p>su命令用于切换用户身份，其格式为su [-] [username]，其中-选项的作用是切换到目标用户的环境变量。后面可以跟-，也可以不跟。普通用户的su命令不加username时，就是切换到root用户。当然，root用户同样可以使用su命令切换到普通用户。该命令加上-后，会初始化当前用户的各种环境变量。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">pwd</span></span> </span><br><span class="line">/home/test </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">su</span> </span><br><span class="line">密码：</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">pwd</span></span> </span><br><span class="line">/home/test </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">exit</span></span> </span><br><span class="line">登出</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">su -</span> </span><br><span class="line">密码：</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">pwd</span></span> </span><br><span class="line">/root</span><br></pre></td></tr></table></figure>
+
+<p>如果不加-切换到root账户时，当前目录没有变化；而加上-切换到root账户时，当前目录为root账户的家目录。这跟直接登录root账户是一样的。当由root切换到普通用户时，是不需要输入密码的。</p>
+<h3 id="sudo-切换用户身份"><a href="#sudo-切换用户身份" class="headerlink" title="sudo 切换用户身份"></a><code>sudo</code> 切换用户身份</h3><p>用su可以切换用户身份，而且每个普通用户都能切换到root身份。如果某个用户不小心泄漏了root的密码，那岂不是系统非常不安全？没错，为了改进这个问题，Linux系统工程师设计了sudo这个命令。使用sudo命令执行一个只有root才能执行的命令是可以办到的，但是需要输入密码。这个密码并不是root的密码，而是用户自己的密码。默认情况下，只有root用户能使用sudo命令，普通用户想要使用sudo，是需要root预先设定的。我们可以使用visudo命令编辑相关的配置文件&#x2F;etc&#x2F;sudoers。如果没有visudo这个命令，请使用命令yum install -y sudo安装。</p>
+<p>默认root支持sudo，是因为这个文件中有一行root ALL&#x3D;(ALL) ALL。在该行下面加入test ALL&#x3D;(ALL) ALL，就可以让test用户拥有sudo的特权。从左到右，第一段test这里为一个用户，指定让哪个用户有sudo特权；第二段ALL&#x3D;(ALL)比较难理解，左边的ALL指的是所有的主机，右边的ALL指的是获取哪个用户的身份，第二段几乎都不用配置；第三段设定可以使用sudo的命令有哪些。</p>
+<p>使用visudo命令编辑&#x2F;etc&#x2F;sudoers配置文件（必须要使用root用户:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">visudo</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># Allow root to run any commands anywhere</span></span> </span><br><span class="line">root    ALL=(ALL)       ALL </span><br><span class="line">test    ALL=(ALL)       ALL </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>此时可以验证一下test账户的权限了，方法如下（如下操作是在root账号下进行的）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">su <span class="built_in">test</span></span> </span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">ls</span>  //当前目录是在/root下</span></span><br><span class="line">ls: 无法打开目录.: 权限不够</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">sudo <span class="built_in">ls</span></span> </span><br><span class="line">We trust you have received the usual lecture from the local system Administrator. It usually boils down to these three things:</span><br><span class="line">     #1) Respect the privacy of others.</span><br><span class="line">     #2) Think before you type.</span><br><span class="line">     #3) With great power comes great responsibility. </span><br><span class="line">[sudo] password for test: </span><br><span class="line">123  456  anaconda-ks.cfg  Desktop  Documents  Downloads  initial-setup-ks.cfg  Music  Pictures  Public  Templates  Videos </span><br></pre></td></tr></table></figure>
+
+<p>由于切换到test账户后当前目录还是&#x2F;root，test账户没有任何权限，所以使用命令ls查看时，提示权限不够。然而使用命令sudo ls输入test账户自身的密码后，就有权限了。初次使用sudo命令时，会出现上面的一大段提示，当再次使用sudo命令时则不再提示。如果每增加一个用户就设置一行，这样太麻烦了，所以可以这样设置：把# %wheel ALL&#x3D;(ALL) ALL前面的#去掉，让这一行生效。它的意思是，wheel这个组的所有用户都拥有了sudo的权利。接下来，只要把需要设置sudo权限的所有用户加入到wheel这个组中即可。如下所示：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># Allows people in group wheel to run all commands</span></span> </span><br><span class="line"><span class="meta prompt_">%</span><span class="language-bash">wheel  ALL=(ALL)       ALL</span> </span><br></pre></td></tr></table></figure>
+
+<h3 id="不允许root远程登录"><a href="#不允许root远程登录" class="headerlink" title="不允许root远程登录"></a>不允许root远程登录</h3><p>&#x2F;etc&#x2F;ssh&#x2F;sshd_config为sshd服务的配置文件，默认允许root账户通过ssh远程登录Linux。要想不允许root用户远程登录Linux，具体操作方法为：修改配置文件&#x2F;etc&#x2F;ssh&#x2F;sshd_config，在文件中查找#PermitRootLogin yes并修改为 PermitRootLogin no。保存配置文件后，需要重启sshd服务，如下所示：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">systemctl restart sshd.service</span> </span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/04/07/Linux%E5%AE%9E%E8%B7%B5%E6%97%A5%E8%AE%B0-%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95%E7%AE%A1%E7%90%86/" rel="prev" title="Linux实践日记-Linux安装，远程，文件和目录管理">
+                  <i class="fa fa-angle-left"></i> Linux实践日记-Linux安装，远程，文件和目录管理
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">星之辰</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">84k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:07</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>-->
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true}});</script></body>
+</html>
