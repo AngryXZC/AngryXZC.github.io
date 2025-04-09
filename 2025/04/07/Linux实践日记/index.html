@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"angryxzc.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="记录Linux安装和使用过程中的一些问题。以及Linux文件和目录管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux实践日记">
+<meta property="og:url" content="http://angryxzc.github.io/2025/04/07/Linux%E5%AE%9E%E8%B7%B5%E6%97%A5%E8%AE%B0/index.html">
+<meta property="og:site_name" content="星之辰的博客">
+<meta property="og:description" content="记录Linux安装和使用过程中的一些问题。以及Linux文件和目录管理">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-04-07T11:32:25.000Z">
+<meta property="article:modified_time" content="2025-04-08T03:23:54.236Z">
+<meta property="article:author" content="星之辰">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://angryxzc.github.io/2025/04/07/Linux%E5%AE%9E%E8%B7%B5%E6%97%A5%E8%AE%B0/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://angryxzc.github.io/2025/04/07/Linux%E5%AE%9E%E8%B7%B5%E6%97%A5%E8%AE%B0/","path":"2025/04/07/Linux实践日记/","title":"Linux实践日记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux实践日记 | 星之辰的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">星之辰的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">What I cannot create, I do not understand-Feynman Diagram</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-%E5%AE%89%E8%A3%85%E7%AF%87"><span class="nav-number">1.</span> <span class="nav-text">Linux 安装篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#VMware%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%AD%E6%B6%89%E5%8F%8A%E7%9A%843%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">VMware虚拟机中涉及的3种常见网络模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CentOS-%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E7%9A%84%E8%A7%84%E5%88%99"><span class="nav-number">1.2.</span> <span class="nav-text">CentOS 磁盘分区的规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">1.3.</span> <span class="nav-text">命令行快捷键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux%E7%B3%BB%E7%BB%9F%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">1.4.</span> <span class="nav-text">Linux系统目录结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-%E5%85%B3%E6%9C%BA%E4%B8%8E%E9%87%8D%E5%90%AF%E5%91%BD%E4%BB%A4"><span class="nav-number">1.5.</span> <span class="nav-text">Linux 关机与重启命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%98%E8%AE%B0root%E5%AF%86%E7%A0%81%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">1.6.</span> <span class="nav-text">忘记root密码的解决方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%91%E6%8F%B4%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.7.</span> <span class="nav-text">救援模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%85%8D%E7%BD%AE%E7%BD%91%E7%BB%9C%E5%90%8E%E4%BD%BF%E7%94%A8ssh%E5%91%BD%E4%BB%A4%E8%BF%9E%E6%8E%A5Linux"><span class="nav-number">2.</span> <span class="nav-text">使用虚拟机配置网络后使用ssh命令连接Linux</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9C%A8VMware%E4%B8%AD%E9%85%8D%E7%BD%AE%E7%BD%91%E7%BB%9C"><span class="nav-number">2.1.</span> <span class="nav-text">1. 在VMware中配置网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%9C%A8Linux%E4%B8%AD%E9%85%8D%E7%BD%AESSH%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.2.</span> <span class="nav-text">2. 在Linux中配置SSH服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95%E7%AE%A1%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">Linux 文件和目录管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84%E5%92%8C%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84"><span class="nav-number">3.1.</span> <span class="nav-text">绝对路径和相对路径</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cd%E5%91%BD%E4%BB%A4"><span class="nav-number">3.1.1.</span> <span class="nav-text">cd命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mkdir%E5%91%BD%E4%BB%A4"><span class="nav-number">3.1.2.</span> <span class="nav-text">mkdir命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ls%E5%91%BD%E4%BB%A4"><span class="nav-number">3.1.3.</span> <span class="nav-text">ls命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rmdir%E5%91%BD%E4%BB%A4"><span class="nav-number">3.1.4.</span> <span class="nav-text">rmdir命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rm%E5%91%BD%E4%BB%A4"><span class="nav-number">3.1.5.</span> <span class="nav-text">rm命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">3.2.</span> <span class="nav-text">环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#which%E5%91%BD%E4%BB%A4"><span class="nav-number">3.2.1.</span> <span class="nav-text">which命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PATH%E5%8F%98%E9%87%8F"><span class="nav-number">3.2.2.</span> <span class="nav-text">PATH变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mv%E5%91%BD%E4%BB%A4"><span class="nav-number">3.2.3.</span> <span class="nav-text">mv命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cp%E5%91%BD%E4%BB%A4"><span class="nav-number">3.2.4.</span> <span class="nav-text">cp命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%A0%E4%B8%AA%E6%96%87%E6%A1%A3%E7%9B%B8%E5%85%B3%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="nav-number">3.3.</span> <span class="nav-text">几个文档相关的命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cat%E5%91%BD%E4%BB%A4"><span class="nav-number">3.3.1.</span> <span class="nav-text">cat命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tac%E5%91%BD%E4%BB%A4"><span class="nav-number">3.3.2.</span> <span class="nav-text">tac命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#more%E5%91%BD%E4%BB%A4"><span class="nav-number">3.3.3.</span> <span class="nav-text">more命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#less%E5%91%BD%E4%BB%A4"><span class="nav-number">3.3.4.</span> <span class="nav-text">less命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#head%E5%91%BD%E4%BB%A4"><span class="nav-number">3.3.5.</span> <span class="nav-text">head命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tail%E5%91%BD%E4%BB%A4"><span class="nav-number">3.3.6.</span> <span class="nav-text">tail命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E6%89%80%E6%9C%89%E8%80%85%E5%92%8C%E6%89%80%E5%B1%9E%E7%BB%84"><span class="nav-number">3.4.</span> <span class="nav-text">文件的所有者和所属组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7"><span class="nav-number">3.5.</span> <span class="nav-text">Linux 文件属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-%E6%9B%B4%E6%94%B9%E6%96%87%E4%BB%B6%E7%9A%84%E6%9D%83%E9%99%90"><span class="nav-number">3.6.</span> <span class="nav-text">Linux 更改文件的权限</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#chgrp%E5%91%BD%E4%BB%A4"><span class="nav-number">3.6.1.</span> <span class="nav-text">chgrp命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chown%E5%91%BD%E4%BB%A4"><span class="nav-number">3.6.2.</span> <span class="nav-text">chown命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chmod%E5%91%BD%E4%BB%A4"><span class="nav-number">3.6.3.</span> <span class="nav-text">chmod命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#umask%E5%91%BD%E4%BB%A4"><span class="nav-number">3.6.4.</span> <span class="nav-text">umask命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E7%89%B9%E6%AE%8A%E5%B1%9E%E6%80%A7"><span class="nav-number">3.6.5.</span> <span class="nav-text">修改文件特殊属性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#chattr%E5%91%BD%E4%BB%A4"><span class="nav-number">3.6.5.1.</span> <span class="nav-text">chattr命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#lsattr%E5%91%BD%E4%BB%A4"><span class="nav-number">3.6.5.2.</span> <span class="nav-text">lsattr命令</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#set-uid-set-gid%E5%92%8Csticky-bit"><span class="nav-number">3.6.5.3.</span> <span class="nav-text">set uid,set gid和sticky bit</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8Linux%E4%B8%8B%E6%90%9C%E7%B4%A2%E6%96%87%E4%BB%B6"><span class="nav-number">3.7.</span> <span class="nav-text">在Linux下搜索文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8which%E5%91%BD%E4%BB%A4%E6%9F%A5%E6%89%BE%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E7%9A%84%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84"><span class="nav-number">3.7.1.</span> <span class="nav-text">用which命令查找可执行文件的绝对路径</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8whereis%E5%91%BD%E4%BB%A4%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6"><span class="nav-number">3.7.2.</span> <span class="nav-text">用whereis命令查找文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8locate%E5%91%BD%E4%BB%A4%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6"><span class="nav-number">3.7.3.</span> <span class="nav-text">用locate命令查找文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8find%E5%91%BD%E4%BB%A4%E6%9F%A5%E6%89%BE%E6%96%87%E4%BB%B6"><span class="nav-number">3.7.4.</span> <span class="nav-text">用find命令查找文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%AE%80%E4%BB%8B"><span class="nav-number">3.8.</span> <span class="nav-text">Linux 文件系统简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux-%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.9.</span> <span class="nav-text">Linux 文件类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux-%E6%96%87%E4%BB%B6%E5%90%8E%E7%BC%80%E5%90%8D"><span class="nav-number">3.9.1.</span> <span class="nav-text">Linux 文件后缀名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux%E7%9A%84%E9%93%BE%E6%8E%A5%E6%96%87%E4%BB%B6"><span class="nav-number">3.9.2.</span> <span class="nav-text">Linux的链接文件</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">星之辰</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://angryxzc.github.io/2025/04/07/Linux%E5%AE%9E%E8%B7%B5%E6%97%A5%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="星之辰">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星之辰的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Linux实践日记 | 星之辰的博客">
+      <meta itemprop="description" content="记录Linux安装和使用过程中的一些问题。以及Linux文件和目录管理">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux实践日记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-04-07 19:32:25" itemprop="dateCreated datePublished" datetime="2025-04-07T19:32:25+08:00">2025-04-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-04-08 11:23:54" itemprop="dateModified" datetime="2025-04-08T11:23:54+08:00">2025-04-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>33 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">记录Linux安装和使用过程中的一些问题。以及Linux文件和目录管理</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Linux-安装篇"><a href="#Linux-安装篇" class="headerlink" title="Linux 安装篇"></a>Linux 安装篇</h2><h3 id="VMware虚拟机中涉及的3种常见网络模式"><a href="#VMware虚拟机中涉及的3种常见网络模式" class="headerlink" title="VMware虚拟机中涉及的3种常见网络模式"></a>VMware虚拟机中涉及的3种常见网络模式</h3><ul>
+<li><strong>桥接模式</strong>：虚拟机和宿主机在同一局域网中，虚拟机可以直接访问宿主机和其他网络设备。这种模式下，虚拟机和物理机连的是同一个网络，虚拟机和物理机是并列关系，地位是相当的。比如，你家如果有用路由器，那么你的电脑和你的手机同时连接这个路由器提供的Wi-Fi，那么它们的关系就是这种模式。</li>
+<li><strong>NAT模式</strong>：虚拟机和宿主机在同一局域网中，虚拟机可以访问宿主机，但不能直接访问其他网络设备。这种模式下，物理机会充当一个“路由器”的角色，虚拟机要想上网，必须经过物理机，那物理机如果不能上网，虚拟机也就不能上网了。之所以说这种模式兼容性最好，是因为当物理机的网络环境变化时，虚拟机的网络并不会有影响。比如，上班时你把物理机连接在公司的网络环境中，下班后又把物理机连接在你家的路由器上。你公司的网段很有可能和你家的网段是不同的。桥接模式下，虚拟机和物理机一样，都要自动获取IP才可以上网，而我们做实验的时候，是需要把虚拟机设置为静态IP的，这样就导致虚拟机网络不稳定。而设置为NAT模式，虚拟机的网络并不需要依赖你公司的网络环境或者你家的网络环境。</li>
+<li><strong>仅主机模式</strong>：虚拟机和宿主机在同一局域网中，虚拟机不能访问宿主机和其他网络设备。。这个就很容易理解了，这种模式下，相当于拿一根网线直连了物理机和虚拟机。</li>
+</ul>
+<h3 id="CentOS-磁盘分区的规则"><a href="#CentOS-磁盘分区的规则" class="headerlink" title="CentOS 磁盘分区的规则"></a>CentOS 磁盘分区的规则</h3><ul>
+<li>&#x2F;boot分区分200MB；</li>
+<li>swap分区分内存的2倍，如果内存大于等于4GB，swap分8GB即可，因为分多了也是浪费磁盘空间）；</li>
+<li>&#x2F;分区分20GB；</li>
+<li>剩余的空间给&#x2F;data分区。在本书中，并没有单独分&#x2F;data分区。</li>
+</ul>
+<h3 id="命令行快捷键"><a href="#命令行快捷键" class="headerlink" title="命令行快捷键"></a>命令行快捷键</h3><ul>
+<li>Ctrl+C：结束（终止）当前命令。如果你输入了一大串字符，但不想运行，可以按Ctrl+C组合键，此时光标将跳入下一行，而在刚刚的光标处会留下一个^C的标记。</li>
+<li>Tab：实现自动补全功能。这个键比较重要，使用频率也很高。当你输入命令、文件或目录的前几个字符时，它会自动帮你补全。比如，编辑网卡的配置文件时文件路径很长，这时结合Tab键就会很轻松。</li>
+<li>Ctrl+D：退出当前终端。同样，你也可以输入命令exit实现该功能。</li>
+<li>Ctrl+Z：暂停当前进程。这和Ctrl+C是有去区别的，暂停后，使用fg命令恢复该进程。</li>
+<li>Ctrl+L：清屏，使光标移动到屏幕的第一行。当命令和显示的结果占满整个屏幕时，我们每运行一个命令，都会在最后一行显示，这样看起来不太方便，此时就可以使用这个快捷键，让光标移动到屏幕第一行，也就是所谓的清屏。</li>
+<li>Ctrl+A：可以让光标移动到命令的最前面。有时候一条命令很长，快敲完时发现前面某个字母不对，此时可以直接用这个快捷键把光标定位到行首，然后再用左右方向键微调光标的位置。</li>
+<li>Ctrl+E：可以让光标移动到最后面，作用同上。</li>
+</ul>
+<h3 id="Linux系统目录结构"><a href="#Linux系统目录结构" class="headerlink" title="Linux系统目录结构"></a>Linux系统目录结构</h3><ul>
+<li>&#x2F;bin：bin是Binary的缩写，该目录下存放的是最常用的命令。</li>
+<li>&#x2F;boot：该目录下存放的是启动Linux时使用的一些核心文件，包括一些连接文件以及镜像文件。</li>
+<li>&#x2F;dev：dev是Device（设备）的缩写。该目录下存放的是Linux的外部设备。在Linux中，访问设备的方式和访问文件的方式是相同的。</li>
+<li>&#x2F;etc：该目录下存放的是所有系统管理所需要的配置文件和子目录。</li>
+<li>&#x2F;home：这是用户的家目录。在Linux中，每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的。</li>
+<li>&#x2F;lib和&#x2F;lib64：这两个目录下存放的是系统最基本的动态连接共享库，其作用类似于Windows里的DLL文件，几乎所有的应用程序都需要用到这些共享库。其中&#x2F;lib64为64位的软件包的库文件所在目录。</li>
+<li>&#x2F;media：系统会自动识别一些设备（如U盘、光驱等），当识别后，Linux会把识别的设备挂载到该目录下。</li>
+<li>&#x2F;mnt：系统提供该目录是为了让用户临时挂载别的文件系统。我们可以将光驱挂载到&#x2F;mnt&#x2F;上，然后进入该目录查看光驱里的内容。</li>
+<li>&#x2F;opt：这是给主机额外安装软件所设置的目录，该目录默认为空。比如，你要安装一个Oracle数据库，可以放到该目录下。</li>
+<li>&#x2F;proc：该目录是一个虚拟目录，是系统内存的映射，可以直接访问它来获取系统信息。该目录的内容在内存里，我们可以直接修改里面的某些文件。比如可以通过下面的命令来屏蔽主机的ping命令，使其他人无法ping你的机器。在日常工作中，你会经常用到类似的用法：<br><code># echo 1 &gt; /proc/sys/net/ipv4/icmp_echo_ignore_all </code></li>
+<li>&#x2F;root：该目录是系统管理员的用户家目录。</li>
+<li>&#x2F;run：这个目录其实和&#x2F;var&#x2F;run是同一个目录，这里面存放的是一些服务的pid。一个服务启动完后，是有一个pid文件的。</li>
+<li>&#x2F;sbin：s就是Super User的意思，该目录存放的是系统管理员使用的系统管理程序。</li>
+<li>&#x2F;srv：该目录存放的是一些服务启动之后需要提取的数据。</li>
+<li>&#x2F;sys：该目录存放的是与硬件驱动程序相关的信息。</li>
+<li>&#x2F;tmp：该目录用来存放一些临时文件。</li>
+<li>&#x2F;usr：这是一个非常重要的目录，类似于Windows下的Program  Files目录，用户的很多应用程序和文件都存放在该目录下。</li>
+<li>&#x2F;usr&#x2F;bin：该目录存放的是系统用户使用的应用程序。</li>
+<li>&#x2F;usr&#x2F;sbin：该目录存放的是超级用户使用的比较高级的管理程序和系统守护程序。</li>
+<li>&#x2F;usr&#x2F;src：该目录是内核源代码默认的放置目录。</li>
+<li>&#x2F;var：该目录存放的是不断扩充且经常修改的目录，包括各种日志文件或者pid文件，其中刚刚提到的&#x2F;var&#x2F;run就是在这个目录下面。</li>
+</ul>
+<p>在Linux系统中，有几个重要的目录需要注意:</p>
+<ul>
+<li>&#x2F;etc目录下是系统的配置文件，如果更改了该目录下的某个文件，可能会导致系统无法正常启动。</li>
+<li>&#x2F;bin、&#x2F;sbin、&#x2F;usr&#x2F;bin和&#x2F;usr&#x2F;sbin目录是系统预设的执行文件的放置目录，其中&#x2F;bin和&#x2F;usr&#x2F;bin目录下是供系统用户使用的指令（除root外的通用账户），而&#x2F;sbin和&#x2F;usr&#x2F;sbin目录下则是供root使用的指令。比如，ls指令就存放在&#x2F;bin&#x2F;目录下。</li>
+<li>&#x2F;var也是一个非常重要的目录，系统上运行各个程序时所产生的日志都被记录在该目录下（即&#x2F;var&#x2F;log目录中）。另外mail指令的预设也放置在这里。</li>
+</ul>
+<h3 id="Linux-关机与重启命令"><a href="#Linux-关机与重启命令" class="headerlink" title="Linux 关机与重启命令"></a>Linux 关机与重启命令</h3><ul>
+<li>关机命令：<code>shutdown -h now</code></li>
+<li>重启命令：<code>shutdown -r now</code></li>
+<li>取消关机命令：<code>shutdown -c</code></li>
+<li>关机命令：<code>poweroff</code></li>
+<li>重启命令：<code>reboot</code></li>
+<li>关机命令：<code>halt</code></li>
+<li>关机命令：<code>init 0</code></li>
+<li>重启命令：<code>init 6</code></li>
+<li>关机命令：<code>telinit 0</code></li>
+<li>重启命令：<code>telinit 6</code></li>
+<li>关机命令：<code>halt -p</code></li>
+<li>重启命令：<code>halt -r</code></li>
+<li>关机命令：<code>shutdown -h</code></li>
+<li>重启命令：<code>shutdown -r</code></li>
+<li>关机命令：<code>shutdown -h now</code></li>
+<li>重启命令：<code>shutdown -r now</code></li>
+<li>关机命令：<code>shutdown -h +5</code></li>
+</ul>
+<h3 id="忘记root密码的解决方法"><a href="#忘记root密码的解决方法" class="headerlink" title="忘记root密码的解决方法"></a>忘记root密码的解决方法</h3><ol>
+<li>重启系统，按下<code>e</code>键进入编辑模式。</li>
+<li>找到以<code>kernel</code>开头的行，按下<code>e</code>键进入编辑模式。</li>
+<li>在行尾添加<code>init=/bin/bash</code>，按下<code>Enter</code>键。</li>
+<li>按下<code>b</code>键启动系统。</li>
+<li>系统启动后，输入<code>mount -o remount,rw /</code>命令挂载根文件系统为可读写模式。</li>
+<li>输入<code>passwd</code>命令修改root密码。</li>
+<li>输入<code>sync</code>命令同步文件系统。</li>
+<li>输入<code>reboot</code>命令重启系统。</li>
+<li>使用新密码登录系统。</li>
+<li>如果系统无法启动，可以使用<code>init=/bin/sh</code>替代<code>init=/bin/bash</code>，然后执行第5步到第9步。</li>
+</ol>
+<h3 id="救援模式"><a href="#救援模式" class="headerlink" title="救援模式"></a>救援模式</h3><p>救援模式即rescue模式，这个模式主要应用于系统无法进入的情况，比如grub损坏或者某一个配置文件修改出错。</p>
+<p>在这种情况下，我们可以使用救援模式来修复系统。救援模式的启动方式有两种，一种是通过光盘启动，另一种是通过网络启动。</p>
+<p>用的时候再说吧。</p>
+<h2 id="使用虚拟机配置网络后使用ssh命令连接Linux"><a href="#使用虚拟机配置网络后使用ssh命令连接Linux" class="headerlink" title="使用虚拟机配置网络后使用ssh命令连接Linux"></a>使用虚拟机配置网络后使用ssh命令连接Linux</h2><h3 id="1-在VMware中配置网络"><a href="#1-在VMware中配置网络" class="headerlink" title="1. 在VMware中配置网络"></a>1. 在VMware中配置网络</h3><ul>
+<li>选择VMware虚拟机，点击“编辑”菜单，选择“虚拟机设置”。</li>
+<li>在“网络适配器”选项卡中，选择“桥接模式”或“NAT模式”，点击“确定”按钮。</li>
+<li>启动虚拟机，登录Linux系统。</li>
+<li>执行<code>ifconfig</code>命令查看虚拟机的IP地址。</li>
+<li>在宿主机上打开终端，执行<code>ssh root@虚拟机IP地址</code>命令连接虚拟机。</li>
+<li>输入虚拟机的root密码，连接成功后即可在宿主机上操作虚拟机。</li>
+</ul>
+<h3 id="2-在Linux中配置SSH服务"><a href="#2-在Linux中配置SSH服务" class="headerlink" title="2. 在Linux中配置SSH服务"></a>2. 在Linux中配置SSH服务</h3><ul>
+<li>执行<code>yum install -y openssh-server</code>命令安装SSH服务。</li>
+<li>执行<code>systemctl start sshd</code>命令启动SSH服务。</li>
+<li>执行<code>systemctl enable sshd</code>命令设置SSH服务开机自启。</li>
+<li>执行<code>systemctl status sshd</code>命令查看SSH服务状态。</li>
+<li>执行<code>firewall-cmd --permanent --add-port=22/tcp</code>命令添加SSH服务端口到防火墙。</li>
+<li>执行<code>firewall-cmd --reload</code>命令重新加载防火墙配置。</li>
+<li>执行<code>ssh root@虚拟机IP地址</code>命令连接虚拟机。</li>
+<li>输入虚拟机的root密码，连接成功后即可在宿主机上操作虚拟机。</li>
+</ul>
+<h2 id="Linux-文件和目录管理"><a href="#Linux-文件和目录管理" class="headerlink" title="Linux 文件和目录管理"></a>Linux 文件和目录管理</h2><h3 id="绝对路径和相对路径"><a href="#绝对路径和相对路径" class="headerlink" title="绝对路径和相对路径"></a>绝对路径和相对路径</h3><p>绝对路径是从根目录开始的完整路径，比如<code>/home/user/file.txt</code>。相对路径是相对于当前工作目录的路径，比如<code>../file.txt</code>表示上一级目录下的file.txt文件。<br>相对路径和绝对路径的区别在于，绝对路径是从根目录开始的，而相对路径是相对于当前工作目录的。</p>
+<h4 id="cd命令"><a href="#cd命令" class="headerlink" title="cd命令"></a><code>cd</code>命令</h4><p><code>cd</code>命令用于切换当前工作目录。常用的选项有：</p>
+<ul>
+<li><code>cd ~</code>：切换到当前用户的主目录。</li>
+<li><code>cd -</code>：切换到上一个工作目录。</li>
+<li><code>cd ..</code>：切换到上一级目录。</li>
+<li><code>cd .</code>：切换到当前目录。</li>
+</ul>
+<h4 id="mkdir命令"><a href="#mkdir命令" class="headerlink" title="mkdir命令"></a><code>mkdir</code>命令</h4><p><code>mkdir</code>命令用于创建目录。常用的选项有：</p>
+<ul>
+<li><code>-p</code>：创建多级目录。</li>
+<li><code>-v</code>：显示创建目录的详细信息。</li>
+<li><code>-m</code>：设置目录的权限。</li>
+</ul>
+<h4 id="ls命令"><a href="#ls命令" class="headerlink" title="ls命令"></a><code>ls</code>命令</h4><p><code>ls</code>命令用于列出目录中的文件和子目录。常用的选项有：</p>
+<ul>
+<li><code>-a</code>：显示所有文件，包括隐藏文件。</li>
+<li><code>-l</code>：以长格式显示文件和目录的信息。</li>
+<li><code>-h</code>：以人类可读的格式显示文件大小。</li>
+<li><code>-R</code>：递归显示子目录中的文件。</li>
+<li><code>-d</code>：显示目录本身的信息，而不是目录中的文件。</li>
+</ul>
+<h4 id="rmdir命令"><a href="#rmdir命令" class="headerlink" title="rmdir命令"></a><code>rmdir</code>命令</h4><p><code>rmdir</code>命令用于删除空目录。常用的选项有：</p>
+<ul>
+<li><code>-p</code>：删除多级空目录。</li>
+<li><code>-v</code>：显示删除目录的详细信息。</li>
+<li><code>-f</code>：强制删除目录。</li>
+</ul>
+<h4 id="rm命令"><a href="#rm命令" class="headerlink" title="rm命令"></a><code>rm</code>命令</h4><p><code>rm</code>命令用于删除文件和目录。常用的选项有：</p>
+<ul>
+<li><code>-r</code>：递归删除目录及其内容。</li>
+<li><code>-f</code>：强制删除文件和目录。</li>
+<li><code>-i</code>：删除前提示确认。</li>
+<li><code>-v</code>：显示删除文件和目录的详细信息。</li>
+</ul>
+<h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><p>环境变量是系统中预定义的一些变量，用于存储系统和用户的配置信息。</p>
+<h4 id="which命令"><a href="#which命令" class="headerlink" title="which命令"></a><code>which</code>命令</h4><p><code>which</code>命令用于查找可执行文件的绝对路径。常用的选项有：</p>
+<ul>
+<li><code>-a</code>：显示所有匹配的路径。</li>
+<li><code>-s</code>：静默模式，不显示任何输出。</li>
+<li><code>-p</code>：显示可执行文件的路径。</li>
+</ul>
+<h4 id="PATH变量"><a href="#PATH变量" class="headerlink" title="PATH变量"></a><code>PATH</code>变量</h4><p><code>PATH</code>变量是一个环境变量，用于存储可执行文件的搜索路径。当我们在命令行中输入一个命令时，系统会在<code>PATH</code>变量中定义的路径中查找该命令的可执行文件。<br>我们可以使用<code>echo $PATH</code>命令查看当前的<code>PATH</code>变量的值。<br>我们可以使用<code>export PATH=$PATH:/new/path</code>命令添加新的路径到<code>PATH</code>变量中。<br>我们可以使用<code>unset PATH</code>命令删除<code>PATH</code>变量。<br>我们可以使用<code>export PATH=/new/path</code>命令设置新的<code>PATH</code>变量的值。<br>我们可以使用<code>export PATH=/usr/local/bin:/usr/bin:/bin</code>命令设置新的<code>PATH</code>变量的值。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$PATH</span></span><br><span class="line">/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin</span><br></pre></td></tr></table></figure>
+
+<h4 id="mv命令"><a href="#mv命令" class="headerlink" title="mv命令"></a><code>mv</code>命令</h4><p><code>mv</code>命令格式:<code>mv [ 选项 ] [源文件或目录] [目标文件或目录]</code></p>
+<p><code>mv</code>命令有如下几种情况：</p>
+<ul>
+<li>目标文件是目录，但该目录不存在。</li>
+<li>目标文件是目录，且该目录存在。</li>
+<li>目标文件是文件，且该文件不存在。</li>
+<li>目标文件是文件，但该文件存在</li>
+</ul>
+<p>目标文件是目录时，其存在与否，执行后的结果是不一样的。如果该目录存在，则会把源文件或目录移动到该目录中。如果该目录不存在，则会把源目录重命名为给定的目标文件名。当目标文件是文件时，其存在与否，执行后的结果也是不一样的。如果该文件存在，则会询问是否覆盖。如果该文件不存在，则会把源文件重命名为给定的目标文件名。</p>
+<p><code>mv</code>命令用于移动文件和目录。常用的选项有：</p>
+<ul>
+<li><code>-i</code>：移动前提示确认。</li>
+<li><code>-u</code>：只在源文件比目标文件新时才移动。</li>
+<li><code>-v</code>：显示移动文件和目录的详细信息。</li>
+<li><code>-f</code>：强制移动文件和目录。</li>
+<li><code>-n</code>：不覆盖目标文件。</li>
+</ul>
+<h4 id="cp命令"><a href="#cp命令" class="headerlink" title="cp命令"></a><code>cp</code>命令</h4><p><code>cp</code>命令用于复制文件和目录。常用的选项有：</p>
+<ul>
+<li><code>-i</code>：复制前提示确认。</li>
+<li><code>-u</code>：只在源文件比目标文件新时才复制。</li>
+<li><code>-v</code>：显示复制文件和目录的详细信息。</li>
+<li><code>-f</code>：强制复制文件和目录。</li>
+<li><code>-n</code>：不覆盖目标文件。</li>
+<li><code>-r</code>：递归复制目录及其内容。</li>
+<li><code>-a</code>：归档模式，保留文件的属性和权限。</li>
+</ul>
+<h3 id="几个文档相关的命令"><a href="#几个文档相关的命令" class="headerlink" title="几个文档相关的命令"></a>几个文档相关的命令</h3><h4 id="cat命令"><a href="#cat命令" class="headerlink" title="cat命令"></a><code>cat</code>命令</h4><p><code>cat</code>命令用于查看文件的内容。常用的选项有：</p>
+<ul>
+<li><code>-n</code>：显示行号。</li>
+<li><code>-b</code>：显示非空行的行号。</li>
+<li><code>-s</code>：压缩连续的空行。</li>
+<li><code>-E</code>：显示行尾的$符号。</li>
+<li><code>-A</code>：显示所有字符，包括不可见字符。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># echo  &#x27;111111111&#x27; &gt; dirb/filee</span></span><br><span class="line"><span class="comment"># echo  &#x27;222222222&#x27; &gt;&gt; dirb/filee </span></span><br><span class="line"><span class="comment"># cat dirb/filee </span></span><br><span class="line">111111111 222222222 </span><br><span class="line"><span class="comment"># cat -n dirb/filee      </span></span><br><span class="line">1  111111111      </span><br><span class="line">2  222222222 </span><br></pre></td></tr></table></figure>
+
+<p>上例中出现了符号<code>&gt;&gt;</code>，它跟前面介绍的符号<code>&gt;</code>类似，其作用也是重定向，即把前面的内容输入到后面的文件中，但符号<code>&gt;&gt;</code>是“追加”的意思。当使用符号<code>&gt;</code>时，如果文件中有内容，则会删除文件中原有的内容，而使用符号<code>&gt;&gt;</code>则不会删除原有的内容</p>
+<h4 id="tac命令"><a href="#tac命令" class="headerlink" title="tac命令"></a><code>tac</code>命令</h4><p><code>tac</code>命令是<code>cat</code>命令的反向操作，它用于查看文件的内容，但显示的顺序是从最后一行到第一行。</p>
+<h4 id="more命令"><a href="#more命令" class="headerlink" title="more命令"></a><code>more</code>命令</h4><p>当文件内容太多时，<code>cat</code>命令会把所有内容都显示出来，这样就不方便查看了。此时可以使用<code>more</code>命令来分页显示文件的内容。</p>
+<p><code>more</code>命令用于分页显示文件的内容。当看完一页后，可以按空格键显示下一页，按回车键显示下一行，<code>Ctrl+B</code>可以返回上一页，<code>Ctrl+F</code>可以前进一页，按<code>q</code>键退出。<br><code>more</code>命令的常用选项有：</p>
+<ul>
+<li><code>-c</code>：清屏显示。</li>
+<li><code>-d</code>：显示提示信息。</li>
+<li><code>-f</code>：强制显示所有内容。</li>
+<li><code>-l</code>：清除屏幕上的所有内容。</li>
+</ul>
+<h4 id="less命令"><a href="#less命令" class="headerlink" title="less命令"></a><code>less</code>命令</h4><p><code>less</code>命令是<code>more</code>命令的增强版，它可以向前和向后翻页。使用方法与<code>more</code>命令类似，按空格键显示下一页，按<code>j</code>键向下滚动一行，按<code>k</code>键向上滚动一行.在使用<code>more</code>和<code>less</code>查看某个文件时，你可以按一下<code>/</code>键，并输入一个字符串（如root），然后回车，这样就可以查找这个字符串了。如果是查找多个该字符串，可以按<code>n</code>键显示下一个。另外，也可以用<code>?</code>键替代<code>/</code>键来搜索字符串，唯一不同的是，<code>/</code>是在当前行向下搜索，而<code>?</code>是在当前行向上搜索。</p>
+<h4 id="head命令"><a href="#head命令" class="headerlink" title="head命令"></a><code>head</code>命令</h4><p>命令head用于显示文件的前10行，后面直接跟文件名，或者使用选项-n来指定显示的行数。<br>选项-n后有无空格均可。另外，也可以省略字母n，-后面直接跟数字，如<code>-10</code>.</p>
+<p><code>head</code>命令用于查看文件的前几行。常用的选项有：</p>
+<ul>
+<li><code>-n</code>：指定显示的行数。</li>
+</ul>
+<h4 id="tail命令"><a href="#tail命令" class="headerlink" title="tail命令"></a><code>tail</code>命令</h4><p>和命令head类似，命令tail用于显示文件的最后10行.<br><code>tail</code>命令用于查看文件的后几行。常用的选项有：</p>
+<ul>
+<li><code>-n</code>：指定显示的行数.</li>
+</ul>
+<h3 id="文件的所有者和所属组"><a href="#文件的所有者和所属组" class="headerlink" title="文件的所有者和所属组"></a>文件的所有者和所属组</h3><p>一个Linux目录或者文件，都会有一个所有者和所属组。所有者是指文件的拥有者，而所属组指的是这个文件属于哪一个用户组。所有者和所属组的权限是可以单独设置的，所有者和所属组的权限可以使用<code>ls -l</code>命令查看。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ls -l /etc/passwd</span></span><br><span class="line">-rw-r--r-- 1 root root  0 Apr  7 19:32 /etc/passwd</span><br></pre></td></tr></table></figure>
+
+<p>上面命令的输出结果中，第一列是文件的权限，第二列是文件的硬链接数，第三列是文件的所有者，第四列是文件的所属组，第五列是文件的大小，第六列是文件的最后修改时间，第七列是文件的名称。</p>
+<h3 id="Linux-文件属性"><a href="#Linux-文件属性" class="headerlink" title="Linux 文件属性"></a>Linux 文件属性</h3><p>在上例中，用ls –l命令查看当前目录下的文件时，共显示了9列内容（用空格划分列）：</p>
+<ul>
+<li>第1列：包含该文件的类型、所有者、所属组以及其他用户对该文件的权限。第1列共11位（这里列出的是10位，没有最后一位，你可以通过ls -l &#x2F;看一下，会看到最后一位是一个.），其中第1位用来描述该文件的类型。上例中我们看到的文件类型有d和-，其实除了这两种外，还有l、b、c、s等，具体描述如下所示。<ul>
+<li><code>d</code>：表示该文件是一个目录。</li>
+<li><code>-</code>：表示该文件是一个普通文件。</li>
+<li><code>l</code>：表示该文件是一个链接文件。</li>
+<li><code>b</code>：表示该文件是一个块设备文件。比如<code>/dev/sda1</code>。</li>
+<li><code>c</code>：表示该文件是一个字符设备文件。比如<code>/dev/tty1</code>。</li>
+<li><code>s</code>：表示该文件是一个套接字文件。</li>
+<li>文件类型后面的9位，每3位为一组，分别表示所有者、所属组和其他用户对该文件的权限。每组的第1位表示读权限，第2位表示写权限，第3位表示执行权限。</li>
+</ul>
+</li>
+<li>第2列：表示该文件占用的节点（inode），如果是目录，那这个数值与该目录下是子目录数量有关。</li>
+<li>第3列：表示该文件的所有者。</li>
+<li>第4列：表示该文件的所属组。</li>
+<li>第5列：表示该文件的大小。</li>
+<li>第6列、第7列、第8列：表示该文件的最后修改时间。</li>
+<li>第9列：表示该文件的名称。</li>
+</ul>
+<h3 id="Linux-更改文件的权限"><a href="#Linux-更改文件的权限" class="headerlink" title="Linux 更改文件的权限"></a>Linux 更改文件的权限</h3><h4 id="chgrp命令"><a href="#chgrp命令" class="headerlink" title="chgrp命令"></a><code>chgrp</code>命令</h4><p><code>chgrp</code>命令用于更改文件的所属组。其格式为：<code>chgrp [组名] [文件名]</code>，示例命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># groupadd testgroup </span></span><br><span class="line"><span class="comment"># mkdir /tmp/4_6  //创建实验用的目录</span></span><br><span class="line"><span class="comment"># cd /tmp/4_6 </span></span><br><span class="line"><span class="comment"># touch test1 </span></span><br><span class="line"><span class="comment"># ls -l test1</span></span><br><span class="line">-rw-r--r-- 1 root root 0 2月  18 11:16 test1 </span><br><span class="line"><span class="comment"># chgrp testgroup test1 # ls -l test1 </span></span><br><span class="line">-rw-r--r-- 1 root testgroup 0 2月  18 11:16 test1</span><br></pre></td></tr></table></figure>
+
+<p>上例中用到了groupadd命令，其含义为增加一个用户组。chgrp命令还可以更改目录的所属组，示例命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mkdir dir2 </span></span><br><span class="line"><span class="comment"># touch dir2/test2 </span></span><br><span class="line"><span class="comment"># ls –ld dir2 </span></span><br><span class="line">drwxr-xr-x 2 root root 6 2月  18 11:19 dir2 </span><br><span class="line"><span class="comment"># chgrp testgroup dir2 </span></span><br><span class="line"><span class="comment"># ls -ld dir2 </span></span><br><span class="line">drwxr-xr-x 2 root testgroup 6 2月  18 11:19 dir2 </span><br><span class="line"><span class="comment"># ls –l dir2 </span></span><br><span class="line">总用量 0 </span><br><span class="line">-rw-r--r-- 1 root root 0 2月  18 11:19 test2 </span><br></pre></td></tr></table></figure>
+
+<p>上例中，chgrp命令只更改了目录本身，而目录下的文件并没有更改。如果要想级联更改子目录以及子文件，加-R选项可以实现，示例命令如下：# chgrp -R testgroup dir2 # ls -l dir2 总用量 0 -rw-r–r– 1 root testgroup 0 2月  18 11:25 test2 chgrp命令不常用，因为还有一个命令可以替代它，那就是chown。</p>
+<h4 id="chown命令"><a href="#chown命令" class="headerlink" title="chown命令"></a><code>chown</code>命令</h4><p><code>chown</code>命令用于更改文件的所有者和所属组。其格式为：<code>chown [ -R ] 账户名 文件名</code>或者<code>chown [ -R ] 账户名:组名 文件名</code>， 这里的-R选项只适用于目录，作用是级联更改 示例命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># mkdir dir3 # useradd user1    // 创建用户user1</span></span><br><span class="line"><span class="comment"># touch dir3/test3   // 在dir3目录下创建test3文件</span></span><br><span class="line"><span class="comment"># chown user1 dir3 </span></span><br><span class="line"><span class="comment"># ls -ld dir3    // dir3目录所有者已经由root改为user</span></span><br><span class="line">1drwxr-xr-x 2 user1 root 19 2月  18 11:31 dir3 </span><br><span class="line"><span class="comment"># ls -l dir3    // 但是dir3目录下的test3文件的所有者依旧是root</span></span><br><span class="line">总用量 0 -rw-r--r-- 1 root root 0 2月  18 11:31 test3 </span><br><span class="line"><span class="comment"># chown -R user1:testgroup dir3 </span></span><br><span class="line"><span class="comment"># ls -l dir3 </span></span><br><span class="line">总用量 0 -rw-r--r-- 1 user1 testgroup 0 2月  18 11:31 test3 </span><br></pre></td></tr></table></figure>
+
+<h4 id="chmod命令"><a href="#chmod命令" class="headerlink" title="chmod命令"></a><code>chmod</code>命令</h4><p>为了方便更改文件的权限，Linux使用数字代替rwx，具体规则为：r等于4，w等于2，x等于1，-等于0。例如，rwxrwx—用数字表示就是770，其具体算法为：rwx&#x3D;4+2+1&#x3D;7，rwx&#x3D;4+2+1&#x3D;7，—&#x3D;0+0+0&#x3D;0。命令chmod（change mode的简写）   用于改变用户对文件&#x2F;目录的读写执行权限，其格式为：chmod [-R] xyz 文件名（这里的xyz表示数字）。其中，-R选项的作用等同于chown命令的-R选项，也表示级联更改。值得注意的是，在Linux系统中，一个目录的默认权限为755，而一个文件的默认权限为644.</p>
+<p>chmod还支持使用rwx的方式来设置权限。从之前的介绍中可以发现，基本上就9个属性。我们可以使用u、g和o来分别表示user、group和others的属性，用a代表all（即全部）。此外，我们还可以针对u、g、o和a，增加或者减少它们的某个权限（读、写或执行）.</p>
+<ul>
+<li><code>+</code>：增加权限。</li>
+<li><code>-</code>：删除权限。</li>
+<li><code>=</code>：设置权限。</li>
+</ul>
+<h4 id="umask命令"><a href="#umask命令" class="headerlink" title="umask命令"></a><code>umask</code>命令</h4><p>默认情况下，目录的权限值为755，普通文件的权限值为644，那么这个值是由谁规定的呢？究其原因，便涉及umask了。命令umask用于改变文件的默认权限，其格式为：umask xxx（这里的xxx代表3个数字）。如果要查看umask的值，只要在命令行输入umask，然后回车即可.<br>如果umask的预设值是0022，这表示什么含义呢？咱们先来看以下两条规则。</p>
+<ul>
+<li>若用户建立普通文件，则预设没有可执行权限，只有r、w两个权限，最大值为666（-rw-rw-rw-）。</li>
+<li>若用户建立目录，则预设所有权限均开放，即777（drwxrwxrwx）。</li>
+</ul>
+<p>umask数值代表的含义为以上两条规则中的默认值（文件为666，目录为777）需要减掉的权限.</p>
+<h4 id="修改文件特殊属性"><a href="#修改文件特殊属性" class="headerlink" title="修改文件特殊属性"></a>修改文件特殊属性</h4><h5 id="chattr命令"><a href="#chattr命令" class="headerlink" title="chattr命令"></a><code>chattr</code>命令</h5><p><code>chattr</code>命令用于修改文件的特殊属性。其格式为：<code>chattr [ + | - | = ] [ a | A | c | d | i | I | j | s | S | t ] 文件名</code>，其中：</p>
+<ul>
+<li><code>A</code>：不记录访问时间。</li>
+<li><code>a</code>：只能追加文件内容,非root用户不能设定该属性</li>
+<li><code>c</code>：压缩文件。</li>
+<li><code>d</code>：不在dump中备份。</li>
+<li><code>i</code>：不可修改。</li>
+<li><code>s</code>：删除文件时安全删除。</li>
+</ul>
+<h5 id="lsattr命令"><a href="#lsattr命令" class="headerlink" title="lsattr命令"></a><code>lsattr</code>命令</h5><p><code>lsattr</code>命令用于查看文件的特殊属性。其格式为：<code>lsattr [ -aR] [文件名]</code>，其中：</p>
+<ul>
+<li><code>-a</code>：显示所有文件的属性。</li>
+<li><code>-R</code>：递归显示子目录中的文件属性。</li>
+</ul>
+<h5 id="set-uid-set-gid和sticky-bit"><a href="#set-uid-set-gid和sticky-bit" class="headerlink" title="set uid,set gid和sticky bit"></a><code>set uid</code>,<code>set gid</code>和<code>sticky bit</code></h5><p><code>set uid</code>、<code>set gid</code>和<code>sticky bit</code>是Linux系统中用于控制文件和目录访问权限的特殊属性。</p>
+<ul>
+<li><code>set uid</code>：当一个文件的所有者是root用户时，设置该属性后，任何用户执行该文件时，都会以root用户的身份运行。比如，<code>/usr/bin/passwd</code>命令就是使用了该属性。</li>
+<li><code>set gid</code>：当一个目录的所属组是root用户时，设置该属性后，任何用户在该目录下创建的文件都会自动继承该目录的所属组。</li>
+<li><code>sticky bit</code>：当一个目录设置了该属性后，只有文件的所有者才能删除该文件。比如，<code>/tmp</code>目录就是使用了该属性。</li>
+</ul>
+<p>默认rwx_<br>实际上还有:<br>    s(set_uid&#x2F;set_group);<br>    t(stick_bit)</p>
+<h3 id="在Linux下搜索文件"><a href="#在Linux下搜索文件" class="headerlink" title="在Linux下搜索文件"></a>在Linux下搜索文件</h3><h4 id="用which命令查找可执行文件的绝对路径"><a href="#用which命令查找可执行文件的绝对路径" class="headerlink" title="用which命令查找可执行文件的绝对路径"></a>用which命令查找可执行文件的绝对路径</h4><p>which只能用来查找PATH环境变量中出现的路径下的可执行文件。这个命令比较常用，有时我们不知道某个命令的绝对路径，用which查找就很容易知道了。</p>
+<h4 id="用whereis命令查找文件"><a href="#用whereis命令查找文件" class="headerlink" title="用whereis命令查找文件"></a>用whereis命令查找文件</h4><p>whereis命令用于查找可执行文件、源代码和手册页的路径。其格式为：<code>whereis [-bms] [文件名]</code>，常用的选项有：</p>
+<ul>
+<li><code>-b</code>：查找可执行文件。</li>
+<li><code>-m</code>：查找手册页。</li>
+<li><code>-s</code>：查找源代码。</li>
+</ul>
+<h4 id="用locate命令查找文件"><a href="#用locate命令查找文件" class="headerlink" title="用locate命令查找文件"></a>用locate命令查找文件</h4><p>locate命令类似于whereis，也是通过查找预先生成的文件列表库来告诉用户要查找的文件在哪里，后面直接跟文件名。</p>
+<h4 id="用find命令查找文件"><a href="#用find命令查找文件" class="headerlink" title="用find命令查找文件"></a>用find命令查找文件</h4><p>find命令是Linux下最常用的查找文件的命令，功能非常强大。其格式为：<code>find [路径] [选项] [表达式]</code>，其中：</p>
+<ul>
+<li><p><code>路径</code>：表示要查找的目录。</p>
+</li>
+<li><p><code>选项</code>：表示查找的选项。</p>
+</li>
+<li><p><code>表达式</code>：表示查找的条件。<br>常用的选项有：</p>
+</li>
+<li><p><code>-name</code>：按名称查找文件。</p>
+</li>
+<li><p><code>-iname</code>：按名称查找文件，忽略大小写。</p>
+</li>
+<li><p><code>-type</code>：按类型查找文件。</p>
+</li>
+<li><p><code>-size</code>：按大小查找文件。</p>
+</li>
+<li><p><code>-user</code>：按所有者查找文件。</p>
+</li>
+<li><p><code>-group</code>：按所属组查找文件。</p>
+</li>
+<li><p><code>-perm</code>：按权限查找文件。</p>
+</li>
+<li><p>-atime +n&#x2F;-n：表示访问或执行时间大于或小于n天的文件。</p>
+</li>
+<li><p>-ctime +n&#x2F;-n：表示写入、更改inode属性（如更改所有者、权限或者链接）的时间大于或小于n天的文件。</p>
+</li>
+<li><p>-mtime +n&#x2F;-n：表示写入时间大于或小于n天的文件，该参数用得最多。</p>
+</li>
+</ul>
+<p>文件的access time（即atime）是在读取文件或者执行文件时更改的。文件的modified  time（即mtime）是在写入文件时随文件内容的更改而更改的。文件的change time（即ctime）是在写入文件、更改所有者、权限或链接设置时随inode内容的更改而更改的。</p>
+<p>其中，inode（索引节点）用来存放档案及目录的基本信息，包含时间信息、文档名、所有者以及所属组等。inode是Unix操作系统中的一种数据结构，其本质是结构体，在文件系统创建时生成，且个数有限。在Linux下，可以通过命令df -i来查看各个分区的inode总数以及使用情况。</p>
+<p>因此，更改文件的内容即会更改mtime和ctime，但是文件的ctime可能会在mtime未发生任何变化时更改。例如，更改了文件的权限，但是文件内容没有变化，那么，如何获得一个文件的atime、mtime以及ctime呢？stat命令可用来列出文件的atime、ctime和mtime.示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># stat /etc/passwd</span></span><br><span class="line">File: /etc/passwd</span><br><span class="line">Size: 0          Blocks: 0          IO Block: 4096   regular empty file </span><br><span class="line">Device: 801h/2049d Inode: 2           Links: 1</span><br><span class="line">Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)</span><br><span class="line">Access: 2023-10-01 12:00:00.000000000 +0800</span><br><span class="line">Modify: 2023-10-01 12:00:00.000000000 +0800</span><br><span class="line">Change: 2023-10-01 12:00:00.000000000 +0800</span><br><span class="line"> Birth: -</span><br></pre></td></tr></table></figure>
+
+<p>上例中，Access表示atime，Modify表示mtime，Change表示ctime。可以看到，ctime和mtime是相同的，而atime则是不同的。</p>
+<ul>
+<li>-name filename：表示直接查找该文件名的文件。<code># find . -name test2  //.表示当前目录</code></li>
+<li>-type filetype：表示通过文件类型查找文件。文件类型在前面已经简单介绍过，相信你已经基本了解了。filetype包含了f、b、c、d、l、s等类型.<code>#  find . -type d //查找目录</code></li>
+</ul>
+<h3 id="Linux-文件系统简介"><a href="#Linux-文件系统简介" class="headerlink" title="Linux 文件系统简介"></a>Linux 文件系统简介</h3><p>Windows系统格式化硬盘时，会指定格式FAT或者NTFS，而Linux的文件系统格式为ext3、ext4或者xfs。</p>
+<h3 id="Linux-文件类型"><a href="#Linux-文件类型" class="headerlink" title="Linux 文件类型"></a>Linux 文件类型</h3><ul>
+<li>普通文件（regular file）：即一般类型的文件，当用命令ls -l查看某个目录时，第一个属性为“-”的文件就是普通文件。它又可分成纯文本文件（ASCII）和二进制文件（binary）。纯文本文件可以通过cat、more、less等工具直接查看内容，而二进制文件不能。例如，我们用的命令&#x2F;usr&#x2F;bin&#x2F;ls就是一个二进制文件。</li>
+<li>目录（directory）：它与Windows下的文件夹类似，只不过在Linux中我们不将其称为“文件夹”，而称为“目录”。用命令ls -l查看的第一个属性值为d的文件就是目录。</li>
+<li>链接文件（link  file）：用命令ls -l查看的第一个属性为l的文件就是链接文件，它类似于Windows下的快捷方式。这种文件在Linux中很常见，在日常系统运维工作中经常用到，所以你要特别留意一下这类文件。</li>
+<li>设备（device）：即与系统周边相关的一些文件，通常都集中在&#x2F;dev目录下。这种文件一般分为两种，一种是块（block）设备，就是一些存储数据，以提供系统存取的接口设备，简称硬盘。例如，第一块硬盘是&#x2F;dev&#x2F;sda1，用命令ls-l查看的第一个属性值为b的文件就是块设备。另一种是字符（character）设备，是一些串行端口的接口设备，例如键盘、鼠标等，用命令ls-l查看的第一个属性为c的文件就是字符设备。</li>
+</ul>
+<h4 id="Linux-文件后缀名"><a href="#Linux-文件后缀名" class="headerlink" title="Linux 文件后缀名"></a>Linux 文件后缀名</h4><p>在Linux系统中，文件的后缀名没有具体意义，加或者不加都无所谓。但是为了便于区分，我们习惯在定义文件名时加一个后缀名。这样当用户看到这个文件名时，就会很快知道它到底是一个什么文件，例如1.sh、2.tar.gz、my.cnf、test.zip等。</p>
+<p>早期的UNIX系统文件名最多允许14个字符，而新的UNIX或者Linux系统中，文件名最长可达255个字符。</p>
+<h4 id="Linux的链接文件"><a href="#Linux的链接文件" class="headerlink" title="Linux的链接文件"></a>Linux的链接文件</h4><p>链接文件”这个概念，它分为硬链接（hard link）和软链接（symbolic link）两种。两种链接的本质区别在于inode。下面就来介绍一下这两种链接文件。</p>
+<ul>
+<li>硬链接：当系统要读取一个文件时，会先读inode信息，然后再根据inode中的信息到块区域将数据取出来。而硬链接是直接再建立一个inode链接到文件放置的块区域，即进行硬链接时该文件内容没有任何变化，只是增加了一个指向这个文件的inode，并不会额外占用磁盘空间。硬链接有两个限制：<ul>
+<li>(1)不能跨文件系统，因为不同的文件系统有不同的inode table； </li>
+<li>(2)不能链接目录。</li>
+</ul>
+</li>
+<li>软链接：与硬链接不同，软链接是建立一个独立的文件，当读取这个链接文件时，它会把读取的行为转发到该文件所链接的文件上。例如，现在有一个文件a，我们做了一个软链接文件b（只是一个链接文件，非常小），b指向了a。当读取b时，b就会把读取的动作转发到a上，这样就读取了文件a。当我们删除文件a时，链接文件b不会被删除；但如果再次读取b时，会提示无法打开文件。然而，当我们删除b时，a是不会有任何影响的。</li>
+</ul>
+<p>由此看来，似乎硬链接比较安全，因为删除任何一个硬链接文件，还会有其他文件指向那个inode，既然inode存在，那文件的数据块也就存在。但由于硬链接的限制太多了（包括无法做目录的链接），所以用途上比较受限，而软链接的使用方向较广。那么，如何建立软链接和硬链接呢？这就用到了下面我们要介绍的ln（link）命令：</p>
+<p>ln命令的格式为：<code>ln [-s] [来源文件] [目的文件]</code>，该命令常用的选项是-s。如果不加-s选项就是建立硬链接，加上-s选项就建立软链接。示例命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mkdir /tmp/4_9 </span></span><br><span class="line"><span class="comment"># cd /tmp/4_9 </span></span><br><span class="line"><span class="comment"># cp /etc/passwd ./ </span></span><br><span class="line"><span class="comment"># ll</span></span><br><span class="line"> 总用量 4 -rw-r--r-- 1 root root 2276 2月  18 14:52 passwd </span><br><span class="line"> <span class="comment"># du –sk //du命令用来计算文件或者目录的大小，-k表示以KB为单位，这里的4，就是4KB</span></span><br><span class="line"> 4       . </span><br><span class="line"> <span class="comment"># ln passwd passwd-hard </span></span><br><span class="line"> <span class="comment"># ll </span></span><br><span class="line"> 总用量 8 </span><br><span class="line"> -rw-r--r-- 2 root root 2276 2月  18 14:52 passwd </span><br><span class="line"> -rw-r--r-- 2 root root 2276 2月  18 14:52 passwd-hard </span><br><span class="line"> <span class="comment"># du -sk </span></span><br><span class="line"> 4       . </span><br></pre></td></tr></table></figure>
+
+<p> 这里的ll命令等同于ls -l，请使用which命令查看一下。一开始目录下面只有一个passwd文件，目录总大小为4KB，做了硬链接后，虽然两个文件的大小都为2276B，但目录的总大小并没有变化。我们不妨先删除源文件，然后再来比较一下，示例命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># rm -f passwd </span></span><br><span class="line"><span class="comment"># ll </span></span><br><span class="line">总用量 4 </span><br><span class="line">-rw-r--r-- 1 root root 2276 2月  18 14:52 passwd-hard </span><br><span class="line"><span class="comment"># du -sk </span></span><br><span class="line">4      . </span><br></pre></td></tr></table></figure>
+
+<p>上例中，删除源文件passwd后，文件大小依旧不变。这说明硬链接文件并不会复制数据块，额外占用磁盘空间。再来看硬链接的另外一个限制——不允许目录做硬链接，示例命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mkdir dir1</span></span><br><span class="line"><span class="comment"># ln dir1 dir2</span></span><br><span class="line"><span class="built_in">ln</span>: `dir2<span class="string">&#x27;: Invalid cross-device link</span></span><br></pre></td></tr></table></figure>
+
+<p>下面我们再来看看软链接的一些特性。首先建立一个测试目录456，然后复制&#x2F;etc&#x2F;passwd文件来做测试，再给它做一个软链接文件，示例命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># mkdir 456 </span></span><br><span class="line"><span class="comment"># cd 456 </span></span><br><span class="line"><span class="comment"># cp /etc/passwd ./ </span></span><br><span class="line"><span class="comment"># ln -s passwd  passwd-soft </span></span><br><span class="line"><span class="comment"># ll </span></span><br><span class="line">总用量 4 </span><br><span class="line">-rw-r--r-- 1 root root 2276 2月  18 15:01 passwd </span><br><span class="line">lrwxrwxrwx 1 root root    6 2月  18 15:02 passwd-soft -&gt; passwd </span><br><span class="line"><span class="comment"># head -n1 passwd-soft </span></span><br><span class="line">root:x:0:0:root:/root:/bin/bash </span><br><span class="line"><span class="comment"># head -n1 passwd </span></span><br><span class="line">root:x:0:0:root:/root:/bin/bash </span><br><span class="line"><span class="comment"># rm -f passwd </span></span><br><span class="line"><span class="comment"># head -n1 passwd-soft </span></span><br><span class="line"><span class="built_in">head</span>:无法打开<span class="string">&quot;passwd-soft&quot;</span>读取数据:没有那个文件或目录</span><br><span class="line"><span class="comment"># ll 总用量 0 </span></span><br><span class="line">lrwxrwxrwx 1 root root 6 2月  18 15:02 passwd-soft -&gt; passwd </span><br></pre></td></tr></table></figure>
+
+<p>上例中，如果删除源文件，则不能读取软链接文件，而且使用命令ll查看，发现颜色也有所变化。另外，目录不可以做硬链接，但可以做软链接。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/04/04/%E7%B2%BE%E9%80%9ASpring4-x%E4%BC%81%E4%B8%9A%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%AE%9E%E6%88%98-Chapter05/" rel="prev" title="精通Spring4.x企业应用开发实战-Chapter05">
+                  <i class="fa fa-angle-left"></i> 精通Spring4.x企业应用开发实战-Chapter05
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">星之辰</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">82k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:01</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>-->
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true}});</script></body>
+</html>
