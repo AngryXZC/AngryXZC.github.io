@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"angryxzc.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="记录Linux磁盘管理的实践过程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux实践日记-磁盘管理">
+<meta property="og:url" content="http://angryxzc.github.io/2025/04/28/Linux%E5%AE%9E%E8%B7%B5%E6%97%A5%E8%AE%B0-%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="星之辰的博客">
+<meta property="og:description" content="记录Linux磁盘管理的实践过程">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://angryxzc.github.io/images/os/imook/Linux/df_%E7%BB%93%E6%9E%9C.png">
+<meta property="og:image" content="http://angryxzc.github.io/images/os/imook/Linux/VirtulBox%E6%B7%BB%E5%8A%A0%E8%99%9A%E6%8B%9F%E7%A3%81%E7%9B%98.png">
+<meta property="article:published_time" content="2025-04-28T11:47:22.000Z">
+<meta property="article:modified_time" content="2025-04-28T12:47:35.832Z">
+<meta property="article:author" content="星之辰">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://angryxzc.github.io/images/os/imook/Linux/df_%E7%BB%93%E6%9E%9C.png">
+
+
+<link rel="canonical" href="http://angryxzc.github.io/2025/04/28/Linux%E5%AE%9E%E8%B7%B5%E6%97%A5%E8%AE%B0-%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://angryxzc.github.io/2025/04/28/Linux%E5%AE%9E%E8%B7%B5%E6%97%A5%E8%AE%B0-%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/","path":"2025/04/28/Linux实践日记-磁盘管理/","title":"Linux实践日记-磁盘管理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux实践日记-磁盘管理 | 星之辰的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">星之辰的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">What I cannot create, I do not understand-Feynman Diagram</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%A3%81%E7%9B%98%E6%88%96%E8%80%85%E7%9B%AE%E5%BD%95%E7%9A%84%E5%AE%B9%E9%87%8F"><span class="nav-number">1.</span> <span class="nav-text">查看磁盘或者目录的容量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#df%E5%91%BD%E4%BB%A4"><span class="nav-number">1.1.</span> <span class="nav-text">df命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#du%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text">du命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E7%9A%84%E5%88%86%E5%8C%BA%E5%92%8C%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">磁盘的分区和格式化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E8%99%9A%E6%8B%9F%E7%A3%81%E7%9B%98"><span class="nav-number">2.1.</span> <span class="nav-text">增加虚拟磁盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fdisk%E5%91%BD%E4%BB%A4"><span class="nav-number">2.2.</span> <span class="nav-text">fdisk命令</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">星之辰</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://angryxzc.github.io/2025/04/28/Linux%E5%AE%9E%E8%B7%B5%E6%97%A5%E8%AE%B0-%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="星之辰">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星之辰的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Linux实践日记-磁盘管理 | 星之辰的博客">
+      <meta itemprop="description" content="记录Linux磁盘管理的实践过程">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux实践日记-磁盘管理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-04-28 19:47:22 / 修改时间：20:47:35" itemprop="dateCreated datePublished" datetime="2025-04-28T19:47:22+08:00">2025-04-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">记录Linux磁盘管理的实践过程</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="查看磁盘或者目录的容量"><a href="#查看磁盘或者目录的容量" class="headerlink" title="查看磁盘或者目录的容量"></a>查看磁盘或者目录的容量</h2><p>查看磁盘的使用率</p>
+<h3 id="df命令"><a href="#df命令" class="headerlink" title="df命令"></a>df命令</h3><p>命令df（disk filesystem的简写）用于查看已挂载磁盘的总容量、使用容量、剩余容量等，可以不加任何参数，默认以KB为单位显示。示例命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span></span><br></pre></td></tr></table></figure>
+
+<p>输出结果如下：</p>
+<p><img src="/images/os/imook/Linux/df_%E7%BB%93%E6%9E%9C.png" alt="centos结果"></p>
+<p>上例的结果中，其中&#x2F;、&#x2F;boot是我们在安装系统时划分出来的。&#x2F;dev、&#x2F;dev&#x2F;shm为内存分区，默认大小为内存大小的1&#x2F;2，如果我们把文件存到这个分区下，相当于存到了内存中，好处是读写非常快，坏处是系统重启时文件就会丢失。后面的&#x2F;run、&#x2F;sys&#x2F;fs&#x2F;cgroup等分区都是tmpfs，跟&#x2F;dev&#x2F;shm类似，为临时文件系统，我们不要碰它们。df命令的常用选项有-i、-h、-k和-m，下面介绍这4个选项的用法。为了更能简洁明了地让大家看到磁盘分区，在下面的示例中直接把tmpfs相关的分区全部过滤掉了。</p>
+<ul>
+<li>-i：查看inode使用情况，表示查看inodes的使用状况，如已使用100%，即使磁盘空间有富余，也会提示磁盘空间已满。示例命令如下：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> -i</span><br></pre></td></tr></table></figure>
+
+<p>输出结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Filesystem      Inodes  IUsed   IFree IUse% Mounted on</span><br><span class="line">/dev/sda2      524288  15360 508928    3% /</span><br><span class="line">/dev/sda1         8192     16   8176    1% /boot</span><br><span class="line">/dev/sda3      524288  15360 508928    3% /home</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-h：以人类可读的方式显示磁盘容量，单位为G、M、K等。示例命令如下：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> -h</span><br></pre></td></tr></table></figure>
+
+<p>输出结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Filesystem      Size  Used Avail Use% Mounted on</span><br><span class="line">/dev/sda2       20G  1.5G   17G   8% /</span><br><span class="line">/dev/sda1      200M   20M  180M  10% /boot</span><br><span class="line">/dev/sda3       20G  1.5G   17G   8% /home</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-k,-m：以KB、MB为单位显示磁盘容量，-k表示以KB为单位，-m表示以MB为单位。示例命令如下：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> -k</span><br></pre></td></tr></table></figure>
+
+<p>输出结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Filesystem     1K-blocks    Used Available Use% Mounted on</span><br><span class="line">/dev/sda2       20480000 1536000  17920000   8% /</span><br><span class="line">/dev/sda1         204800   20480   184320  10% /boot</span><br><span class="line">/dev/sda3       20480000 1536000  17920000   8% /home</span><br></pre></td></tr></table></figure>
+
+<p>简单介绍一下上述信息中各列所表示的含义,第1列为分区的名字，第2列为该分区的总容量，第3列为使用容量，第4列为剩余容量，第5列为使用容量的百分比（如果这个数值达到90%以上，那么就应该关注了。因为磁盘分区满了，会引起系统崩溃），最后一列为挂载点.</p>
+<h3 id="du命令"><a href="#du命令" class="headerlink" title="du命令"></a>du命令</h3><p>du（disk usage的简写）命令用于查看目录或文件的大小，其格式为 du [-abckmsh] [文件或者目录名]。该命令常用的参数有如下几个。</p>
+<ul>
+<li>-a：显示目录下所有文件的大小。默认单位为KB。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># du /tmp/test_mv </span></span><br><span class="line">0       /tmp/test_mv/dirb/dirc </span><br><span class="line">4       /tmp/test_mv/dirb </span><br><span class="line">4       /tmp/test_mv </span><br><span class="line"><span class="comment">#  du -a /tmp/test_mv </span></span><br><span class="line">4       /tmp/test_mv/dirb/filee </span><br><span class="line">0       /tmp/test_mv/dirb/dirc </span><br><span class="line">4       /tmp/test_mv/dirb </span><br><span class="line">4       /tmp/test_mv </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-b：以字节为单位显示文件大小。</li>
+<li>-k：以KB为单位显示文件大小。</li>
+<li>-m：以MB为单位显示文件大小。</li>
+<li>-h:表示系统自动调节单位。例如，如果文件太小，可能就几千字节，就以KB为单位显示；如果文件大到千兆字节，就以GB为单位显示。若一个文件小于4KB，当使用-k选项时，也会显示4KB，<strong>因为文件系统的最小分配单位是4KB</strong>。如下：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  du -b /etc/passwd </span></span><br><span class="line">2361    /etc/passwd </span><br><span class="line"><span class="comment">#  du -k /etc/passwd </span></span><br><span class="line">4       /etc/passwd </span><br><span class="line"><span class="comment"># du -m /etc/passwd </span></span><br><span class="line">1       /etc/passwd </span><br><span class="line"><span class="comment"># du -h /etc/passwd </span></span><br><span class="line">4.0K    /etc/passwd </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-c:表示显示所有文件的大小总和.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># du -c /tmp/test_mv </span></span><br><span class="line">0       /tmp/test_mv/dirb/dirc </span><br><span class="line">4       /tmp/test_mv/dirb </span><br><span class="line">4       /tmp/test_mv </span><br><span class="line">4       总用量</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-s:表示只显示目录的大小，而不显示目录下每个文件的大小。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># du -s /tmp/test_mv </span></span><br><span class="line">4       /tmp/test_mv </span><br></pre></td></tr></table></figure>
+
+<p>常用的组合 <code>du -sh filename</code>，表示以人类可读的方式显示文件或目录的大小。</p>
+<h2 id="磁盘的分区和格式化"><a href="#磁盘的分区和格式化" class="headerlink" title="磁盘的分区和格式化"></a>磁盘的分区和格式化</h2><p>在Linux中，磁盘分区和格式化是两个不同的概念。分区是将一个物理磁盘划分为多个逻辑磁盘。格式化是将一个逻辑磁盘划分为多个文件系统。作为一个Linux系统管理员，对磁盘的操作必须熟练，</p>
+<h3 id="增加虚拟磁盘"><a href="#增加虚拟磁盘" class="headerlink" title="增加虚拟磁盘"></a>增加虚拟磁盘</h3><p><img src="/images/os/imook/Linux/VirtulBox%E6%B7%BB%E5%8A%A0%E8%99%9A%E6%8B%9F%E7%A3%81%E7%9B%98.png" alt="VirtulBox添加虚拟磁盘"></p>
+<h3 id="fdisk命令"><a href="#fdisk命令" class="headerlink" title="fdisk命令"></a>fdisk命令</h3><p>TODO</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/04/09/Linux%E5%AE%9E%E8%B7%B5%E6%97%A5%E8%AE%B0-%E7%B3%BB%E7%BB%9F%E7%94%A8%E6%88%B7%E4%B8%8E%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86/" rel="prev" title="Linux实践日记-系统用户与用户组管理">
+                  <i class="fa fa-angle-left"></i> Linux实践日记-系统用户与用户组管理
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">星之辰</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">86k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:11</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>-->
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true}});</script></body>
+</html>
