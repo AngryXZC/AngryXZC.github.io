@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"angryxzc.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="SpringCloud简介">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringCloud简介">
+<meta property="og:url" content="http://angryxzc.github.io/2025/04/30/SpringCloud%E7%AE%80%E4%BB%8B/index.html">
+<meta property="og:site_name" content="星之辰的博客">
+<meta property="og:description" content="SpringCloud简介">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://angryxzc.github.io/images/springcloud/chapter2/%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%B2%BB%E7%90%86-%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0.png">
+<meta property="og:image" content="http://angryxzc.github.io/images/springcloud/chapter2/%E6%9C%8D%E5%8A%A1%E7%9A%84%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1.png">
+<meta property="og:image" content="http://angryxzc.github.io/images/springcloud/chapter2/%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E9%9B%86%E7%BE%A4%E5%8C%96.png">
+<meta property="og:image" content="http://angryxzc.github.io/images/springcloud/chapter2/%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BE%9D%E8%B5%96%E6%80%A7.png">
+<meta property="og:image" content="http://angryxzc.github.io/images/springcloud/chapter2/%E7%86%94%E6%96%AD%E6%9C%BA%E5%88%B6.png">
+<meta property="og:image" content="http://angryxzc.github.io/images/springcloud/chapter2/%E6%9C%8D%E5%8A%A1%E7%BD%91%E5%85%B3%E6%9E%B6%E6%9E%84%E5%9B%BE.png">
+<meta property="og:image" content="http://angryxzc.github.io/images/springcloud/chapter2/%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE%E7%9A%84%E7%BB%9F%E4%B8%80%E7%AE%A1%E7%90%86.png">
+<meta property="og:image" content="http://angryxzc.github.io/images/springcloud/chapter2/%E6%9C%8D%E5%8A%A1%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA.png">
+<meta property="og:image" content="http://angryxzc.github.io/images/springcloud/chapter2/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%B3%BB%E7%BB%9F.png">
+<meta property="og:image" content="http://angryxzc.github.io/images/springcloud/chapter2/Dubbo%E6%A1%86%E6%9E%B6%E7%9A%84%E6%9E%B6%E6%9E%84%E5%9B%BE.png">
+<meta property="og:image" content="http://angryxzc.github.io/images/springcloud/chapter2/SpringCloud%E4%B8%8EDubbo%E6%AF%94%E8%BE%83.png">
+<meta property="og:image" content="http://angryxzc.github.io/images/springcloud/chapter2/SpringCloud%E4%B8%8EKubernetes%E6%AF%94%E8%BE%83.png">
+<meta property="article:published_time" content="2025-04-30T07:30:07.000Z">
+<meta property="article:modified_time" content="2025-04-30T08:47:05.966Z">
+<meta property="article:author" content="星之辰">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="深入理解Spring Cloud与微服务构建">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://angryxzc.github.io/images/springcloud/chapter2/%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%B2%BB%E7%90%86-%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0.png">
+
+
+<link rel="canonical" href="http://angryxzc.github.io/2025/04/30/SpringCloud%E7%AE%80%E4%BB%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://angryxzc.github.io/2025/04/30/SpringCloud%E7%AE%80%E4%BB%8B/","path":"2025/04/30/SpringCloud简介/","title":"SpringCloud简介"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>SpringCloud简介 | 星之辰的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">星之辰的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">What I cannot create, I do not understand-Feynman Diagram</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%BA%94%E8%AF%A5%E5%85%B7%E5%A4%87%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="nav-number">1.</span> <span class="nav-text">微服务应该具备的功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0"><span class="nav-number">1.1.</span> <span class="nav-text">服务的注册与发现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%9A%84%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="nav-number">1.2.</span> <span class="nav-text">服务的负载均衡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%AE%B9%E9%94%99"><span class="nav-number">1.3.</span> <span class="nav-text">服务的容错</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%BD%91%E5%85%B3"><span class="nav-number">1.4.</span> <span class="nav-text">服务网关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE%E7%9A%84%E7%BB%9F%E4%B8%80%E7%AE%A1%E7%90%86"><span class="nav-number">1.5.</span> <span class="nav-text">服务配置的统一管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA"><span class="nav-number">1.6.</span> <span class="nav-text">服务链路追踪</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Cloud"><span class="nav-number">2.</span> <span class="nav-text">Spring Cloud</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%BB%84%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text">常用组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E4%B8%80%E8%A7%88%E8%A1%A8"><span class="nav-number">2.3.</span> <span class="nav-text">项目一览表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dubbo%E7%AE%80%E4%BB%8B"><span class="nav-number">3.</span> <span class="nav-text">Dubbo简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Cloud%E4%B8%8EDubbo%E6%AF%94%E8%BE%83"><span class="nav-number">4.</span> <span class="nav-text">Spring Cloud与Dubbo比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kubernetes%E7%AE%80%E4%BB%8B"><span class="nav-number">5.</span> <span class="nav-text">Kubernetes简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Cloud%E4%B8%8EKubernetes%E6%AF%94%E8%BE%83"><span class="nav-number">6.</span> <span class="nav-text">Spring Cloud与Kubernetes比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">星之辰</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://angryxzc.github.io/2025/04/30/SpringCloud%E7%AE%80%E4%BB%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="星之辰">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星之辰的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="SpringCloud简介 | 星之辰的博客">
+      <meta itemprop="description" content="SpringCloud简介">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SpringCloud简介
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-04-30 15:30:07 / 修改时间：16:47:05" itemprop="dateCreated datePublished" datetime="2025-04-30T15:30:07+08:00">2025-04-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>9.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>33 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">SpringCloud简介</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Spring Cloud作为Java语言的微服务框架，它依赖于SpringBoot，有快速开发、持续交付和容易部署等特点。SpringCloud的组件非常多，涉及微服务的方方面面，井在开源社区Spring和Netflix、Pivotal两大公司的推动下越来越完善。将从以下方面来了解。</p>
+<ul>
+<li>微服务应该具备的功能。</li>
+<li>Spring Cloud介绍。</li>
+<li>Dubbo介绍。</li>
+<li>Kubemetes介绍。</li>
+<li>Spring Cloud与Dubbo比较。</li>
+<li>Spring Cloud与Kubemetes比较。</li>
+</ul>
+<h2 id="微服务应该具备的功能"><a href="#微服务应该具备的功能" class="headerlink" title="微服务应该具备的功能"></a>微服务应该具备的功能</h2><p>微服务，可以拆分为“微”和“服务”二字。“微”即小的意思，那到底多小才算“微”呢？可能不同的团队有不同的答案。从参与微服务的人数来讲，单个微服务从架构设计、代码开发、测试、运维的人数加起来是8～10人才算“微”。那么何为“服务”呢？按照“微服务”概念提出者MartinFowler给出的定义：“服务”是一个独立运行的单元组件，每个单元组件运行在独立的进程中，组件与组件之间通常使用HTTP这种轻量级的通信机制进行通信。</p>
+<p>微服务具有以下的特点。</p>
+<ul>
+<li>按照业务来划分服务，单个服务代码量小，业务单一，易于维护。</li>
+<li>每个微服务都有自己独立的基础组件，例如数据库、缓存等，且运行在独立的进程中。</li>
+<li>微服务之间的通信是通过HTTP协议或者消息组件，且具有容错能力。</li>
+<li>微服务有一套服务治理的解决方案，服务之间不相合，可以随时加入和剔除服务。</li>
+<li>单个微服务能够集群化部署，并且有负载均衡的能力。</li>
+<li>整个微服务系统应该有一个完整的安全机制，包括用户验证、权限验证、资源保护等。</li>
+<li>整个微服务系统有链路追踪的能力。</li>
+<li>有一套完整的实时日志系统。</li>
+</ul>
+<p>微服务具有以上这些特点，那么微服务需要具备一些什么样的功能呢？微服务的功能主要体现在以下儿个方面。</p>
+<ul>
+<li>服务的注册和发现。</li>
+<li>服务的负载均衡。</li>
+<li>服务的容错。</li>
+<li>服务网关。</li>
+<li>服务配置的统一管理。</li>
+<li>链路追踪。</li>
+<li>实时日志。</li>
+</ul>
+<h3 id="服务的注册与发现"><a href="#服务的注册与发现" class="headerlink" title="服务的注册与发现"></a>服务的注册与发现</h3><p>微服务系统由很多个单一职责的服务单元组成，例如Netflix公司的系统是由600多个微服务构成的，而每一个微服务又有众多实例。由于该系统的服务粒度较小，服务数量众多，服务之间的相互依赖成网状，所以该系统需要服务注册中心来统一管理微服务实例，方便查看每一个微服务实例的健康状态。</p>
+<p>服务注册士在指向服务注册中心注册一个服务实例，服务提供者将自己的服务信息（如服务名、IP地址等〉告知服务注册中心。服务发现是指当服务消费者需要消费另外一个服务时，服务注册中心能够告知服务消费者它所要消费服务的实例信息（如服务名、IP地址等〉。通常情况下，一个服务既是服务提供者，也是服务消费者。服务消费者一般使用HTTP协议或者消息组件这种轻盘级的通信机制来进行服务消费。服务的注册与发现如图2-1所示。</p>
+<p><img src="/images/springcloud/chapter2/%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%B2%BB%E7%90%86-%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0.png" alt="服务的治理-服务的注册与发现"></p>
+<p>服务注册巾心会提供服务的健康检查方案，检查被注册的服务是否可用。通常一个服务实例注册后，会定时向服务注册中心提供“心跳”，以表明自己还处于可用的状态。当一个服务实例停止向服务注册中心提供心跳一段时间后，服务注册中心会认为该服务实例不可用，会将该服务实例从服务注册列表中剔除。如果这个被剔除掉的服务实例过一段时间后继续向注册中心提供心跳，那么服务注册中心会将该服务实例重新加入服务注册中心的列表中。另外，微服务的服务注册组件都会提供服务的健康状况查看的UI界面，开发人员或者运维人员只需要登录相关的界面就可以知道服务的健康状态。</p>
+<h3 id="服务的负载均衡"><a href="#服务的负载均衡" class="headerlink" title="服务的负载均衡"></a>服务的负载均衡</h3><p>在微服务架构r~，服务之间的相互调用一般是通过HTTP通信协议来实现的。网络往往具有不可靠性，为了保证服务的高可用（HighAvailability），服务单元往往是集群化部署。例如将服务提供者进行集群化部署，那么服务消费者该调用哪个服务提供者的实例呢？这就涉及到了服务的负载均衡。</p>
+<p>服务的负载均衡一般最流行的做法如图2-2所示，<br><img src="/images/springcloud/chapter2/%E6%9C%8D%E5%8A%A1%E7%9A%84%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1.png" alt="服务的负载均衡"><br>所有的服务都向服务注册中心注册，服务注册中心持有每个服务的应用名和IP地址等信息，同时每个服务也会获取所有服务注册列表信息。服务消费者集成负载均衡组件，该组件会向服务消费者获取服务注册列表信息，并每隔一段时间重新刷新获取该列表。当服务消费者消费服务时，负载均衡组件获取服务提供者所有实例的注册信息，并通过一定的负载均衡策略（开发者可以配置〉，选择一个服务提供者的实例，向该实例进行服务消费，这样就实现了负载均衡。</p>
+<p>服务注册中心不但需要定时接收每个服务的心跳（用来检查服务是否可用），而且每个服务会定期获取服务注册列表的信息，当服务实例数量很多时，服务注册中心承担了非常大的负载。由于服务注册中心在微服务系统中起到了至关重要的作用，所以必须实现高可用。一般的做法是将服务注册中心集群化，每个服务注册中心的数据实时同步，如图2-3所示。<br><img src="/images/springcloud/chapter2/%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E9%9B%86%E7%BE%A4%E5%8C%96.png" alt="服务注册中心集群化"></p>
+<h3 id="服务的容错"><a href="#服务的容错" class="headerlink" title="服务的容错"></a>服务的容错</h3><p>微服务落地到实际项目的，一个网络请求通常需要调用多个服务才能完成。如果一个服务不可用，例如网络延迟或故障，会影响到依赖于这个不可用的服务的其他服务。如图2-4所示，一个微服务系统有很多个服务，当服务F因某些原因导致了服务的不可用，来自于用户的网络请求需要调用服务F。由于服务F无响应，用户的请求都处于阻塞状态，在高并发的场景下，短时间内会导致服务器的线程资源消耗殆尽。另外，依赖于服务F的其他的服务，例如图中的服务E、服务G、服务J,也会等待服务F的响应，处于阻塞状态，导致这些服务的线程资源消耗殆尽，进而导致它们的不可用，以及依赖于它们的服务的不可用，最后导致整个系统处于瘫痪的状态也就是1.2.1节中提到的雪崩效应。<br><img src="/images/springcloud/chapter2/%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BE%9D%E8%B5%96%E6%80%A7.png" alt="服务的依赖性"></p>
+<p>为了解决分布式系统的雪崩效应，分布式系统引进了熔断器机制。熔断器（CircuitBreaker） 一词来源于物理学中的电路知识，它的作用是当电路中出现故障时迅速切断电路，起到保护电路的作用，烙断器机制如图2-5所示。<br><img src="/images/springcloud/chapter2/%E7%86%94%E6%96%AD%E6%9C%BA%E5%88%B6.png" alt="熔断机制"><br>当一个服务的处理用户请求的失败次数在一定时间内小于设定的阀值时，熔断器处于关闭状态，服务正常：当服务处理用户请求的失败次数大于设定的阀值时，说明服务出现了故障，打开熔断器，这时所有的请求会执行快速失败，不执行业务逻辑。当处于打开状态的熔断器时，一段时间后会处于半打开状态，并执行一定数量的请求，剩余的请求会执行快速失败，若执行的请求失败了，则继续打开熔断器；若成功了，则将熔断器关闭。<br>这种机制有着非常重要的意义，它不仅能够防止系统的“雪崩”效应，还具有以下作用。</p>
+<ul>
+<li>将资源进行隔离，如果某个服务里的某个API接口出现了故障，只会隔离该API接口。不会影响到其他API接口。被隔离的API接口会执行快速失败的逻辑，不会等待，请求不会阻塞。如果不进行这种隔离，请求会一直处于阻塞状态，直到超时。若有大量的请求同时涌入，都处于阻塞的状态，服务器的线程资源，迅速被消耗完。</li>
+<li>服务降级的功能。当服务处于正常的状态时，大量的请求在短时间内同时涌入，超过了服务的处理能力，这时熔断器会被打开，将服务降级，以免服务器因负载过高而出现故障。</li>
+<li>自我修复能力。当因某个微小的故障，例如网络服务商的问题，导致网络在短时间内不可用，熔断器被打开。如果不能自我监控、自我检测和自我修复，那么需要开发人员手动地去关闭熔断器，无疑会增加开发人员的工作量。</li>
+</ul>
+<p>Netflix的Hystrix熔断器开源组件功能非常强大，不仅有烙断器的功能，还有熔断器的状态监测，并提供界面友好的UI，开发人员或者运维人员通过UI界面能够直观地看到熔断器的状态和各种性能指标。</p>
+<h3 id="服务网关"><a href="#服务网关" class="headerlink" title="服务网关"></a>服务网关</h3><p>微服务系统通过将资源以API接口的形式暴露给外界来提供服务。在微服务系统中，API接口资源通常是由服务网关（也称API网关〉统一暴露，内部服务不直接对外提供API资源的暴露。这样做的好处是将内部服务隐藏起来，外界还以为是一个服务在提供服务，在一定程度上保护了微服务系统的安全。API网关通常有请求转发的作用，另外它可能需要负责一定的安全验证，例如判断某个请求是否合法，该请求对某一个资源是否具有操作权限等。通常情况，网关层以集群的形式存在。在服务网关层之前，有可能需要加上负载均衡层，通常为Nginx双机热备，通过一定的路由策略，将请求转发到网关层。到达网关层后，经过一系列的用户身份验证、权限判断，最终转发到具体的服务。具体的服务经过一系列的逻辑运算和数据操作，最终将结果返回给用户，此时的架构如图2-6所示。<br><img src="/images/springcloud/chapter2/%E6%9C%8D%E5%8A%A1%E7%BD%91%E5%85%B3%E6%9E%B6%E6%9E%84%E5%9B%BE.png" alt="服务网关架构图"></p>
+<p>网关层具有很重要的意义，具体体现在以下方面。</p>
+<ul>
+<li>网关将所有服务的API接口资源统一聚合，对外统一暴露，外界系统调用的API接口都朵网关对外暴露的API接口。外界系统不需要知道微服务架构中各服务相互调用的复杂性，微服务系统也保护了其内部微服务单元的API接口，防止被外界直接调用以及服务的敏感信息对外暴露。</li>
+<li>网关可以做一些用户身份认证、权限认证，防止非法请求操作API接口，对内部服务起到保护作用。</li>
+<li>网关可以实现监控功能，实时日志输出，对请求进行记录。</li>
+<li>网关可以用来做流量监控，在高流量的情况下，对服务进行降级。</li>
+<li>API接口从内部服务分离出来，方便做测试。</li>
+</ul>
+<p>当然，例关实现这些功能，需要做高可用，否则网关很可能成为架构中的瓶颈。最常用的网关组件有Zuul、Nginx等。</p>
+<h3 id="服务配置的统一管理"><a href="#服务配置的统一管理" class="headerlink" title="服务配置的统一管理"></a>服务配置的统一管理</h3><p>在实际开发过程中，每个服务都有大量的配置文件，例如数据库的配置、日志输出级别的配置等，而往往这些配置在不同的环境中也是不一样的。随着服务数量的增加，配置文件的管理也是一件非常复杂的事。</p>
+<p>在微服务架构中，需要有统一管理配置文件的组件，例如SpringCloud的SpringCloud Con fig组件、阿里的Diamond、百度的Disconf、携程的Apollo等。这些配置组件所实现的功能大体相同，｛旦士在又有些差别，下面以SpringCloud Config为例来阐述服务配置的统一管理。如图2-7所示，大致过程如下。<br><img src="/images/springcloud/chapter2/%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE%E7%9A%84%E7%BB%9F%E4%B8%80%E7%AE%A1%E7%90%86.png" alt="服务配置的统一管理"></p>
+<ul>
+<li>首先，ConfigServer （配置服务〉读取配置文件仓库的配置信息，其中配置文件仓库可以存放在配置服务的本地仓库，也可以放在远程的Git仓库（例如GitHub、Coding等〉。</li>
+<li>配置服务启动后，读取配置文件信息，读取完成的配置信息存放在配置服务的内存中。</li>
+<li>当启动服务A、B时，由于服务A、B指定了向配置服务读取配置信息，服务A、B向配置服务读取配置信息。</li>
+<li>当服务的配置信息需要修改且修改完成后，向配置服务发送Post请求进行刷新，这时服务A、B会向配置服务重写读取配置文件。</li>
+</ul>
+<p>对于集群化的服务，可以通过使用消息总线来刷新多个服务实例。如果服务数量较多，对配置中心需要考虑集群化部署，从而使配置中心高可用，做分布式集群。</p>
+<h3 id="服务链路追踪"><a href="#服务链路追踪" class="headerlink" title="服务链路追踪"></a>服务链路追踪</h3><p>微服务系统是一个分布式架构的系统，微服务系统按业务划分服务单元，一个微服务系统往往有很多个服务单元。由于服务单元数量很多且业务复杂，服务与服务之间的调用有可能非常复杂，一旦出现了异常和错误，就会很难去定位。所以在微服务架构中，必须实现分布式链路追踪，去跟进一个请求到底有哪些服务参与，参与的顺序又是怎样的，从而使每个请求链路清晰可见，出了问题很快就能定位。</p>
+<p>举个例子，如图2-8所示，在微服务系统中，一个来自用户的请求先达到前端AC如前端界面），然后通过远程调用，达到系统的中间件B、c（如负载均衡、网关等），最后达到后端服务D、E。后端经过一系列的业务逻辑计算，最后将数据返回给用户。对于这样一个请求，经历了这么多服务，怎么样将它的请求过程的数据记录下来呢？这就需要用到服务链路追踪。<br><img src="/images/springcloud/chapter2/%E6%9C%8D%E5%8A%A1%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA.png" alt="服务链路追踪"></p>
+<p>Google开源了链路追踪组件Dapper，并在2010年发表了论文《Dapper,a Large-Scale Distributed Systems Tracing In仕astructure》，这篇文章是业内实现链路追踪的标杆和理论基础，具有非常高的参考价值。</p>
+<p>目前，常见的链路追踪组件有Google的Dapper、Twitter的Zipkin，以及阿里的Eagleeye（鹰眼）等，都是非常优秀的链路追踪开源组件。</p>
+<h2 id="Spring-Cloud"><a href="#Spring-Cloud" class="headerlink" title="Spring Cloud"></a>Spring Cloud</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Spring Cloud是基于SpringBoot的。SpringBoot是由Pivotal团队提供的全新Web框架，它主要的特点就是简化了开发和部署的过程，简化了Spring复杂的配置和依赖管理，通过起步依赖和内置Serviet容器能够使开发者迅速搭起一个Web工程。所以SpringCloud在开发部署上继承了SpringBoot的一些优点，提高其在开发和部署上的效率。</p>
+<p>Spring Cloud的首要目标就是通过提供一系列开发组件和框架，帮助开发者迅速搭建一个分布式的微服务系统。SpringCloud是通过包装其他技术框架来实现的，例如包装开源的Netflixoss组件，实现了一套通过基于注解、Java配置和基于模版开发的微服务框架。SpringCloud 框架来自于SpringResouces社区，由Pivotal和Netflix两大公司和一些其他的开发者提供技术上的更新法代。SpringCloud提供了开发分布式微服务系统的一些常用组件，例如服务注册和发现、配置中心、熔断器、智能路由、微代理、控制总线、全局锁、分布式会话等。</p>
+<h3 id="常用组件"><a href="#常用组件" class="headerlink" title="常用组件"></a>常用组件</h3><ol>
+<li>服务注册和发现组件Eureka<br>利用Eureka组件可以很轻松地实现服务的注册和发现的功能。Eureka组件提供了服务的健康监测，以及界面友好的UI。通过Eureka组件提供的UI,Eureka组件可以让开发人员随时了解服务单元的运行情况。另外SpringCloud也支持Consul和Zookeeper，用于注册和发现服务。</li>
+<li>熔断组件Hystrix<br>Hystrix是一个熔断组件，它除了有一些基本的熔断器功能外，还能够实现服务降级、服务限流的功能。另外Hystrix提供了熔断器的健康监测，以及熔断器健康数据的API接口。Hystrix Dashboard组件提供了单个服务熔断器的健康状态数据的界面展示功能，HystrixTurbine组件提供了多个服务的熔断器的健康状态数据的界面展示功能。</li>
+<li>负载均衡组件Ribbon<br>Ribbon是一个负载均衡组件，它通常和Eureka、Zuul、RestTemplate、Feign配合使用。Ribbon和Zuul配合，很容易做到负载均衡，将请求根据负载均衡策略分配到不同的服务实例中。Ribbon和IRestTemplate、Feign配合，在消费服务时能够做到负载均衡。</li>
+<li>路由网关Zuul<br>路由网关Zuul有智能路由和过滤的功能。内部服务的API接口通过Zuul网关统一对外暴露，内部服务的API接口不直接暴露，防止了内部服务敏感信息对外暴露。在默认的情况下，Zuul和Ribbon相结合，能够做到负载均衡、智能路由。Zuul的过滤功能是通过拦截请求来实现的，可以对一些用户的角色和权限进行判断，起到安全验证的作用，同时也可以用于输山实时的请求曰志。<br><strong>上述的4个组件都来自于Netflix的公司，统一称为SpringCloud Netflix。</strong></li>
+<li>Spring Cloud Config<br>Spring Cloud Config组件提供了配置文件统一管理的功能。SpringCloud Config包括Server端和Client端，Server端读取本地仓库或者远程仓库的配置文件，所有的Client向Server读取配置信息，从而达到配置文件统一管理的目的。通常情况下，SpringCloud Config和SpringCloud Bus相互配合刷新指定Client或所有Client的配置文件。</li>
+<li>Spring Cloud Security<br>Spring Cloud Security是对SpringSecurity组件的封装，SpringCloud Security向服务单元提供了用户验证和权限认证。一般来说，单独在微服务系统中使用SpringCloud Security是很少见的，一般它会配合SpringSecurity 0Auth2组件一起使用，通过搭建授权服务，验证Token或者JWT这种形式对整个微服务系统进行安全验证。</li>
+<li>Spring Cloud Sleuth<br>Spring Cloud Sleuth是一个分布式链路追踪组件，它封装了Dapper、Zipkin和Kibana等组件，通过它可以知道服务之间的相互依赖关系，并实时观察链路的调用情况。</li>
+<li>Spring Cloud Stream<br>Spring Cloud Stream是SpringCloud框架的数据流操作包，可以封装RabbitMq、ActiveMq、Kafka、Redis等消息组件，利用SpringCloud Stream可以实现消息的接收和发送。</li>
+</ol>
+<p>述列举了一些常用的SpringCloud组件。一个简单的由SpringCloud构述的微服务系统，通常由服务注册中心Eureka、网关Zuul、配置中心Config和授权服务Auth构成，架构如阁2-9所示。<br><img src="/images/springcloud/chapter2/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%B3%BB%E7%BB%9F.png" alt="一个简单的微服务系统"></p>
+<h3 id="项目一览表"><a href="#项目一览表" class="headerlink" title="项目一览表"></a>项目一览表</h3><ul>
+<li>Spring Cloud Config：服务配置中心，将所有的服务的配置文件放到本地仓库或者远程仓库，配置中心负责读取仓库的配置文件，其他服务向配置中心读取配置。SpringCloud Config使得服务的配置统一管理，并可以在不人为重启服务的情况下进行配置文件的刷新。</li>
+<li>Spring Cloud Netflix：它是通过包装了Netflix公司的微服务组件实现的，也是SpringCloud核心的核心组件，包括Eureka、Hystrix、Zuul、Archaius等。</li>
+<li>Eureka：服务注册和发现组件。</li>
+<li>Hystrix：熔断器组件。Hystrix通过控制服务的API接口的熔断来转移故障，防止微服务系统发生雪崩效应。另外，Hystrix能够起到服务限流和服务降级的作用。使用Hystrix Dashboard组件监控单个服务的熔断器的状态，使用Turbine组件可以聚合多个服务的熔断器的状态。</li>
+<li>Zuul：智能路由网关组件。NetflixZuul能够起到智能路由和请求过滤的作用，是服务接口统一暴露的关键模块，也是安全验证、权限控制的一道门。</li>
+<li>Feign：声明式远程调度组件。</li>
+<li>Ribbon：负载均衡组件。</li>
+<li>Archaius：配置管理API的组件，一个基于Java的配置管理库，主要用于多配置的动态获取。</li>
+<li>Spring Cloud Bus：消息总线组件，常和SpringCloud Config配合使用，用于动态刷新服务的配置。</li>
+<li>Spring Cloud Sleuth：服务链路追踪组件，封装了Dapper、Zipkin,Kibina等组件，可以实时监控服务的链路调用情况。</li>
+<li>Spring Cloud Data Flow：大数据操作组件，SpringCloud Data Flow是SpringXD的替代品，也是一个混合计算的模型，可以通过命令行的方式操作数据流。</li>
+<li>Spring Cloud Security：安全模块组件，是对SpringSecurity的封装，通常配合OAuth2使用来保护微服务系统的安全。</li>
+<li>Spring Cloud Consul：该组件是SpringCloud对Consul的封装，和Eureka类似，它是另一个服务注册和发现组件。</li>
+<li>Spring Cloud Zookeeper：该组件是SpringCloud对Zookeeper的封装，和Eureka、Consul类似，用于服务的注册和发现。</li>
+<li>Spring Cloud Stream：数据流操作组件，可以封装Redis、RabbitMQ、Kafka等组件，实现发送和接收消息等。</li>
+<li>Spring Cloud CLI：该组件是SpringCloud对SpringBoot CLI的封装，可以让用户以命令行方式快速运行和搭建容器。</li>
+<li>Spring Cloud Task：该组件基于SpringTask，提供了任务调度和任务管理的功能。</li>
+<li>Spring Cloud Connectors：用于Paas云平台连接到后端。</li>
+</ul>
+<h2 id="Dubbo简介"><a href="#Dubbo简介" class="headerlink" title="Dubbo简介"></a>Dubbo简介</h2><p>Dubbo是阿里巴巴开源的一个分布式服务框架，致力于提供高性能和1透明化的RPC远程服务调用方案，以及SOA服务冶理方案。Dubbo广泛用于阿里巴巴的各大站点，有很多互联网公司也在使用这个框架，它包含如下核心内容。</p>
+<ul>
+<li>RPC远程调用：封装了长连接NIO框架，如Netty、Mina等，采用的是多线程模式。</li>
+<li>集群容错：提供了基于接口方法的远程调用的功能，并实现了负载均衡策略、失败容错等功能。</li>
+<li>服务发现：集成了Apache的Zookeeper组件，用于服务的注册和发现。</li>
+</ul>
+<p>Dubbo框架的架构图如图2-10所示。<br><img src="/images/springcloud/chapter2/Dubbo%E6%A1%86%E6%9E%B6%E7%9A%84%E6%9E%B6%E6%9E%84%E5%9B%BE.png" alt="Dubbo框架的架构图"></p>
+<p>Dubbo架构的流程如下。</p>
+<ol>
+<li>服务提供者向服务中心注册服务。</li>
+<li>服务消费者订阅服务。</li>
+<li>服务消费者发现服务。</li>
+<li>服务消费者远程调度服务提供者进行服务消费，在调度过程中，使用了负载均衡策略、失败容错的功能。</li>
+<li>服务消费者和提供者，在内存中记录服务的调用次数和调用时间，并定时每分钟发送一次统计数据到监控中心。</li>
+</ol>
+<p>Dubbo是一个非常优秀的服务治理框架，在国内互联网公司应用广泛。它具有以下特性。</p>
+<ul>
+<li>连通性：注册中心负责服务的注册：监控中心负责收集调用次数、调用时间：注册中心、服务提供者、服务消费者为长连接。</li>
+<li>健壮性：监控中心宕机不影响其他服务的使用；注册中心集群，任意一个实例岩机自动切换到另一个注册中心实例；服务实例集群，任意一个实例岩机，自动切换到另外一个可用的实例。</li>
+<li>伸缩性：可以动态增减注册中心和服务的实例数量。</li>
+<li>升级性：服务集群升级，不会对现有架构造成压力。</li>
+</ul>
+<h2 id="Spring-Cloud与Dubbo比较"><a href="#Spring-Cloud与Dubbo比较" class="headerlink" title="Spring Cloud与Dubbo比较"></a>Spring Cloud与Dubbo比较</h2><p>首先从微服务关注点来比较SpringCloud和Dubbo两大服务框架，如表2-1所示。<br><img src="/images/springcloud/chapter2/SpringCloud%E4%B8%8EDubbo%E6%AF%94%E8%BE%83.png" alt="SpringCloud与Dubbo比较"></p>
+<p>Spring Cloud拥有很多的项目模块，包含了微服务系统的方方面面。Dubbo是一个非常优秀的服务治理和服务调用框架，但缺少很多功能模块，例如网关、链路追踪等。在项目模块上，Spring Cloud 占据轩更大的优势。</p>
+<p>Spring Cloud的更新速度非常块，Camden.SR5版本发布于2017年2月6日，Camden.SR6版本发布于2017年3月10日，Dalston版本发布于2017年4月12日，基本每个月会发－次版本的法代。从GitHub的代码仓库来看，SpringCloud几乎每天都有更新。阿里巴巴于2011年IO月开源了Dubbo，开源后的Dubbo发展迅速，大概每2-3个月有一次版本更新。然而，从在2013年3月开始，Dubbo暂停了版本更新，并只在2014年10月发布了一个小版本，修复了一个bug，之后长期处于版本停止更新的状态。直到2017年9月，阿里巴巴中间件部门重新组建了Dubbo团队，把Dubbo列为重点开源项目，并在2017年9～11月期间，一直保持每月一次版本更新的频率。</p>
+<p>从学习成本上考虑，Dubbo的版本趋于稳定，文档完善，可以即学即用，没有太大难度。Spring Cloud 居于SpringBoot开发，需要开发者先学会SpringBoot。另外，SpringCloud版本法代快，需要快j事跟进学习。SpringCloud文档大多是英文的，要求学习者有一定的英文阅读能力。此外，SpringCloud文档很多，不容易快速找到相应的文档。</p>
+<p>开发风格上来讲，Dubbo更倾向于SpringXml的配置方式，Dubbo官方也推荐这种方式。Spring Cloud 基于SpringBoot, Spring Boot采用的是基于注解和JavaBean配置方式的敏捷开发。</p>
+<p>从开发速度上讲，SpringCloud具有更高的开发和部署速度。</p>
+<p>最后，SpringCloud的通信方式大多数是基于HTTPRestful风格的，服务与服务之间完全无关、无相合。由于采用的是HTTPRest，因此服务无关乎语言和平台，共需要提供相应API接口，就可以相互调用。Dubbo的通信方式基于远程调用，对接口、平台和语言有强依赖性。如果需要实现跨平台调用服务，需要写额外的中间件，这也是Dubbo存在的原因。</p>
+<p>Dubbo和SpringCloud拥有各自的优缺点。Dubbo更易上手，并且广泛使用于阿里巴巴的各大站点，经历了“双ll”期间高井发、大流量的检验，Dubbo框架非常成熟和稳定。SpringCloud 服务框架严格遵守MartinFowler提出的微服务规范，社区异常活跃，它很可能成为微服务架构的标准。</p>
+<h2 id="Kubernetes简介"><a href="#Kubernetes简介" class="headerlink" title="Kubernetes简介"></a>Kubernetes简介</h2><p>Kubernetes是一个容器集群管理系统，为容器化的应用程序提供部署运行、维护、扩展、资源调度、服务发现等功能。</p>
+<p>Kubernetes是Google运行Borg大规模系统达15年之久的一个经验总结。Kubernetes结合了社区的最佳创意和实践，旨在帮助开发人员将容器打包、动态编排，同时帮助各大公司向微服务方向进行技术演进。</p>
+<p>它具有以下特点。</p>
+<ul>
+<li>Planet Scale （大容量）：使用Kubemetes的各大公司（包括Google）每周运行了数十亿个容器，这些容器的平台采用同样的设计原则。这些平台在不增加DevOps团队成员的情况下，可以让容器数量增加，节省了人力成本，达到了复用性。</li>
+<li>Never Outgrow （永不过时）：无论容器是运行在一个小公司的测试环境中，还是运行在一个全球化企业的大型系统里，Kubemetes都能灵活地满足复杂的需求。同时，无论业务多么复杂，Kubernetes都能稳定地提供服务。</li>
+<li>Run Anywhere（随时随地运行）: Kubernetes是开源的，可以自由地利用内部、混合或公共云的基础组件进行部署，让开发者可以将更多的时间和精力投入在业务上，而不是服务部署上。</li>
+</ul>
+<p>Kubernetes开源免费，是Google在过去15年时间里部署、管理微服务的经验结晶，所以目前Kubernetes在技术社区也是十分火热。下面来看它提供的功能。</p>
+<ul>
+<li>Automatic Binpacking （自动包装）：根据程序自身的资源需求和一些其他方面的需求自动配置容器。Kubernetes能够最大化地利用机器的工作负载，提高资源的利用率。</li>
+<li>Self-healing （自我修复〉：容器失败自动重启，当节点处于“死机”的状态时，它会被替代并重新编排；当容器达到用户设定的无响应的阀值时，它会被剔除，井且不让其他容器调用它，直到它恢复服务。</li>
+<li>Horizontal Scaling （横向扩展）：可以根据机器的CPU的使用率来调整容器的数量，只需开发人员在管理界面上输入几个命令即可。</li>
+<li>Service Discovery and Load Balancing （服务发现和负载均衡〉：在不需要修改现有的应用程序代码的情况下，便可使用服务的发现机制。Kubernetes为容器提供了一个虚拟网络环境，每个容器拥有独立的IP地址和DNS名称，容器之间实现了负载均衡。</li>
+<li>Automated Rollouts and Rollbacks （自动部署或回滚）: Kubernetes支撑滚动更新模式，能逐步替换掉当前环境的应用程序和配置，同时监视应用程序运行状况，以确保不会同时杀死所有实例。如果出现问题，Kubernetes支持回滚更改。</li>
+<li>Secret and Configuration Management （配置管理〉：部署和更新应用程序的配置，不需要重新打镜像，并且不需要在堆找中暴露配置。</li>
+<li>Storage Orchestration （存储编排）：自动安装所选择的存储系统，无论是本地存储、公共云提供商（如GCP或AWS），还是网络存储系统（如NFS、iSC町、Gluster、Ceph、Cinder或Flocker） 。</li>
+<li>Batch execution （批量处理）：除了服务之外，Kubemetes还可以管理批量处理和CI的工作负载，如果需要，可以替换容器，如NFS、iSCSI、Gluster、Ceph、Cinder或Flocker等。</li>
+</ul>
+<p>从Kubemetes提供的功能来看，Kubernetes完全可以成为构建和部署微服务的一个工具，它是从服务编排｜二实现的，而不是代码实现的。目前国外有很多知名的公司在使用Kubernetes,如Google、eB町、Pearson等。由于它的开源免费，Microsoft,VMWare、RedHat、CoreOS等公司纷纷加入井贡献代码。Kubemetes技术吸引了一大批公司和技术爱好者，它已经成为容器管理的领导者。</p>
+<h2 id="Spring-Cloud与Kubernetes比较"><a href="#Spring-Cloud与Kubernetes比较" class="headerlink" title="Spring Cloud与Kubernetes比较"></a>Spring Cloud与Kubernetes比较</h2><p>Spring Cloud是一个构建微服务的框架，而Kubernetes是通过对运行的容器的编排来实现构建微服务的。两者从构建微服务的角度和实现方式有很大的不同，但它们提供了构建微服务所需的全部功能。从提供的微服务所需的功能上看，两者不分上下，如表2-2所示。</p>
+<p><img src="/images/springcloud/chapter2/SpringCloud%E4%B8%8EKubernetes%E6%AF%94%E8%BE%83.png" alt="SpringCloud与Kubernetes比较"></p>
+<p>Spring Cloud通过众多的类库来实现微服务系统所需的各个组件，同时不断集成优秀的组件，所以SpringCloud组件是非常完善的。SpringCloud基于SpringBoot框架，有快速开发、快速部署的优点。对于Java开发者来说，学习SpringCloud的成本不高。</p>
+<p>Kubemetes在编排上解决微服务的各个功能，例如服务发现、配置管理、负载均衡、容错等。Kubemetes不局限于Java平台，也不局限于语言，开发者可以自由选择开发语言进行项目开发。</p>
+<p>与Kubemetes相比，SpringCloud具有以下优点。</p>
+<ul>
+<li>采用Java语言开发，基于Spring平台，继承了SpringBoot快速开发的优势，是Java程序员实现微服务的最佳实践。</li>
+<li>Spring Cloud有大量的类库和资源，基本上能解决所有可能出现的问题。</li>
+</ul>
+<p>与Kubemetes比较，SpringCloud具有以下缺点。</p>
+<ul>
+<li>依赖于Java语言，不支持跨语言。</li>
+<li>Spring Cloud需要在代码中关注微服务的功能点，例如服务发现、负载均衡等。Kubemetes则不需要关注这些。</li>
+</ul>
+<p>下面介绍Kubemetes的优点和缺点，优点如下。</p>
+<ul>
+<li>Kubemetes支持多种语言，并且是一个容器管理平台。Kubemetes使程序容器化，并在容器管理上提供了微服务的功能，例如配置管理、服务发现、负载均衡等。Kubemetes能够被应用于多种场合，例如程序开发、测试环境、创建环境等。</li>
+<li>Kubemetes除了提供基本的构建微服务的功能外，还提供了环境、资源限制、管理应用程序的生命周期的功能。Kubemetes更像是一个平台，而<br>SpringCloud是一个框架。</li>
+</ul>
+<p>Kubemetes的缺点如下。</p>
+<ul>
+<li>Kubemetes面向DevOps人员，普通的开发人员需要学习很多这方面的知识，学习成本非常高。</li>
+<li>Kubemetes仍然是一个相对较新的平台，发展十分迅速。新特性更新得快，所以需要DevOps人员跟进，不断地学习。</li>
+</ul>
+<p>Spring Cloud尝试从Java类库来实现微服务的所有功能，而Kubernetes尝试从容器编排上实现所有的微服务功能，两者的实现角度和方式不一样。个人觉得，两者最终的实现功能和效果上不分胜负，但从实现的方式上来讲，Kubernetes略胜一筹。Kubernetes面向DevOps人员，学习成本高。SpringCloud有很多的类库，以Spring为基础，继承了SpringBoot快速开发的优点，为Java程序员开发微服务提供了很好的体验，学习成本也较低。所以二者比较，各有优势。没有最好的框架，也没有最好的工具，关键是要适合业务需求和满足业务场景。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>首先介绍了微服务应该具备的功能，然后介绍了SpringCloud和SpringCloud的基本组件，战后介绍了SpringCloud与Dubbo、Kubemetes之间的比较，以及它们的优缺点。SpringCloud作为Java语言的微服务落地框架，有很多的微服务组件。为了循序渐进地学习这些组件，第3、4章将介绍构建微服务前的准备工作，这是学习SpringCloud组件的基本前提。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Spring-Cloud%E4%B8%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%84%E5%BB%BA/" rel="tag"># 深入理解Spring Cloud与微服务构建</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/04/30/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%AE%80%E4%BB%8B/" rel="prev" title="微服务简介">
+                  <i class="fa fa-angle-left"></i> 微服务简介
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/04/30/%E6%9E%84%E5%BB%BA%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%87%86%E5%A4%87/" rel="next" title="构建微服务的准备">
+                  构建微服务的准备 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">星之辰</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">110k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">6:39</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>-->
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true}});</script></body>
+</html>
