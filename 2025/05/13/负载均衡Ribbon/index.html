@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"angryxzc.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="如何使用RestTemplate和Ribbon相结合作为服务消费者去消费服务，同时从源码的角度来深入了解Ribbon。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="负载均衡Ribbon">
+<meta property="og:url" content="http://angryxzc.github.io/2025/05/13/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1Ribbon/index.html">
+<meta property="og:site_name" content="星之辰的博客">
+<meta property="og:description" content="如何使用RestTemplate和Ribbon相结合作为服务消费者去消费服务，同时从源码的角度来深入了解Ribbon。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://angryxzc.github.io/images/springcloud/chapter6/localhost8761%E9%A1%B5%E9%9D%A2.png">
+<meta property="og:image" content="http://angryxzc.github.io/images/springcloud/chapter6/localhost8761%E4%B8%89%E5%AE%9E%E4%BE%8B%E9%A1%B5%E9%9D%A2.png">
+<meta property="og:image" content="http://angryxzc.github.io/images/springcloud/chapter6/%E5%9B%BE6-3LoadBalancerClient%E7%9A%84%E7%88%B6%E7%B1%BB%E5%92%8C%E5%AE%9E%E7%8E%B0%E7%B1%BB.png">
+<meta property="og:image" content="http://angryxzc.github.io/images/springcloud/chapter6/%E5%9B%BE6-4ILoadBalancer%E7%9A%84%E5%AE%9E%E7%8E%B0%E7%B1%BB.png">
+<meta property="og:image" content="http://angryxzc.github.io/images/springcloud/chapter6/%E5%9B%BE6-5IRule%E7%9A%84%E5%AE%9E%E7%8E%B0%E7%B1%BB.png">
+<meta property="article:published_time" content="2025-05-13T08:01:56.000Z">
+<meta property="article:modified_time" content="2025-05-14T07:19:13.907Z">
+<meta property="article:author" content="星之辰">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="深入理解Spring Cloud与微服务构建">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://angryxzc.github.io/images/springcloud/chapter6/localhost8761%E9%A1%B5%E9%9D%A2.png">
+
+
+<link rel="canonical" href="http://angryxzc.github.io/2025/05/13/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1Ribbon/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://angryxzc.github.io/2025/05/13/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1Ribbon/","path":"2025/05/13/负载均衡Ribbon/","title":"负载均衡Ribbon"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>负载均衡Ribbon | 星之辰的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">星之辰的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">What I cannot create, I do not understand-Feynman Diagram</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#RestTemplate%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">RestTemplate简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ribbon%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">Ribbon简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8RestTemplate%E5%92%8CRibbon%E6%9D%A5%E6%B6%88%E8%B4%B9%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.</span> <span class="nav-text">使用RestTemplate和Ribbon来消费服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LoadBalancerClient%E7%AE%80%E4%BB%8B"><span class="nav-number">4.</span> <span class="nav-text">LoadBalancerClient简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90Ribbon"><span class="nav-number">5.</span> <span class="nav-text">源码解析Ribbon</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">星之辰</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://angryxzc.github.io/2025/05/13/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1Ribbon/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="星之辰">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星之辰的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="负载均衡Ribbon | 星之辰的博客">
+      <meta itemprop="description" content="如何使用RestTemplate和Ribbon相结合作为服务消费者去消费服务，同时从源码的角度来深入了解Ribbon。">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          负载均衡Ribbon
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-05-13 16:01:56" itemprop="dateCreated datePublished" datetime="2025-05-13T16:01:56+08:00">2025-05-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-05-14 15:19:13" itemprop="dateModified" datetime="2025-05-14T15:19:13+08:00">2025-05-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>13 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">如何使用RestTemplate和Ribbon相结合作为服务消费者去消费服务，同时从源码的角度来深入了解Ribbon。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="RestTemplate简介"><a href="#RestTemplate简介" class="headerlink" title="RestTemplate简介"></a>RestTemplate简介</h2><p>RestTemplate是SpringResources中一个访问第三方RESTfulAPI接口的网络请求框架。RestTemplate的设计原则和其他SpringTemplate （例如JdbcTemplate、JmsTemplate）类似，都是为执行复杂任务提供了一个具有默认行为的简单方法。</p>
+<p>RestTemplate是用来消费REST服务的，所以RestTemplate的主要方法都与REST的Http协议的一些方法紧密相连，例如HEAD、GET、POST、PUT、DELETE和OPTIONS等方法，这些方法在RestTemplate类对应的方法为headForHeaders（）、getForObject（）、postForObject（）、put（）和delete（）等。</p>
+<p>举例说明，写一个RestTestController类，获取<a target="_blank" rel="noopener" href="https://www.baidu.com/">https://www.baidu.com/</a>的网页Html代码。首先在RestTestController类上加＠RestController注解，开启RestController的功能。通过RestTemplate的getForObject（）方法可以获取<a target="_blank" rel="noopener" href="https://www.baidu.com/">https://www.baidu.com/</a>的网页Html代码，并在API接口“／testRest” 返回该网页的Html字符串。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span> </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RestTestController</span> &#123; </span><br><span class="line">    <span class="meta">@GetMapping(”/testRest”)</span> </span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">testRest</span><span class="params">()</span> &#123;</span><br><span class="line">         RestTemplate restTemplate=<span class="keyword">new</span> <span class="title class_">RestTemplate</span>(); </span><br><span class="line">         <span class="keyword">return</span> </span><br><span class="line">         restTemplate.getForObject( ”https:<span class="comment">//www.baidu. com/”,String.class); </span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>RestTemplate支持常见的Http协议的请求方法，例如Post、Put、Delete等，所以用RestTemplate很容易构建RESTfulAPI。在上面的例子中，RestTemplate用Get方法获取<a target="_blank" rel="noopener" href="https://www.baidu.com/">https://www.baidu.com</a>网页的Html字符串。RestTemplate的使用很简单，它支持Xml、JSON数据格式，默认实现了序列化，可以自动将JOSN字符串转换为实体。例如以下代码可以将返回的JSON字符申转换成一个User对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User useRestTemplate.getForObject（<span class="string">&quot;https://www.xxx.com/user/1&quot;</span>，User.class）；</span><br></pre></td></tr></table></figure>
+
+<h2 id="Ribbon简介"><a href="#Ribbon简介" class="headerlink" title="Ribbon简介"></a>Ribbon简介</h2><p>负载均衡是指将负载分摊到多个执行单元上，常见的负载均衡有两种方式。一种是独立进程单元，通过负载均衡策略，将请求转发到不同的执行单元上，例如Ngnix。另一种是将负载均衡逻辑以代码的形式封装到服务消费者的客户端上，服务消费者客户端维护了一份服务提供者的信息列表，有了信息列表，通过负载均衡策略将请求分摊给多个服务提供者，从而达到负载均衡的目的。</p>
+<p>Ribbon是Netflix公司开源的一个负载均衡的组件，它属于上述的第二种方式，是将负载均衡逻辑封装在客户端中，并且运行在客户端的进程里。Ribbon是一个经过了云端测试的IPC库，司以很好地控制HTTP和TCP客户端的负载均衡行为。</p>
+<p>在SpringCloud构建的微服务系统中，Ribbon作为服务消费者的负载均衡器，有两种使用方式，一种是和RestTemplate相结合，另一种是和Feign相结合。Feign已经默认集成了Ribbon,关于Feign的内容将会在后续博客进行详细讲解。</p>
+<p>Ribbon有很多子模块，但很多模块没有用于生产环境，目前Netflix公司用于生产环境的Ribbon子模块如下。</p>
+<ul>
+<li>ribbon-loadbalancer：可以独立使用或与其他模块一起使用的负载均衡器API。</li>
+<li>ribbon-eureka：Ribbon结合Eureka客户端的API，为负载均衡器提供动态服务注册列表信息。</li>
+<li>ribbon-core: Ribbon的核心API。</li>
+</ul>
+<h2 id="使用RestTemplate和Ribbon来消费服务"><a href="#使用RestTemplate和Ribbon来消费服务" class="headerlink" title="使用RestTemplate和Ribbon来消费服务"></a>使用RestTemplate和Ribbon来消费服务</h2><p>本案例是在<a href="https://angryxzc.github.io/2025/05/01/%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E5%92%8C%E5%8F%91%E7%8E%B0Eureka/">上节案例</a>的基础上进行改造的，先回顾一下上节中的代码结构，它包括一个服务注册巾心eureka-server、一个服务提供者eureka也lient。eureka-client向eureka-server注册服务，并且eureka-client提供了一个“&#x2F;hi”API接口，用于提供服务。</p>
+<p>动eureka-server，端口为8761。启动两个eureka-client实例，端口分别为8762和8763。启动完成后，在浏览器上访问&lt;<a href="http://localhost:876l">http://localhost:876l</a> ／&gt;，浏览器显示eureka-client的两个实例已经成功向服务注册中心注册，它们的端口分别为8762和8763，如图6-1所示。</p>
+<p><img src="/images/springcloud/chapter6/localhost8761%E9%A1%B5%E9%9D%A2.png" alt="图片6-1"></p>
+<p>创建完成eureka-ribbon-client的Module工程之后，在其pom文件中引入相关的依赖，包括继承了主Maven工程的pom文件，引入了EurekaClient的起步依赖spring-cloud-starter­eureka、Ribbon的起步依赖spring-cloud-starter-ribbon，以及Web的起步依赖spring-boot-starter-web, 代码如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag"> <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.forezp<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>eureka-ribbon-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="tag">&lt;<span class="name">name</span>&gt;</span>eureka-ribbon-client<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">description</span>&gt;</span>Demo project for Spring Boot<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.forezp<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>chapter5-2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-eureka<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-ribbon<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在工程的配置文件appIication.yml做程序的相关配置，包括指定程序名为eureka-ribbon-­client，程序的端口号为8764，服务的注册地址为<a href="http://localhost:876l/eureka/">http://localhost:876l/eureka/</a>，代码如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">eureka-ribbon-client</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8764</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line">  <span class="attr">client:</span></span><br><span class="line">    <span class="attr">serviceUrl:</span></span><br><span class="line">      <span class="attr">defaultZone:</span> <span class="string">http://localhost:8761/eureka/</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>另外，作为EurekaClient需要在程序的入口类加上注解＠EnableEurekaClient开启EurekaClient功能，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.forezp;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.netflix.eureka.EnableEurekaClient;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableEurekaClient</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">EurekaRibbonClientApplication</span> &#123;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">  SpringApplication.run(EurekaRibbonClientApplication.class, args);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>写一个RESTfulAPI接口，在该API接口内部需要调用eureka-client的API接口＂&#x2F;hi”，即服务消费。由于eureka-client为两个实例，它们的端口为8762和8763。在调用eureka-client的API接口“／hi”时希望做到轮流访问这两个实例，这时就需要将RestTemplate和Ribbon相结合，进行负载均衡。</p>
+<p>通过查阅官方文档，可以知道如何将它们结合在一起，只需要在程序的IoC容器中注入一个restTemplate的Bean，并在这个Bean上加上@LoadBalanced注解，此时RestTemplate就结合了阳bbon开启了负载均衡功能，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.forezp.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.loadbalancer.LoadBalanced;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.client.RestTemplate;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by fangzhipeng on 2017/6/13.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RibbonConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@LoadBalanced</span></span><br><span class="line">    RestTemplate <span class="title function_">restTemplate</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RestTemplate</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>写一个RibbonService类，在该类的hi（）方法用restTemplate调用eureka-client的API接口，此时Uri上不需要使用硬编码（例如IP地址），只需要写服务名eureka-client即可，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.forezp.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.client.RestTemplate;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by fangzhipeng on 2017/6/13.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RibbonService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    RestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">hi</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> restTemplate.getForObject(<span class="string">&quot;http://eureka-client/hi?name=&quot;</span>+name,String.class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>写一个RibbonController类，为该类加上＠RestController注解，开启RestController的功能，写一个“／hi”Get方法的接口，调用RibbonService类的hi（）方法，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.forezp.web;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.forezp.service.RibbonService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.ServiceInstance;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.loadbalancer.LoadBalancerClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestParam;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by fangzhipeng on 2017/6/13.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RibbonController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    RibbonService ribbonService;</span><br><span class="line">    <span class="meta">@GetMapping(&quot;/hi&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">hi</span><span class="params">(<span class="meta">@RequestParam(required = false,defaultValue = &quot;forezp&quot;)</span> String name)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ribbonService.hi(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>启动eureka-ribbon-client工程，在浏览器上访问<a href="http://localhost:876l">http://localhost:876l</a>，显示的EurekaServer 的主界面如图6-2所示。<br><img src="/images/springcloud/chapter6/localhost8761%E4%B8%89%E5%AE%9E%E4%BE%8B%E9%A1%B5%E9%9D%A2.png" alt="图片6-2"><br>在主界面上发现有两个服务被注册，分别为eureka-client和eureka-ribbon-client，其中eureka-client有两个实例，端口为8762和8763，而eureka-ribbon-client的端口为8764。</p>
+<p>在浏览器上多次访问<a target="_blank" rel="noopener" href="http://localhost:8764/hi?name=forezp">http://localhost:8764/hi?name=forezp</a>，浏览器会轮流显示如下内容：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Hello forezp, this is from port:8762</span><br><span class="line">Hello forezp, this is from port:8763</span><br></pre></td></tr></table></figure>
+
+<p>这时可以发现，当访问<a target="_blank" rel="noopener" href="http://localhost:8764/hi?name=forezp">http://localhost:8764/hi?name=forezp</a>的API接口时，负载均衡器起了作用，负载均衡器会轮流地请求eureka-client的两个实例中的“&#x2F;hi”API接口。</p>
+<h2 id="LoadBalancerClient简介"><a href="#LoadBalancerClient简介" class="headerlink" title="LoadBalancerClient简介"></a>LoadBalancerClient简介</h2><p>负载均衡器的核心类为LoadBalancerClient,LoadBalancerCiient可以获取负载均衡的服务提供者的实例信息。为了演示，在RibbonController重新写一个接口“／testRibbon”，通过LoadBalancerClient去选择一个eureka-client的服务实例的信息，并将该信息返回，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.forezp.web;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.forezp.service.RibbonService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.ServiceInstance;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.loadbalancer.LoadBalancerClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestParam;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by fangzhipeng on 2017/6/13.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RibbonController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    RibbonService ribbonService;</span><br><span class="line">    <span class="meta">@GetMapping(&quot;/hi&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">hi</span><span class="params">(<span class="meta">@RequestParam(required = false,defaultValue = &quot;forezp&quot;)</span> String name)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ribbonService.hi(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> LoadBalancerClient loadBalancer;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/testRibbon&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String  <span class="title function_">testRibbon</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">ServiceInstance</span> <span class="variable">instance</span> <span class="operator">=</span> loadBalancer.choose(<span class="string">&quot;eureka-client&quot;</span>);</span><br><span class="line">      <span class="comment">//  URI uri = URI.create(String.format(&quot;http://%s:%s&quot;, instance.getHost(), instance.getPort()));</span></span><br><span class="line">        <span class="keyword">return</span> instance.getHost()+<span class="string">&quot;:&quot;</span>+instance.getPort();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重新启动工程，在浏览器上多次访问<a target="_blank" rel="noopener" href="http://localhost:8764/testRibbon">http://localhost:8764/testRibbon</a>，浏览器会轮流显示如下内容：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">localhost:8762</span><br><span class="line">localhost:8763</span><br></pre></td></tr></table></figure>
+
+<p>可见，LoadBalancerClient的choose（”eureka-client＇’）方法可以轮流得到eureka-client的两个服务实例的信息。</p>
+<p>那么负载均衡器是怎么获取到这些客户端的信息的呢？查看官方文档可以知道，负载均衡器LoadBalancerClient是从EurekaClient获取服务注册列表信息的，并将服务注册列表信息缓存了一份。在LoadBalancerClient调用choose（）方法时，根据负载均衡策略选择一个服务实例的信息，从而进行了负载均衡。LoadBalancerClient也可以不从EurekaClient获取注册列表信息，这时需要自己维护一份服务注册列表信息。</p>
+<p>为了进一步讲解，在6.3节中工程的基础之上再创建一个工程，取名为ribbon-client。ribbon-client工程的pom文件同eureka-ribbon-client工程的类似，在ribbon-client工程的程序的启动类RibbonClientApplication加上＠SpringBootApplication的注解，开启SpringBoot的基本功能。</p>
+<p>在ribbon-client工程的配置文件application.yml中，通过配置ribbon.eureka.enable为false来禁止调用EurekaClient获取注册列表。在配置文件application.yml中有一个程序名为stores的服务，有两个不同Uri地址（例如example.com和google.com）的服务实例，通过stores.ribbon.listOfServers来配置这些服务实例的Uri，代码如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stores:</span></span><br><span class="line">  <span class="attr">ribbon:</span></span><br><span class="line">    <span class="attr">listOfServers:</span> <span class="string">example.com,google.com</span></span><br><span class="line"></span><br><span class="line"><span class="attr">ribbon:</span></span><br><span class="line">  <span class="attr">eureka:</span></span><br><span class="line">   <span class="attr">enabled:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8769</span></span><br></pre></td></tr></table></figure>
+
+<p>新建一个RestController类，创建一个API接口“／testRibbon”。在RestController类注入LoadBalancerClient，通过LoadBalancerClient的choose（）方法获取服务实例的信息，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.forezp.web;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.ServiceInstance;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.loadbalancer.LoadBalancerClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestParam;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by fangzhipeng on 2017/6/13.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RibbonController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> LoadBalancerClient loadBalancer;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/testRibbon&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String  <span class="title function_">testRibbon</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">ServiceInstance</span> <span class="variable">instance</span> <span class="operator">=</span> loadBalancer.choose(<span class="string">&quot;stores&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> instance.getHost()+<span class="string">&quot;:&quot;</span>+instance.getPort();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>启动工程，在浏览器上多次访问h浏览器会交替出现以下内容：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">example.com:80</span><br><span class="line">google.com:80</span><br></pre></td></tr></table></figure>
+
+<p>现在我们可以知道，在Ribbon中的负载均衡客户端为LoadBalancerClient。在SpringCloud 项目中，负载均衡器Ribbon会默认从EurekaClient的服务注册列表中获取服务的信息，并缓存一份。根据缓存的服务注册列表信息，可以通过LoadBalancerClient来选择不同的服务实例，从而实现负载均衡。如果禁止Ribbon从Eureka获取注册列表信息，则需要自己去维护一份服务注册列表信息。根据自己维护服务注册列表的信息，Ribbon也可以实现负载均衡。</p>
+<h2 id="源码解析Ribbon"><a href="#源码解析Ribbon" class="headerlink" title="源码解析Ribbon"></a>源码解析Ribbon</h2><p>为了深入理解Ribbon，现在从源码的角度来讲解Ribbon，看它如何和Eureka相结合，井如何和RestTemplate相结合来做负载均衡。首先，跟踪LoadBalancerClient的源码，它是一个接口类，继承了ServiceinstanceChooser，它的实现类为RibbonLoadBalanceClient，它们之间的关系如图6-3所示。</p>
+<p><img src="/images/springcloud/chapter6/%E5%9B%BE6-3LoadBalancerClient%E7%9A%84%E7%88%B6%E7%B1%BB%E5%92%8C%E5%AE%9E%E7%8E%B0%E7%B1%BB.png" alt="图片6-3"></p>
+<p>LoadBalancerClient是一个负载均衡的客户端，有如下3种方法。其中有2个excute（）方法，均用来执行请求，reconstructURI（）用于重构Uri，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Source code recreated from a .class file by IntelliJ IDEA</span></span><br><span class="line"><span class="comment">// (powered by FernFlower decompiler)</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> org.springframework.cloud.client.loadbalancer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.ServiceInstance;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">LoadBalancerClient</span> <span class="keyword">extends</span> <span class="title class_">ServiceInstanceChooser</span> &#123;</span><br><span class="line">    &lt;T&gt; T <span class="title function_">execute</span><span class="params">(String var1, LoadBalancerRequest&lt;T&gt; var2)</span> <span class="keyword">throws</span> IOException;</span><br><span class="line"></span><br><span class="line">    &lt;T&gt; T <span class="title function_">execute</span><span class="params">(String var1, ServiceInstance var2, LoadBalancerRequest&lt;T&gt; var3)</span> <span class="keyword">throws</span> IOException;</span><br><span class="line"></span><br><span class="line">    URI <span class="title function_">reconstructURI</span><span class="params">(ServiceInstance var1, URI var2)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>关于<code>@Autowired     private LoadBalancerClient loadBalancer; </code>这部分是如何装配到IOC容器中的见springboot的自动装配机制</strong><br>ServicelnstanceChooser接口有一个方法用于根据serviceld获取Servicelnstance，即通过服务名来选择服务实例，代码如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Source code recreated from a .class file by IntelliJ IDEA</span></span><br><span class="line"><span class="comment">// (powered by FernFlower decompiler)</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> org.springframework.cloud.client.loadbalancer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.ServiceInstance;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ServiceInstanceChooser</span> &#123;</span><br><span class="line">    ServiceInstance <span class="title function_">choose</span><span class="params">(String var1)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>LoadBalancerClient的实现类为RibbonLoadBalancerClient。RibbonLoadBalancerCI ient是一个非常重要的类，最终的负载均衡的请求处理由它来执行。RibbonLoadBalancerClient的部分源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Source code recreated from a .class file by IntelliJ IDEA</span></span><br><span class="line"><span class="comment">// (powered by FernFlower decompiler)</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> org.springframework.cloud.netflix.ribbon;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.netflix.client.config.IClientConfig;</span><br><span class="line"><span class="keyword">import</span> com.netflix.loadbalancer.ILoadBalancer;</span><br><span class="line"><span class="keyword">import</span> com.netflix.loadbalancer.Server;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.URI;</span><br><span class="line"><span class="keyword">import</span> java.util.Collections;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.DefaultServiceInstance;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.ServiceInstance;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.loadbalancer.LoadBalancerClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.client.loadbalancer.LoadBalancerRequest;</span><br><span class="line"><span class="keyword">import</span> org.springframework.util.Assert;</span><br><span class="line"><span class="keyword">import</span> org.springframework.util.ReflectionUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RibbonLoadBalancerClient</span> <span class="keyword">implements</span> <span class="title class_">LoadBalancerClient</span> &#123;</span><br><span class="line">    ...<span class="comment">//省略部分代码</span></span><br><span class="line">    <span class="keyword">public</span> ServiceInstance <span class="title function_">choose</span><span class="params">(String serviceId)</span> &#123;</span><br><span class="line">        <span class="type">Server</span> <span class="variable">server</span> <span class="operator">=</span> <span class="built_in">this</span>.getServer(serviceId);</span><br><span class="line">        <span class="keyword">return</span> server == <span class="literal">null</span> ? <span class="literal">null</span> : <span class="keyword">new</span> <span class="title class_">RibbonServer</span>(serviceId, server, <span class="built_in">this</span>.isSecure(server, serviceId), <span class="built_in">this</span>.serverIntrospector(serviceId).getMetadata(server));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> Server <span class="title function_">getServer</span><span class="params">(String serviceId)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.getServer(<span class="built_in">this</span>.getLoadBalancer(serviceId));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> Server <span class="title function_">getServer</span><span class="params">(ILoadBalancer loadBalancer)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> loadBalancer == <span class="literal">null</span> ? <span class="literal">null</span> : loadBalancer.chooseServer(<span class="string">&quot;default&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> ILoadBalancer <span class="title function_">getLoadBalancer</span><span class="params">(String serviceId)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.clientFactory.getLoadBalancer(serviceId);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在RibbonLoadBalancerClient的源码中，choose（）方法用于选择具体服务实例。该方法通过getServer（）方法去获取实例，经过源码跟踪，最终交给ILoadBalancer类去选择服务实例。</p>
+<p>ILoadBalancer在ribbon-loadbalancer的jar包下，ILoadBalancer是一个接口，该接口定义了一系列实现负载均衡的方法，源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Source code recreated from a .class file by IntelliJ IDEA</span></span><br><span class="line"><span class="comment">// (powered by FernFlower decompiler)</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.netflix.loadbalancer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ILoadBalancer</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">addServers</span><span class="params">(List&lt;Server&gt; var1)</span>;</span><br><span class="line"></span><br><span class="line">    Server <span class="title function_">chooseServer</span><span class="params">(Object var1)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">markServerDown</span><span class="params">(Server var1)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** <span class="doctag">@deprecated</span> */</span></span><br><span class="line">    <span class="meta">@Deprecated</span></span><br><span class="line">    List&lt;Server&gt; <span class="title function_">getServerList</span><span class="params">(<span class="type">boolean</span> var1)</span>;</span><br><span class="line"></span><br><span class="line">    List&lt;Server&gt; <span class="title function_">getReachableServers</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    List&lt;Server&gt; <span class="title function_">getAllServers</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中，addServers（）方法用于添加一个Server集合，chooseServer（）方法用于根据key去获取Server,markServerDown（）方法用于标记某个服务下线，getReachableServers（）获取可用的Server集合，getAllServers（）获取所有的Server集合。</p>
+<p>ILoadBalancer的子类为BaseLoadBalancer,BaseLoadBalancer的实现类为DynamicServer­ListLoadBalancer，三者之间的关系如图6-4所示。<br><img src="/images/springcloud/chapter6/%E5%9B%BE6-4ILoadBalancer%E7%9A%84%E5%AE%9E%E7%8E%B0%E7%B1%BB.png" alt="图片6-4"></p>
+<p>查看DynamicServerListLoadBalancer类的源码，DynamicServerListLoadBalancer需要配置IClientConfig, IRule、IPing、ServerList、ServerListFilter和ILoadBalancer。查看BaseLoadBalancer类的源码，在默认的情况下，实现了如下配置。</p>
+<ul>
+<li>IClientConfig ribbonClientConfig: DefaultClientConfiglmpl。</li>
+<li>IRule ribbonRule: RoundRobinRule。</li>
+<li>IPing ribbonPing: DummyPing。</li>
+<li>ServerList ribbonServerList: ConfigurationBasedServerList。</li>
+<li>ServerListFilter ribbonServerListFilter: ZonePreferenceServerListFilter。</li>
+<li>ILoadBalancer ribbonLoadBalancer: ZoneAwareLoadBalancer。</li>
+</ul>
+<p>IClientConfig用于配置负载均衡的客户端，IClientConfig的默认实现类为DefaultClient­Configlmpl</p>
+<p>IRule用于配置负载均衡的策略，IRule有3个方法，其中choose（）是根据key来获取server实例的，setLoadBalancer（）和getLoadBalancer（）是用来设置和获取ILoadBalancer的，它的源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Source code recreated from a .class file by IntelliJ IDEA</span></span><br><span class="line"><span class="comment">// (powered by FernFlower decompiler)</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.netflix.loadbalancer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">IRule</span> &#123;</span><br><span class="line">    Server <span class="title function_">choose</span><span class="params">(Object var1)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">setLoadBalancer</span><span class="params">(ILoadBalancer var1)</span>;</span><br><span class="line"></span><br><span class="line">    ILoadBalancer <span class="title function_">getLoadBalancer</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>IRule有很多默认的实现类，这些实现类根据不同的算法和逻辑来处理负载均衡的策略。IRule的默认实现类有以下7种。在大多数情况下，这些默认的实现类是可以满足需求的，如果有特殊的谛求，可以自己实现。IRule和其实现类之间的关系如图6-5所示。</p>
+<p><img src="/images/springcloud/chapter6/%E5%9B%BE6-5IRule%E7%9A%84%E5%AE%9E%E7%8E%B0%E7%B1%BB.png" alt="图片6-5"></p>
+<ul>
+<li>BestAvailableRule：选择最小请求数。</li>
+<li>ClientConfigEnabledRoundRobinRule：轮询。</li>
+<li>RandomRule：随机选择一个server。</li>
+<li>RoundRobinRule：轮询选择server。</li>
+<li>RetryRule：根据轮询的方式重试。</li>
+<li>WeightedResponseTimeRule：根据响应时间去分配一个weight, weight越低，被选择的可能性就越低。</li>
+<li>ZoneAvoidanceRule：根据server的zone区域和可用性来轮询选择。</li>
+</ul>
+<p>TODO</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3Spring-Cloud%E4%B8%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%84%E5%BB%BA/" rel="tag"># 深入理解Spring Cloud与微服务构建</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/05/01/%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E5%92%8C%E5%8F%91%E7%8E%B0Eureka/" rel="prev" title="服务注册和发现Eureka">
+                  <i class="fa fa-angle-left"></i> 服务注册和发现Eureka
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/05/14/%E5%88%9D%E8%AF%86MySQL/" rel="next" title="初识MySQL">
+                  初识MySQL <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">星之辰</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">127k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">7:43</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>-->
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true}});</script></body>
+</html>
