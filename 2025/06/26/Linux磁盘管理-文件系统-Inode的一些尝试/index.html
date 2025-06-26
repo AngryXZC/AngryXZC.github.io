@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"angryxzc.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="记录Linux磁盘管理的实践过程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux磁盘管理,文件系统,Inode的一些尝试">
+<meta property="og:url" content="http://angryxzc.github.io/2025/06/26/Linux%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F-Inode%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%9D%E8%AF%95/index.html">
+<meta property="og:site_name" content="星之辰的博客">
+<meta property="og:description" content="记录Linux磁盘管理的实践过程">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-06-26T01:51:37.000Z">
+<meta property="article:modified_time" content="2025-06-26T08:04:58.868Z">
+<meta property="article:author" content="星之辰">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://angryxzc.github.io/2025/06/26/Linux%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F-Inode%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%9D%E8%AF%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://angryxzc.github.io/2025/06/26/Linux%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F-Inode%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%9D%E8%AF%95/","path":"2025/06/26/Linux磁盘管理-文件系统-Inode的一些尝试/","title":"Linux磁盘管理,文件系统,Inode的一些尝试"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Linux磁盘管理,文件系统,Inode的一些尝试 | 星之辰的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">星之辰的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">What I cannot create, I do not understand-Feynman Diagram</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Visual-Box-%E6%B7%BB%E5%8A%A0%E8%99%9A%E6%8B%9F%E7%A3%81%E7%9B%98"><span class="nav-number">1.</span> <span class="nav-text">Visual Box 添加虚拟磁盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dev-sda-%E5%92%8Cdev-sdb-%E4%BB%A5%E5%8F%8Adev-sdc%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">dev&#x2F;sda 和dev&#x2F;sdb 以及dev&#x2F;sdc有什么区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E6%A0%87%E7%AD%BE%E7%B1%BB%E5%9E%8B%EF%BC%9Ados-%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D%E3%80%82"><span class="nav-number">3.</span> <span class="nav-text">磁盘标签类型：dos  是什么意思。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA%E8%A1%A8"><span class="nav-number">4.</span> <span class="nav-text">磁盘分区表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%8C%BA%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%BB%A5%E5%8F%8AWindows%E4%B8%8B%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84FAT32%E5%92%8CNTFS"><span class="nav-number">5.</span> <span class="nav-text">分区格式化以及Windows下文件系统的FAT32和NTFS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%82%E8%BD%BD"><span class="nav-number">6.</span> <span class="nav-text">挂载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inode"><span class="nav-number">7.</span> <span class="nav-text">Inode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#inode-%E5%92%8C%E6%96%87%E4%BB%B6%E5%90%8D%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">8.</span> <span class="nav-text">inode 和文件名之间的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E9%93%BE%E6%8E%A5%EF%BC%88Symbolic-Link%EF%BC%89-%E5%92%8C-%E7%A1%AC%E9%93%BE%E6%8E%A5%EF%BC%88Hard-Link%EF%BC%89-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">9.</span> <span class="nav-text">软链接（Symbolic Link） 和 硬链接（Hard Link） 的区别</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">星之辰</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://angryxzc.github.io/2025/06/26/Linux%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F-Inode%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%9D%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="星之辰">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星之辰的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Linux磁盘管理,文件系统,Inode的一些尝试 | 星之辰的博客">
+      <meta itemprop="description" content="记录Linux磁盘管理的实践过程">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux磁盘管理,文件系统,Inode的一些尝试
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-06-26 09:51:37 / 修改时间：16:04:58" itemprop="dateCreated datePublished" datetime="2025-06-26T09:51:37+08:00">2025-06-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>13 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">记录Linux磁盘管理的实践过程</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="Visual-Box-添加虚拟磁盘"><a href="#Visual-Box-添加虚拟磁盘" class="headerlink" title="Visual Box 添加虚拟磁盘"></a>Visual Box 添加虚拟磁盘</h2><p>在 VirtualBox 中添加虚拟磁盘（Virtual Disk）的方法如下，适用于添加一个新的 VDI&#x2F;VHD&#x2F;VMDK 磁盘或挂载已有虚拟磁盘：</p>
+<p>✅ 方法一：给已有虚拟机添加新虚拟磁盘</p>
+<p>步骤：</p>
+<ol>
+<li>打开 VirtualBox → 选择虚拟机 → 点击上方菜单栏中的 “设置（Settings）”。</li>
+<li>在设置窗口中，选择左侧的 “存储（Storage）”。</li>
+<li>你会看到已有的控制器（比如 SATA Controller）→ 点击控制器右边的 +图标（添加硬盘）。</li>
+<li>选择：<ul>
+<li>创建新磁盘 → 创建新的虚拟磁盘（VDI&#x2F;VHD&#x2F;VMDK，设定大小等）。</li>
+<li>或者 选择已有磁盘 → 挂载现成的虚拟磁盘文件。</li>
+</ul>
+</li>
+<li>完成后，点击 “确定” 保存配置。</li>
+</ol>
+<p>✅ 方法二：使用命令行添加虚拟磁盘</p>
+<p>适合高级用户，可以用 VBoxManage 工具操作。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">VBoxManage storageattach <span class="string">&quot;虚拟机名称&quot;</span> \</span><br><span class="line">--storagectl <span class="string">&quot;SATA&quot;</span> \</span><br><span class="line">--port 1 \</span><br><span class="line">--device 0 \</span><br><span class="line">--<span class="built_in">type</span> hdd \</span><br><span class="line">--medium <span class="string">&quot;路径/文件名.vdi&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>例如</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">VBoxManage storageattach <span class="string">&quot;Ubuntu_VM&quot;</span> \</span><br><span class="line">--storagectl <span class="string">&quot;SATA Controller&quot;</span> \</span><br><span class="line">--port 1 \</span><br><span class="line">--device 0 \</span><br><span class="line">--<span class="built_in">type</span> hdd \</span><br><span class="line">--medium <span class="string">&quot;/home/user/VirtualBox VMs/newdisk.vdi&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>💡 补充说明</p>
+<table>
+<thead>
+<tr>
+<th>磁盘类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VDI</td>
+<td>VirtualBox 的原生格式，支持动态扩展。</td>
+</tr>
+<tr>
+<td>VHD</td>
+<td>虚拟硬盘格式，兼容性好，可用于其他虚拟化平台。</td>
+</tr>
+<tr>
+<td>VMDK</td>
+<td>VMware 的虚拟磁盘格式，也可用于 VirtualBox。</td>
+</tr>
+<tr>
+<td>固定磁盘大小</td>
+<td>磁盘大小在创建时就固定，不会动态扩展。</td>
+</tr>
+<tr>
+<td>动态磁盘大小</td>
+<td>磁盘大小会根据实际使用情况动态调整，节省空间。</td>
+</tr>
+</tbody></table>
+<h2 id="dev-sda-和dev-sdb-以及dev-sdc有什么区别？"><a href="#dev-sda-和dev-sdb-以及dev-sdc有什么区别？" class="headerlink" title="dev&#x2F;sda 和dev&#x2F;sdb 以及dev&#x2F;sdc有什么区别？"></a>dev&#x2F;sda 和dev&#x2F;sdb 以及dev&#x2F;sdc有什么区别？</h2><p>在 Linux 系统中，&#x2F;dev&#x2F;sda、&#x2F;dev&#x2F;sdb、&#x2F;dev&#x2F;sdc 是对 物理或虚拟磁盘设备 的命名，它们代表不同的磁盘。下面是它们的区别和命名逻辑：</p>
+<p>🧾 命名规则详解</p>
+<ul>
+<li>&#x2F;dev&#x2F;：是 Linux 中所有设备文件的目录。</li>
+<li>sd：表示一个 SCSI 磁盘（包括 SATA&#x2F;SCSI&#x2F;SAS&#x2F;USB 设备都统称为 sd）。</li>
+<li>a&#x2F;b&#x2F;c&#x2F;…：表示第几个磁盘（顺序取决于系统识别的顺序）。</li>
+</ul>
+<p>✅ 举例说明</p>
+<table>
+<thead>
+<tr>
+<th>磁盘设备</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x2F;dev&#x2F;sda</td>
+<td>第一个识别的磁盘(primary disk)</td>
+</tr>
+<tr>
+<td>&#x2F;dev&#x2F;sdb</td>
+<td>第二个识别的磁盘(secondary disk)</td>
+</tr>
+<tr>
+<td>&#x2F;dev&#x2F;sdc</td>
+<td>第三个识别的磁盘(tertiary disk)</td>
+</tr>
+</tbody></table>
+<p>🧩 分区命名（进一步）</p>
+<ul>
+<li>&#x2F;dev&#x2F;sda1、&#x2F;dev&#x2F;sda2：表示 sda 磁盘上的第 1、2 个分区。</li>
+<li>&#x2F;dev&#x2F;sdb1：表示第二块磁盘（sdb）上的第 1 个分区。</li>
+<li>如果是 GPT 分区，编号规则一样，只是格式方式不同。</li>
+</ul>
+<p>📌 使用场景</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x2F;dev&#x2F;sda</td>
+<td>系统盘，（通常挂载,\boot）</td>
+</tr>
+<tr>
+<td>&#x2F;dev&#x2F;sdb</td>
+<td>第二块磁盘(如数据盘、外接USB硬盘)</td>
+</tr>
+<tr>
+<td>&#x2F;dev&#x2F;sdc</td>
+<td>第三块磁盘(如备份盘、额外存储设备，新添加的虚拟磁盘)</td>
+</tr>
+</tbody></table>
+<p>在 VirtualBox、VMware 等虚拟机中，如果你添加多块虚拟磁盘，它们就会依次出现在 &#x2F;dev&#x2F;sda、&#x2F;dev&#x2F;sdb、&#x2F;dev&#x2F;sdc 中。</p>
+<p>🔍 查看当前磁盘状态的命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsblk</span><br></pre></td></tr></table></figure>
+
+<p>输出示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT</span><br><span class="line">sda      8:0    0   40G  0 disk</span><br><span class="line">├─sda1   8:1    0   1G   0 part /boot</span><br><span class="line">├─sda2   8:2    0   2G   0 part [SWAP]</span><br><span class="line">└─sda3   8:3    0  37G   0 part /</span><br><span class="line">sdb      8:16   0   20G  0 disk</span><br><span class="line">└─sdb1   8:17   0   20G  0 part /mnt/data</span><br></pre></td></tr></table></figure>
+
+<p>✅ 总结</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x2F;dev&#x2F;sda</td>
+<td>第一个磁盘（主磁盘）</td>
+</tr>
+<tr>
+<td>&#x2F;dev&#x2F;sdb</td>
+<td>第二个磁盘（次磁盘）</td>
+</tr>
+<tr>
+<td>&#x2F;dev&#x2F;sdc</td>
+<td>第三个磁盘（额外磁盘）</td>
+</tr>
+<tr>
+<td>&#x2F;dev&#x2F;sdXN</td>
+<td>第 N 个磁盘的第 X 个分区</td>
+</tr>
+</tbody></table>
+<p>如果你有多块磁盘设备，可以通过 lsblk、fdisk -l 或 blkid 查看详细信息。</p>
+<h2 id="磁盘标签类型：dos-是什么意思。"><a href="#磁盘标签类型：dos-是什么意思。" class="headerlink" title="磁盘标签类型：dos  是什么意思。"></a>磁盘标签类型：dos  是什么意思。</h2><p>磁盘标签类型 dos 指的是磁盘使用的 分区表格式，也称为 MBR（Master Boot Record）格式。它是最传统、最早期的一种磁盘分区方式，至今在某些场景下仍然被使用。</p>
+<p>✅ 什么是 DOS 分区表（MBR）？</p>
+<ul>
+<li>dos 是 Linux 工具（如 fdisk 或 parted）中对 MBR 分区表 的称呼。</li>
+<li>它源自 DOS 操作系统时代，因此得名。</li>
+</ul>
+<p>🔍 特点对比：DOS（MBR） vs GPT</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>DOS&#x2F;MBR 分区表</th>
+<th>GPT 分区表</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>最大磁盘容量</td>
+<td>~2TB(传统BIOS限制)</td>
+<td>理论上可达0.4ZB</td>
+</tr>
+<tr>
+<td>最大主分区数量</td>
+<td>4个主分区（或3个主分区+1个扩展分区）</td>
+<td>128个主分区（无主&#x2F;逻辑限制）</td>
+</tr>
+<tr>
+<td>启动方式支持</td>
+<td>仅支持传统 BIOS</td>
+<td>支持 UEFI 和传统 BIOS</td>
+</tr>
+<tr>
+<td>数据安全性</td>
+<td>较低，分区表损坏可能导致数据丢失</td>
+<td>较高，使用 CRC 校验分区表</td>
+</tr>
+<tr>
+<td>工具默认显示标签类型名</td>
+<td>dos</td>
+<td>gpt</td>
+</tr>
+</tbody></table>
+<p>📌 示例命令：查看磁盘分区表类型</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo parted /dev/sda <span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+
+<p>输出示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Partition Table: dos</span><br></pre></td></tr></table></figure>
+
+<p>✅ 什么时候用 dos（MBR）？</p>
+<table>
+<thead>
+<tr>
+<th>使用场景</th>
+<th>推荐与否</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>旧电脑只支持(BIOS)</td>
+<td>✅</td>
+<td>GPT可能无法启动</td>
+</tr>
+<tr>
+<td>小容量磁盘(&lt;2TB)</td>
+<td>✅</td>
+<td>无明显问题</td>
+</tr>
+<tr>
+<td>兼容性需求</td>
+<td>✅</td>
+<td>某些老旧系统或工具只支持 MBR</td>
+</tr>
+<tr>
+<td>新系统或大容量磁盘</td>
+<td>❌</td>
+<td>推荐使用 GPT</td>
+</tr>
+<tr>
+<td>Linux启动盘</td>
+<td>✅ &#x2F;❌</td>
+<td>默写老版本只支持MBR</td>
+</tr>
+</tbody></table>
+<p>🚀 如何切换为 GPT？</p>
+<ol>
+<li>使用 gdisk 或 parted 删除原有分区。</li>
+<li>然后创建新的 GPT 分区表：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo parted /dev/sdX</span><br><span class="line">(parted) mklabel gpt</span><br></pre></td></tr></table></figure>
+
+<h2 id="磁盘分区表"><a href="#磁盘分区表" class="headerlink" title="磁盘分区表"></a>磁盘分区表</h2><p>磁盘分区表是存储设备（如硬盘、SSD）上用于管理分区的结构。它定义了磁盘的分区布局、大小和类型等信息。常见的分区表类型有 MBR（Master Boot Record）和 GPT（GUID Partition Table）。磁盘分区表（Partition Table）是磁盘上的一段特殊区域，用于记录磁盘中 每个分区的位置、大小、类型 等信息。它就像磁盘的“目录索引”或“导航图”，没有它，操作系统无法知道磁盘怎么被划分、哪些区域可以用。</p>
+<p>✅ 简单理解</p>
+<p>想象硬盘是一块空地，分区表就是划地的图纸：</p>
+<ul>
+<li>把空地划成几块地（即几个分区）</li>
+<li>每块地在哪开始、多大、干什么用途（系统分区？数据分区？）</li>
+</ul>
+<p>操作系统读这个图纸，才能知道每块地怎么用。</p>
+<p>🧱 分区表的作用</p>
+<table>
+<thead>
+<tr>
+<th>作用</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>标记每个分区起始与结束的位置</td>
+<td>告诉系统每个分区在磁盘的哪段</td>
+</tr>
+<tr>
+<td>指定分区类型</td>
+<td>比如Linux分区、EFI分区、WindowsNTFS分区等</td>
+</tr>
+<tr>
+<td>管理主分区和扩展分区</td>
+<td>MBR分区表最多支持4个主分区或3个主分区+1个扩展分区</td>
+</tr>
+</tbody></table>
+<p>🔍 常见的分区表类型</p>
+<table>
+<thead>
+<tr>
+<th>分区表类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MBR（Master Boot Record）</td>
+<td>传统分区表，最多支持4个主分区或3个主分区+1个扩展分区。最大支持2TB磁盘。</td>
+</tr>
+<tr>
+<td>GPT（GUID Partition Table）</td>
+<td>新一代分区表，支持更大磁盘（理论上可达0.4ZB），最多支持128个分区。使用UEFI启动。</td>
+</tr>
+<tr>
+<td>BSD</td>
+<td>BSD 系统使用的分区表格式，支持多种分区类型。</td>
+</tr>
+<tr>
+<td>Sun</td>
+<td>SunOS 系统使用的分区表格式，主要用于 Solaris 系统。</td>
+</tr>
+<tr>
+<td>Apple</td>
+<td>macOS 使用的分区表格式，通常是 GPT。</td>
+</tr>
+<tr>
+<td>LDM（Logical Disk Manager）</td>
+<td>Windows 的动态磁盘分区表，支持跨磁盘卷等高级功能。</td>
+</tr>
+</tbody></table>
+<p>🎯 示例：MBR 分区表结构</p>
+<ul>
+<li>第 0 扇区（512 字节）：<ul>
+<li>前 446 字节：引导程序（bootloader）</li>
+<li>接下来的 64 字节：分区表（最多 4 项）</li>
+<li>最后 2 字节：MBR 结束标记 0x55AA</li>
+</ul>
+</li>
+</ul>
+<p>📌 使用工具查看分区表</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo parted /dev/sda <span class="built_in">print</span></span><br></pre></td></tr></table></figure>
+
+<p>输出示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Partition Table: gpt</span><br><span class="line">Disk Flags: </span><br><span class="line">Number  Start   End     Size    File system  Name     Flags</span><br><span class="line"> 1      1049kB  538MB   537MB   fat32        EFI      boot, esp</span><br><span class="line"> 2      538MB   21.5GB  21.0GB  ext4         root</span><br></pre></td></tr></table></figure>
+
+<h2 id="分区格式化以及Windows下文件系统的FAT32和NTFS"><a href="#分区格式化以及Windows下文件系统的FAT32和NTFS" class="headerlink" title="分区格式化以及Windows下文件系统的FAT32和NTFS"></a>分区格式化以及Windows下文件系统的FAT32和NTFS</h2><p>🧾 “分区进行格式化，其实就是安装文件系统”</p>
+<p>通俗地讲就是：<br>    “格式化” 就是在硬盘分区上安装一种能让操作系统管理文件的系统结构（即：文件系统）。</p>
+<p>✅ 举个例子：</p>
+<ul>
+<li>假设你把硬盘分成几块（比如 C盘、D盘）</li>
+<li>这些块是“空地”，你需要给它铺上地砖、安装架子、贴标签（这就是“安装文件系统”）</li>
+<li>操作系统只有认识这些结构，才能把文件正确存进去、找出来</li>
+</ul>
+<p>📂 文件系统是干什么的？</p>
+<p>文件系统是一套管理磁盘上文件和目录的方法，主要作用：</p>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>距离说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>定义文件怎么存</td>
+<td>记录文件的起始位置、大小、名字等</td>
+</tr>
+<tr>
+<td>管理空闲空间</td>
+<td>哪些位置是空的哪些位置被占用了</td>
+</tr>
+<tr>
+<td>提供控制权限</td>
+<td>谁能读，谁能写，谁能执行 这个文件</td>
+</tr>
+</tbody></table>
+<p>🪟 Windows 常见的文件系统</p>
+<table>
+<thead>
+<tr>
+<th>文件系统</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FAT32</td>
+<td>兼容性好，支持大多数操作系统，但单个文件最大只能 4GB。</td>
+</tr>
+<tr>
+<td>NTFS</td>
+<td>Windows 的主流文件系统，支持大文件（最大 16TB），有更好的安全性和性能。</td>
+</tr>
+<tr>
+<td>exFAT</td>
+<td>适用于大容量存储设备（如U盘、SD卡），支持大文件，兼容性较好。</td>
+</tr>
+<tr>
+<td>ReFS</td>
+<td>Windows Server 的新文件系统，支持大数据存储和高可用性，但不支持所有 Windows 版本。</td>
+</tr>
+<tr>
+<td>UDF</td>
+<td>通用光盘格式，主要用于光盘和DVD，但也可用于硬盘。</td>
+</tr>
+</tbody></table>
+<p>💡 “格式化” &#x3D; 清空 + 建立文件系统结构</p>
+<p>当你在 Windows 或 Linux 里点击“格式化磁盘”时，其实做了两件事：</p>
+<ol>
+<li>清空旧数据（或者至少标记为可覆盖）</li>
+<li>在分区上建立一个新的文件系统（如 NTFS 或 ext4）</li>
+</ol>
+<p>🛠 举个命令行例子（Linux）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 格式化 /dev/sdb1 为 ext4 文件系统</span></span><br><span class="line">mkfs.ntfs /dev/sdb1    <span class="comment"># 在 /dev/sdb1 上安装 NTFS 文件系统</span></span><br><span class="line">mkfs.ext4 /dev/sdb1    <span class="comment"># 安装 ext4（Linux 默认）</span></span><br></pre></td></tr></table></figure>
+
+<p>磁盘分好区之后不能直接使用，还需要进行格式化（安装文件系统），系统才能识别并正常使用这个分区。</p>
+<p>🧱 分区之后的使用流程：</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>①创建分区</td>
+<td>使用 fdisk、parted 等工具创建分区</td>
+</tr>
+<tr>
+<td>②格式化分区</td>
+<td>安装文件系统（如 mkfs.ntfs &#x2F; mkfs.ext4）</td>
+</tr>
+<tr>
+<td>③挂载分区</td>
+<td>指定一个挂载点，（如 &#x2F;mnt&#x2F;data）</td>
+</tr>
+<tr>
+<td>④使用分区</td>
+<td>现在可以在挂载点读写文件了</td>
+</tr>
+</tbody></table>
+<p>📌 示例（Linux 命令行）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 分区后，对新分区 /dev/sdb1 格式化为 ext4 文件系统</span></span><br><span class="line">sudo mkfs.ext4 /dev/sdb1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建挂载点</span></span><br><span class="line">sudo <span class="built_in">mkdir</span> /mnt/mydisk</span><br><span class="line"></span><br><span class="line"><span class="comment"># 挂载该分区</span></span><br><span class="line">sudo mount /dev/sdb1 /mnt/mydisk</span><br><span class="line"><span class="comment"># 查看挂载情况</span></span><br><span class="line"><span class="built_in">df</span> -h</span><br></pre></td></tr></table></figure>
+
+<h2 id="挂载"><a href="#挂载" class="headerlink" title="挂载"></a>挂载</h2><p>挂载（mount）就是把某个磁盘分区或设备连接到文件系统的某个目录下，让你可以通过那个目录访问它。</p>
+<p>📂 通俗理解</p>
+<p>想象 Linux 的文件系统是一个 树状结构（&#x2F; 是根），所有内容都是以文件夹的形式挂在这棵树上。</p>
+<p>而新插入的硬盘、U盘、移动设备等，必须“挂”到这棵树的某个“节点”下，系统才知道从哪里访问它。</p>
+<p>🎯 举个例子</p>
+<p>你有一个新的磁盘分区 &#x2F;dev&#x2F;sdb1，你想把它挂载到 &#x2F;mnt&#x2F;data：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mount /dev/sdb1 /mnt/data</span><br></pre></td></tr></table></figure>
+
+<p>执行完后：</p>
+<ul>
+<li>&#x2F;mnt&#x2F;data 就相当于这个分区的“门口”</li>
+<li>你往 &#x2F;mnt&#x2F;data 里放文件，实质上就是写到 &#x2F;dev&#x2F;sdb1 上了</li>
+</ul>
+<p>🔍 再具体一点</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>挂载点(Mount Point)</td>
+<td>挂载的目录（如 &#x2F;mnt&#x2F;data）</td>
+</tr>
+<tr>
+<td>设备(Device)</td>
+<td>要挂载的分区或设备（如 &#x2F;dev&#x2F;sdb1）</td>
+</tr>
+<tr>
+<td>挂载操作</td>
+<td>把设备连接到挂载点（如 mount 命令）</td>
+</tr>
+<tr>
+<td>卸载操作</td>
+<td>断开挂载（如 umount 命令）</td>
+</tr>
+</tbody></table>
+<p>📌 举例操作流程</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建挂载目录</span></span><br><span class="line">sudo <span class="built_in">mkdir</span> /mnt/usb</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将分区 /dev/sdb1 挂载到该目录</span></span><br><span class="line">sudo mount /dev/sdb1 /mnt/usb</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看内容</span></span><br><span class="line"><span class="built_in">ls</span> /mnt/usb</span><br></pre></td></tr></table></figure>
+
+<p>当你不需要用了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 卸载分区</span></span><br><span class="line">sudo umount /mnt/usb</span><br></pre></td></tr></table></figure>
+
+<p>🚫 常见误解：磁盘已经格式化就能用了？</p>
+<p>不是的！格式化只是安装了文件系统，但必须挂载到某个目录，才能在系统中访问。</p>
+<h2 id="Inode"><a href="#Inode" class="headerlink" title="Inode"></a>Inode</h2><p>很好！你提到的 inode（索引节点） 是 Linux&#x2F;Unix 文件系统中非常核心的一个概念。</p>
+<p>📦 inode 记录了什么？</p>
+<p>每个文件在 Linux 系统里都有一个 inode，它记录了：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>实例说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>文件的大小</td>
+<td>比如10KB</td>
+</tr>
+<tr>
+<td>文件的类型</td>
+<td>普通文件、目录、符号链接等</td>
+</tr>
+<tr>
+<td>文件的权限</td>
+<td>读、写、执行权限</td>
+</tr>
+<tr>
+<td>文件的所有者</td>
+<td>用户ID（UID）和组ID（GID）</td>
+</tr>
+<tr>
+<td>文件的创建、访问、修改时间</td>
+<td>比如创建时间是 2025-06-26 09:51:37</td>
+</tr>
+<tr>
+<td>文件的数据块位置</td>
+<td>数据块(blocks)在磁盘的物理地址</td>
+</tr>
+<tr>
+<td>链接计数</td>
+<td>有多少个硬链接指向这个 inode</td>
+</tr>
+</tbody></table>
+<p>🚫 inode 不记录什么？</p>
+<p>inode 不记录文件名和路径。文件名和路径信息存储在目录项（directory entry）中，目录项指向对应的 inode。</p>
+<p>🧠 类比一下：</p>
+<p>你可以把：</p>
+<ul>
+<li>inode 想成身份证：存着你年龄、身高、住址，但不一定有“昵称”</li>
+<li>目录文件 是联系人列表：名字 ➡️ 指向你的身份证号码</li>
+</ul>
+<p>🔍 实例命令：查看 inode 信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -i file.txt</span><br></pre></td></tr></table></figure>
+
+<p>输出示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1288491 file.txt</span><br></pre></td></tr></table></figure>
+
+<p>👉 1288491 就是这个文件的 inode 号。</p>
+<p>🧰 查看详细 inode 信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">stat</span> file.txt</span><br></pre></td></tr></table></figure>
+
+<p>输出内容中包括：</p>
+<ul>
+<li>Inode 号</li>
+<li>访问、修改、创建时间</li>
+<li>设备号、权限等</li>
+</ul>
+<p>💥 inode 用完会怎样？</p>
+<p>每个分区在格式化时会分配有限个 inode 数量（比如 1百万个）。<br>即使磁盘空间还有，只要 inode 用光，就不能再创建文件了！</p>
+<p>常见在写大量小文件时遇到，比如 Web 缓存、日志、临时文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">No space left on device</span><br></pre></td></tr></table></figure>
+
+<p>即使 df -h 显示磁盘还有空间，用 df -i 就能看到 inode 已满。</p>
+<h2 id="inode-和文件名之间的关系"><a href="#inode-和文件名之间的关系" class="headerlink" title="inode 和文件名之间的关系"></a>inode 和文件名之间的关系</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">        📁 目录（如 /home/user）</span><br><span class="line"></span><br><span class="line">   文件名         ➡     inode号</span><br><span class="line">───────────────     ─────────────</span><br><span class="line"><span class="string">&quot;file.txt&quot;</span>        ➡     inode: 1010</span><br><span class="line"><span class="string">&quot;log.txt&quot;</span>         ➡     inode: 1011</span><br><span class="line"><span class="string">&quot;notes&quot;</span>           ➡     inode: 1012</span><br><span class="line"></span><br><span class="line">        ⬇             inode: 1010</span><br><span class="line">                     ┌──────────────────────────────┐</span><br><span class="line">                     │ 文件类型：普通文件            │</span><br><span class="line">                     │ 权限：rw-r--r--               │</span><br><span class="line">                     │ 用户/组：user:staff           │</span><br><span class="line">                     │ 文件大小：16 KB               │</span><br><span class="line">                     │ 创建/修改/访问时间戳          │</span><br><span class="line">                     │ 数据块地址：[123, 124, 125]   │</span><br><span class="line">                     └──────────────────────────────┘</span><br><span class="line"></span><br><span class="line">                     ⬇</span><br><span class="line">              📦 实际数据存放在磁盘的数据块</span><br></pre></td></tr></table></figure>
+
+<p>🧪 示例演示（Linux 系统）</p>
+<p>我们来手动观察一个文件和它的 inode：</p>
+<p>① 创建一个文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;hello inode&quot;</span> &gt; file.txt</span><br></pre></td></tr></table></figure>
+
+<p>② 查看 inode 编号：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -li file.txt</span><br></pre></td></tr></table></figure>
+
+<p>输出可能是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1288491 -rw-r--r-- 1 user user 12 Jun 25 10:00 file.txt</span><br></pre></td></tr></table></figure>
+
+<p>🔢 1288491 就是 inode 号</p>
+<p>③ 查看 inode 内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">stat</span> file.txt</span><br></pre></td></tr></table></figure>
+
+<p>输出包含：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  File: file.txt</span><br><span class="line">  Size: 12         Blocks: 8          IO Block: 4096   regular file</span><br><span class="line">Device: 802h/2050d Inode: 1288491     Links: 1</span><br><span class="line">Access: 2025-06-25 10:00:01.000000000 +0800</span><br><span class="line">Modify: 2025-06-25 10:00:01.000000000 +0800</span><br><span class="line">Change: 2025-06-25 10:00:01.000000000 +0800</span><br></pre></td></tr></table></figure>
+
+<p>④ 创建硬链接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ln</span> file.txt copy.txt</span><br></pre></td></tr></table></figure>
+
+<p>现在 file.txt 和 copy.txt 都指向 同一个 inode。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -li file.txt copy.txt</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1288491 -rw-r--r-- 2 user user 12 Jun 25 10:00 copy.txt</span><br><span class="line">1288491 -rw-r--r-- 2 user user 12 Jun 25 10:00 file.txt</span><br></pre></td></tr></table></figure>
+
+<p>👉 两个文件名，指向同一个 inode ⇒ 文件共享内容和属性</p>
+<p>📌 图示升级：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">目录项：</span><br><span class="line"></span><br><span class="line">&quot;file.txt&quot;   ─┐</span><br><span class="line">              ├─&gt; inode 1288491 → 📦 数据块</span><br><span class="line">&quot;copy.txt&quot;   ─┘</span><br></pre></td></tr></table></figure>
+
+<p>只删除其中一个名字（如 rm file.txt），另一个依然能用，只有当 链接数为 0，系统才真正删除文件数据。</p>
+<h2 id="软链接（Symbolic-Link）-和-硬链接（Hard-Link）-的区别"><a href="#软链接（Symbolic-Link）-和-硬链接（Hard-Link）-的区别" class="headerlink" title="软链接（Symbolic Link） 和 硬链接（Hard Link） 的区别"></a>软链接（Symbolic Link） 和 硬链接（Hard Link） 的区别</h2><p>TODO</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/05/22/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/" rel="prev" title="设计模式-适配器模式">
+                  <i class="fa fa-angle-left"></i> 设计模式-适配器模式
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">星之辰</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">137k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:16</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>-->
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true}});</script></body>
+</html>
