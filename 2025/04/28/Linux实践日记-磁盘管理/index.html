@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://angryxzc.github.io/images/os/imook/Linux/df_%E7%BB%93%E6%9E%9C.png">
 <meta property="og:image" content="http://angryxzc.github.io/images/os/imook/Linux/VirtulBox%E6%B7%BB%E5%8A%A0%E8%99%9A%E6%8B%9F%E7%A3%81%E7%9B%98.png">
 <meta property="article:published_time" content="2025-04-28T11:47:22.000Z">
-<meta property="article:modified_time" content="2025-06-26T08:08:08.423Z">
+<meta property="article:modified_time" content="2025-07-03T00:51:02.951Z">
 <meta property="article:author" content="星之辰">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -116,7 +116,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%A3%81%E7%9B%98%E6%88%96%E8%80%85%E7%9B%AE%E5%BD%95%E7%9A%84%E5%AE%B9%E9%87%8F"><span class="nav-number">1.</span> <span class="nav-text">查看磁盘或者目录的容量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#df%E5%91%BD%E4%BB%A4"><span class="nav-number">1.1.</span> <span class="nav-text">df命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#du%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text">du命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E7%9A%84%E5%88%86%E5%8C%BA%E5%92%8C%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">磁盘的分区和格式化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E8%99%9A%E6%8B%9F%E7%A3%81%E7%9B%98"><span class="nav-number">2.1.</span> <span class="nav-text">增加虚拟磁盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fdisk%E5%91%BD%E4%BB%A4"><span class="nav-number">2.2.</span> <span class="nav-text">fdisk命令</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%A3%81%E7%9B%98%E6%88%96%E8%80%85%E7%9B%AE%E5%BD%95%E7%9A%84%E5%AE%B9%E9%87%8F"><span class="nav-number">1.</span> <span class="nav-text">查看磁盘或者目录的容量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#df%E5%91%BD%E4%BB%A4"><span class="nav-number">1.1.</span> <span class="nav-text">df命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#du%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text">du命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E7%9A%84%E5%88%86%E5%8C%BA%E5%92%8C%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">磁盘的分区和格式化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E8%99%9A%E6%8B%9F%E7%A3%81%E7%9B%98"><span class="nav-number">2.1.</span> <span class="nav-text">增加虚拟磁盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fdisk%E5%91%BD%E4%BB%A4"><span class="nav-number">2.2.</span> <span class="nav-text">fdisk命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96%E7%A3%81%E7%9B%98%E5%88%86%E5%8C%BA"><span class="nav-number">3.</span> <span class="nav-text">格式化磁盘分区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4mke2fs%E3%80%81mkfs-ext2%E3%80%81mkfs-ext3%E3%80%81mkfs-ext4%E5%92%8Cmkfs-xfs"><span class="nav-number">3.1.</span> <span class="nav-text">命令mke2fs、mkfs.ext2、mkfs.ext3、mkfs.ext4和mkfs.xfs</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -129,7 +129,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -140,7 +140,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">25</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -203,7 +203,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-06-26 16:08:08" itemprop="dateModified" datetime="2025-06-26T16:08:08+08:00">2025-06-26</time>
+      <time title="修改时间：2025-07-03 08:51:02" itemprop="dateModified" datetime="2025-07-03T08:51:02+08:00">2025-07-03</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -229,14 +229,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>4.2k</span>
+      <span>4.5k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>15 分钟</span>
+      <span>16 分钟</span>
     </span>
 </div>
 
@@ -341,6 +341,17 @@
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">xzc@ubuntu:~$ sudo fdisk -l </span><br><span class="line">Disk /dev/sda: 697.31 GiB, 748733595648 bytes, 1462370304 sectors</span><br><span class="line">Disk model: HARDDISK        </span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disklabel <span class="built_in">type</span>: gpt</span><br><span class="line">Disk identifier: 9CE971C2-7A68-454B-9D0E-DCE057234B98</span><br><span class="line"></span><br><span class="line">Device       Start        End    Sectors   Size Type</span><br><span class="line">/dev/sda1     2048    2203647    2201600     1G EFI System</span><br><span class="line">/dev/sda2  2203648 1462368255 1460164608 696.3G Linux filesystem</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/sdb: 1.15 GiB, 1239285760 bytes, 2420480 sectors</span><br><span class="line">Disk model: HARDDISK        </span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disk /dev/sdc: 60.13 MiB, 63053824 bytes, 123152 sectors</span><br><span class="line">Disk model: HARDDISK        </span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disklabel <span class="built_in">type</span>: dos</span><br><span class="line">Disk identifier: 0xcd755a51</span><br><span class="line"></span><br><span class="line">Device     Boot Start    End Sectors  Size Id Type</span><br><span class="line">/dev/sdc1        2048 123151  121104 59.1M  5 Extended</span><br><span class="line">/dev/sdc5        4096  24575   20480   10M 83 Linux</span><br><span class="line">/dev/sdc6       26624  47103   20480   10M 83 Linux</span><br><span class="line">/dev/sdc7       49152 123151   74000 36.1M 83 Linux</span><br><span class="line">xzc@ubuntu:~$ sudo fdisk -l /dev/sdc</span><br><span class="line">Disk /dev/sdc: 60.13 MiB, 63053824 bytes, 123152 sectors</span><br><span class="line">Disk model: HARDDISK        </span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes</span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes</span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes</span><br><span class="line">Disklabel <span class="built_in">type</span>: dos</span><br><span class="line">Disk identifier: 0xcd755a51</span><br><span class="line"></span><br><span class="line">Device     Boot Start    End Sectors  Size Id Type</span><br><span class="line">/dev/sdc1        2048 123151  121104 59.1M  5 Extended</span><br><span class="line">/dev/sdc5        4096  24575   20480   10M 83 Linux</span><br><span class="line">/dev/sdc6       26624  47103   20480   10M 83 Linux</span><br><span class="line">/dev/sdc7       49152 123151   74000 36.1M 83 Linux</span><br></pre></td></tr></table></figure>
 
+<h2 id="格式化磁盘分区"><a href="#格式化磁盘分区" class="headerlink" title="格式化磁盘分区"></a>格式化磁盘分区</h2><p>磁盘分区虽然分好区了，但暂时还不能用，我们还须对每一个分区进行格式化。所谓格式化，其实就是安装文件系统，Windows下的文件系统有FAT32和NTFS。前面章节中，阿铭介绍过CentOS 7以XFS作为默认的文件系统，但我们依然可以给它指定ext3或者ext4格式</p>
+<h3 id="命令mke2fs、mkfs-ext2、mkfs-ext3、mkfs-ext4和mkfs-xfs"><a href="#命令mke2fs、mkfs-ext2、mkfs-ext3、mkfs-ext4和mkfs-xfs" class="headerlink" title="命令mke2fs、mkfs.ext2、mkfs.ext3、mkfs.ext4和mkfs.xfs"></a>命令mke2fs、mkfs.ext2、mkfs.ext3、mkfs.ext4和mkfs.xfs</h3><p>当用man命令查询前4个命令的帮助文档时，你会发现我们看到的是同一个帮助文档，这说明这4个命令是一样的。下面我们以mke2fs命令为例进行介绍。</p>
+<p>mke2fs命令常用的选项如下所示。</p>
+<ul>
+<li>-b：表示分区时设定每个数据区块占用的空间大小。目前，每个数据块支持1024B、2048B以及4096B。</li>
+<li>-i：表示设定inode的大小。-N：表示设定inode的数量。有时默认的inode数不够用，所以要自定义inode的数量。</li>
+<li>-c：表示在格式化前先检测一下磁盘是否有问题。加上这个选项后，运行速度会非常慢。</li>
+<li>-L：表示预设该分区的标签（label）。</li>
+<li>-j：表示建立ext3格式的分区。如果使用mkfs.ext3格式，就不用加这个选项了。</li>
+<li>-t：用来指定文件系统的类型，可以是ext2、ext3 ，也可以是 ext4。示例命令如下：</li>
+</ul>
 <p>TODO</p>
 
     </div>
@@ -396,13 +407,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">137k</span>
+    <span title="站点总字数">138k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:16</span>
+    <span title="站点阅读时长">8:21</span>
   </span>
 </div>
 <div class="busuanzi-count">

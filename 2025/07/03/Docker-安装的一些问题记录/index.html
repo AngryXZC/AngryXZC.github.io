@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"angryxzc.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Docker 安装的一些问题记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker 安装的一些问题记录">
+<meta property="og:url" content="http://angryxzc.github.io/2025/07/03/Docker-%E5%AE%89%E8%A3%85%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="星之辰的博客">
+<meta property="og:description" content="Docker 安装的一些问题记录">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-07-03T00:51:01.000Z">
+<meta property="article:modified_time" content="2025-07-03T00:56:13.372Z">
+<meta property="article:author" content="星之辰">
+<meta property="article:tag" content="Docker">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://angryxzc.github.io/2025/07/03/Docker-%E5%AE%89%E8%A3%85%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://angryxzc.github.io/2025/07/03/Docker-%E5%AE%89%E8%A3%85%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/","path":"2025/07/03/Docker-安装的一些问题记录/","title":"Docker 安装的一些问题记录"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Docker 安装的一些问题记录 | 星之辰的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">星之辰的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">What I cannot create, I do not understand-Feynman Diagram</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%90%B3-Docker-%E5%AD%A6%E4%B9%A0%E4%B8%8E%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97%EF%BC%88macOS-%E7%8E%AF%E5%A2%83%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">🐳 Docker 学习与安装指南（macOS 环境）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">2.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0-Docker-%E5%8E%BB%E5%93%AA%E9%87%8C%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">学习 Docker 去哪里？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%EF%BC%9F"><span class="nav-number">4.</span> <span class="nav-text">什么是守护进程？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E7%82%B9%EF%BC%9A"><span class="nav-number">4.1.</span> <span class="nav-text">特点：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%86%85%E6%A0%B8%E4%B8%8E%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4"><span class="nav-number">5.</span> <span class="nav-text">操作系统的内核与用户空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Homebrew-%E7%9A%84-Formulae-%E5%92%8C-Cask-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">6.</span> <span class="nav-text">Homebrew 的 Formulae 和 Cask 是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-sock-%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3"><span class="nav-number">7.</span> <span class="nav-text">docker.sock 错误解决</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%EF%BC%9A"><span class="nav-number">7.1.</span> <span class="nav-text">错误信息：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%9B%A0-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="nav-number">7.2.</span> <span class="nav-text">原因 &amp; 解决方法：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#macOS-%E4%BD%BF%E7%94%A8-brew-install-docker-%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">8.</span> <span class="nav-text">macOS 使用 brew install docker 的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Docker-%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%EF%BC%9F"><span class="nav-number">9.</span> <span class="nav-text">什么是 Docker 守护进程？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#containerd-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">10.</span> <span class="nav-text">containerd 是什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E8%A6%81%E6%9E%B6%E6%9E%84%EF%BC%9A"><span class="nav-number">10.1.</span> <span class="nav-text">简要架构：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88-macOS-%E4%B8%8A%E9%9C%80%E8%A6%81-Docker-Desktop%EF%BC%9F"><span class="nav-number">11.</span> <span class="nav-text">为什么 macOS 上需要 Docker Desktop？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Colima-%E6%9B%BF%E4%BB%A3-Docker-Desktop%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="nav-number">11.1.</span> <span class="nav-text">使用 Colima 替代 Docker Desktop（推荐）</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">星之辰</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://angryxzc.github.io/2025/07/03/Docker-%E5%AE%89%E8%A3%85%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="星之辰">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星之辰的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Docker 安装的一些问题记录 | 星之辰的博客">
+      <meta itemprop="description" content="Docker 安装的一些问题记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Docker 安装的一些问题记录
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-07-03 08:51:01 / 修改时间：08:56:13" itemprop="dateCreated datePublished" datetime="2025-07-03T08:51:01+08:00">2025-07-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>745</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">Docker 安装的一些问题记录</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="🐳-Docker-学习与安装指南（macOS-环境）"><a href="#🐳-Docker-学习与安装指南（macOS-环境）" class="headerlink" title="🐳 Docker 学习与安装指南（macOS 环境）"></a>🐳 Docker 学习与安装指南（macOS 环境）</h2><h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="u%3E#%E5%AD%A6%E4%B9%A0-docker-%E5%8E%BB%E5%93%AA%E9%87%8C%3C/u">学习 Docker 去哪里？</a></li>
+<li><a href="u%3E#%E4%BB%80%E4%B9%88%E6%98%AF%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%3C/u">什么是守护进程？</a></li>
+<li><a href="u%3E#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%86%85%E6%A0%B8%E4%B8%8E%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%3C/u">操作系统的内核与用户空间</a></li>
+<li><a href="u%3E#homebrew-%E7%9A%84-formulae-%E5%92%8C-cask-%E6%98%AF%E4%BB%80%E4%B9%88%3C/u">Homebrew 的 Formulae 和 Cask 是什么？</a></li>
+<li><a href="u%3E#docker.sock-%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3%3C/u">docker.sock 错误解决</a></li>
+<li><a href="u%3E#macos-%E4%BD%BF%E7%94%A8-brew-install-docker-%E7%9A%84%E9%97%AE%E9%A2%98%3C/u">macOS 使用 <code>brew install docker</code> 的问题</a></li>
+<li><a href="u%3E#%E4%BB%80%E4%B9%88%E6%98%AF-docker-%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B%3C/u">什么是 Docker 守护进程？</a></li>
+<li><a href="u%3E#containerd-%E6%98%AF%E4%BB%80%E4%B9%88%3C/u">containerd 是什么？</a></li>
+<li><a href="u%3E#%E4%B8%BA%E4%BB%80%E4%B9%88-macos-%E4%B8%8A%E9%9C%80%E8%A6%81-docker-desktop%3C/u">为什么 macOS 上需要 Docker Desktop？</a></li>
+</ol>
+<hr>
+<h2 id="学习-Docker-去哪里？"><a href="#学习-Docker-去哪里？" class="headerlink" title="学习 Docker 去哪里？"></a>学习 Docker 去哪里？</h2><p>推荐资源：</p>
+<ul>
+<li>📚 官网：<a href="u%3Ehttps://docs.docker.com/get-started/%3C/u">Docker 官方中文文档</a></li>
+<li>📖 开源书籍：<a href="u%3Ehttps://yeasy.gitbook.io/docker_practice/%3C/u">Docker 从入门到实践</a></li>
+<li>📺 B站教程：<ul>
+<li>黑马程序员、狂神说等系列</li>
+</ul>
+</li>
+<li>📘 书籍推荐：<ul>
+<li>《Docker 从入门到实践》</li>
+<li>《Docker 技术入门与实战》</li>
+</ul>
+</li>
+<li>🧪 在线实验平台：<a href="u%3Ehttps://labs.play-with-docker.com/%3C/u">Play with Docker</a></li>
+</ul>
+<hr>
+<h2 id="什么是守护进程？"><a href="#什么是守护进程？" class="headerlink" title="什么是守护进程？"></a>什么是守护进程？</h2><p>守护进程（Daemon） 是在后台运行、不直接与用户交互的长期进程。</p>
+<h3 id="特点："><a href="#特点：" class="headerlink" title="特点："></a>特点：</h3><ul>
+<li>后台运行，通常无界面</li>
+<li>无控制终端</li>
+<li>由系统管理，通常随系统启动</li>
+<li>例子：<ul>
+<li><code>sshd</code>：SSH 服务</li>
+<li><code>cron</code>：定时任务调度</li>
+<li><code>dockerd</code>：Docker 守护进程</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="操作系统的内核与用户空间"><a href="#操作系统的内核与用户空间" class="headerlink" title="操作系统的内核与用户空间"></a>操作系统的内核与用户空间</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">+--------------------+</span><br><span class="line">|  用户空间 User Space  | &lt;-- 运行应用程序</span><br><span class="line">+--------------------+</span><br><span class="line">|  内核空间 Kernel Space | &lt;-- 操作系统核心（如调度、内存管理等）</span><br><span class="line">+--------------------+</span><br><span class="line">|      硬件           |</span><br><span class="line">+--------------------+</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>用户空间：应用程序运行区域，权限受限。</li>
+<li>内核空间：系统服务运行区域，拥有完全硬件控制权。</li>
+</ul>
+<hr>
+<h2 id="Homebrew-的-Formulae-和-Cask-是什么？"><a href="#Homebrew-的-Formulae-和-Cask-是什么？" class="headerlink" title="Homebrew 的 Formulae 和 Cask 是什么？"></a>Homebrew 的 Formulae 和 Cask 是什么？</h2><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>用途</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Formula</td>
+<td>安装命令行工具（源码）</td>
+<td><code>brew install wget</code></td>
+</tr>
+<tr>
+<td>Cask</td>
+<td>安装 GUI 应用（dmg&#x2F;pkg）</td>
+<td><code>brew install --cask google-chrome</code></td>
+</tr>
+</tbody></table>
+<ul>
+<li><code>brew install docker</code> 安装的是 Formula（CLI 工具）</li>
+<li><code>brew install --cask docker</code> 安装的是 Docker Desktop（图形界面 + 守护进程）</li>
+</ul>
+<hr>
+<h2 id="docker-sock-错误解决"><a href="#docker-sock-错误解决" class="headerlink" title="docker.sock 错误解决"></a>docker.sock 错误解决</h2><h3 id="错误信息："><a href="#错误信息：" class="headerlink" title="错误信息："></a>错误信息：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?</span><br></pre></td></tr></table></figure>
+
+<h3 id="原因-解决方法："><a href="#原因-解决方法：" class="headerlink" title="原因 &amp; 解决方法："></a>原因 &amp; 解决方法：</h3><ol>
+<li><p>守护进程未启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start docker</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>权限不足</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo docker ps</span><br><span class="line">sudo usermod -aG docker <span class="variable">$USER</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>环境变量干扰</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unset</span> DOCKER_HOST</span><br></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<h2 id="macOS-使用-brew-install-docker-的问题"><a href="#macOS-使用-brew-install-docker-的问题" class="headerlink" title="macOS 使用 brew install docker 的问题"></a>macOS 使用 <code>brew install docker</code> 的问题</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install docker</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>✅ 安装了 <code>docker</code> CLI</li>
+<li>❌ 没有安装 <code>dockerd</code>（守护进程）</li>
+<li>❌ 不能直接运行容器，因为 macOS 不原生支持 <code>dockerd</code></li>
+</ul>
+<hr>
+<h2 id="什么是-Docker-守护进程？"><a href="#什么是-Docker-守护进程？" class="headerlink" title="什么是 Docker 守护进程？"></a>什么是 Docker 守护进程？</h2><p><code>dockerd</code> 是 Docker 的后台服务进程，主要职责包括：</p>
+<ul>
+<li>管理容器生命周期（run&#x2F;stop&#x2F;remove）</li>
+<li>管理镜像和网络</li>
+<li>提供 API 接口供 <code>docker</code> CLI 调用</li>
+<li>调用 containerd 执行底层容器操作</li>
+</ul>
+<hr>
+<h2 id="containerd-是什么？"><a href="#containerd-是什么？" class="headerlink" title="containerd 是什么？"></a>containerd 是什么？</h2><ul>
+<li><code>containerd</code> 是一个容器运行时（Container Runtime）</li>
+<li>负责执行容器启动、停止、拉取镜像等操作</li>
+<li>Docker 守护进程 <code>dockerd</code> 内部就调用了 <code>containerd</code></li>
+</ul>
+<h3 id="简要架构："><a href="#简要架构：" class="headerlink" title="简要架构："></a>简要架构：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker CLI</span><br><span class="line">   ↓</span><br><span class="line">dockerd</span><br><span class="line">   ↓</span><br><span class="line">containerd</span><br><span class="line">   ↓</span><br><span class="line">runc（实际运行容器）</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="为什么-macOS-上需要-Docker-Desktop？"><a href="#为什么-macOS-上需要-Docker-Desktop？" class="headerlink" title="为什么 macOS 上需要 Docker Desktop？"></a>为什么 macOS 上需要 Docker Desktop？</h2><p>macOS 无法原生运行 Linux 容器（因为内核不同），所以需要通过虚拟化：</p>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>含守护进程</th>
+<th>GUI</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Docker Desktop</td>
+<td>✅</td>
+<td>✅</td>
+<td>官方推荐方案</td>
+</tr>
+<tr>
+<td>brew + docker</td>
+<td>❌</td>
+<td>❌</td>
+<td>只有 CLI</td>
+</tr>
+<tr>
+<td>Colima + brew</td>
+<td>✅</td>
+<td>❌</td>
+<td>开源轻量替代方案</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="使用-Colima-替代-Docker-Desktop（推荐）"><a href="#使用-Colima-替代-Docker-Desktop（推荐）" class="headerlink" title="使用 Colima 替代 Docker Desktop（推荐）"></a>使用 Colima 替代 Docker Desktop（推荐）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">brew install colima docker</span><br><span class="line">colima start</span><br><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>✅ 无需 Docker Desktop</li>
+<li>✅ 后台自动启动 <code>dockerd</code> 守护进程</li>
+<li>✅ 支持多配置、多容器网络等高级功能</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/06/26/Linux%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F-Inode%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%9D%E8%AF%95/" rel="prev" title="Linux磁盘管理,文件系统,Inode的一些尝试">
+                  <i class="fa fa-angle-left"></i> Linux磁盘管理,文件系统,Inode的一些尝试
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">星之辰</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">138k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:21</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>-->
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true}});</script></body>
+</html>
