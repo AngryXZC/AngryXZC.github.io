@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"angryxzc.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="本文将介绍如何在游戏商城项目中整合SpringBoot和MyBatis框架，提供一个基础的后端服务架构。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="游戏商城实战攻略 - Day1：gameStore整合SpringBoot+MyBatis框架">
+<meta property="og:url" content="http://angryxzc.github.io/2025/07/04/%E6%B8%B8%E6%88%8F%E5%95%86%E5%9F%8E%E5%AE%9E%E6%88%98%E6%94%BB%E7%95%A5-Day1%EF%BC%9AgameStore%E6%95%B4%E5%90%88SpringBoot-MyBatis%E6%A1%86%E6%9E%B6/index.html">
+<meta property="og:site_name" content="星之辰的博客">
+<meta property="og:description" content="本文将介绍如何在游戏商城项目中整合SpringBoot和MyBatis框架，提供一个基础的后端服务架构。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-07-04T12:22:42.000Z">
+<meta property="article:modified_time" content="2025-07-04T14:56:16.175Z">
+<meta property="article:author" content="星之辰">
+<meta property="article:tag" content="游戏商城">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://angryxzc.github.io/2025/07/04/%E6%B8%B8%E6%88%8F%E5%95%86%E5%9F%8E%E5%AE%9E%E6%88%98%E6%94%BB%E7%95%A5-Day1%EF%BC%9AgameStore%E6%95%B4%E5%90%88SpringBoot-MyBatis%E6%A1%86%E6%9E%B6/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://angryxzc.github.io/2025/07/04/%E6%B8%B8%E6%88%8F%E5%95%86%E5%9F%8E%E5%AE%9E%E6%88%98%E6%94%BB%E7%95%A5-Day1%EF%BC%9AgameStore%E6%95%B4%E5%90%88SpringBoot-MyBatis%E6%A1%86%E6%9E%B6/","path":"2025/07/04/游戏商城实战攻略-Day1：gameStore整合SpringBoot-MyBatis框架/","title":"游戏商城实战攻略 - Day1：gameStore整合SpringBoot+MyBatis框架"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>游戏商城实战攻略 - Day1：gameStore整合SpringBoot+MyBatis框架 | 星之辰的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">星之辰的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">What I cannot create, I do not understand-Feynman Diagram</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%9D%A5%E6%BA%90"><span class="nav-number">1.</span> <span class="nav-text">项目来源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E6%95%B4%E5%90%88%E5%86%85%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">具体整合内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB"><span class="nav-number">3.</span> <span class="nav-text">问题汇总</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MyBatis-Generator-%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93"><span class="nav-number">3.1.</span> <span class="nav-text">MyBatis Generator 使用问题总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%F0%9F%93%81-%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E8%AF%B4%E6%98%8E"><span class="nav-number">3.1.1.</span> <span class="nav-text">📁 项目结构说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%9A%A0%EF%B8%8F-%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">3.1.2.</span> <span class="nav-text">⚠️ 常见错误与解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E2%9D%8C-The-specified-target-project-directory-does-not-exist"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">❌ The specified target project directory ... does not exist</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E2%9D%8C-Cannot-instantiate-object-of-type-com-xzc-gamestore-mbg-CommentGenerator"><span class="nav-number">3.1.2.2.</span> <span class="nav-text">❌ Cannot instantiate object of type com.xzc.gamestore.mbg.CommentGenerator</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E2%9D%8C-Cannot-instantiate-object-of-type-org-mybatis-generator-plugins-UnmergeableXmlMappersPlugin"><span class="nav-number">3.1.2.3.</span> <span class="nav-text">❌ Cannot instantiate object of type org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E2%9D%8C-%E4%BD%BF%E7%94%A8%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84-src-main-java-%E5%AF%BC%E8%87%B4%E8%B7%AF%E5%BE%84%E6%89%BE%E4%B8%8D%E5%88%B0"><span class="nav-number">3.1.2.4.</span> <span class="nav-text">❌ 使用绝对路径 &#x2F;src&#x2F;main&#x2F;java 导致路径找不到</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%9C%85-%E6%AD%A3%E7%A1%AE%E8%BF%90%E8%A1%8C%E6%96%B9%E5%BC%8F"><span class="nav-number">3.1.3.</span> <span class="nav-text">✅ 正确运行方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%9C%85-%E5%B0%8F%E6%8A%80%E5%B7%A7%E6%B1%87%E6%80%BB"><span class="nav-number">3.1.4.</span> <span class="nav-text">✅ 小技巧汇总</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E5%89%8D%E7%BC%80%E8%AF%B4%E6%98%8E%E5%8D%95%E7%8B%AC%E8%B4%B4%E5%87%BA"><span class="nav-number">4.</span> <span class="nav-text">数据库表前缀说明单独贴出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%9C%B0%E5%9D%80"><span class="nav-number">5.</span> <span class="nav-text">项目地址</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">星之辰</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">69</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://angryxzc.github.io/2025/07/04/%E6%B8%B8%E6%88%8F%E5%95%86%E5%9F%8E%E5%AE%9E%E6%88%98%E6%94%BB%E7%95%A5-Day1%EF%BC%9AgameStore%E6%95%B4%E5%90%88SpringBoot-MyBatis%E6%A1%86%E6%9E%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="星之辰">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星之辰的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="游戏商城实战攻略 - Day1：gameStore整合SpringBoot+MyBatis框架 | 星之辰的博客">
+      <meta itemprop="description" content="本文将介绍如何在游戏商城项目中整合SpringBoot和MyBatis框架，提供一个基础的后端服务架构。">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          游戏商城实战攻略 - Day1：gameStore整合SpringBoot+MyBatis框架
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-07-04 20:22:42 / 修改时间：22:56:16" itemprop="dateCreated datePublished" datetime="2025-07-04T20:22:42+08:00">2025-07-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%B8%B8%E6%88%8F%E5%95%86%E5%9F%8E%E5%AE%9E%E6%88%98%E6%94%BB%E7%95%A5/" itemprop="url" rel="index"><span itemprop="name">游戏商城实战攻略</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>736</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">本文将介绍如何在游戏商城项目中整合SpringBoot和MyBatis框架，提供一个基础的后端服务架构。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="项目来源"><a href="#项目来源" class="headerlink" title="项目来源"></a>项目来源</h2><p>本项目是基于<a target="_blank" rel="noopener" href="https://www.macrozheng.com/">GitHub开源项目mall制作</a></p>
+<h2 id="具体整合内容"><a href="#具体整合内容" class="headerlink" title="具体整合内容"></a>具体整合内容</h2><ol>
+<li><strong>SpringBoot</strong>：作为项目的基础框架，提供快速开发和配置的能力。</li>
+<li><strong>MyBatis</strong>：作为数据访问层框架，简化数据库操作。</li>
+<li><strong>MyBatis Generator</strong>：自动生成MyBatis的Mapper和实体类，减少手动编码工作量。</li>
+<li><strong>MySQL</strong>：作为项目的数据库，存储游戏商城的数据。</li>
+<li><strong>Lombok</strong>：简化Java代码，减少样板代码的编写。</li>
+<li><strong>Hutool</strong>：小巧的Java工具库，提供常用的工具方法，提升开发效率。</li>
+</ol>
+<p>如何整合见<a target="_blank" rel="noopener" href="https://www.macrozheng.com/">mall</a>中mall-learning中架构篇相关内容</p>
+<h2 id="问题汇总"><a href="#问题汇总" class="headerlink" title="问题汇总"></a>问题汇总</h2><ol>
+<li>mall中使用的MySQL版本是5.7.26，而我使用的是Mysql  Ver 8.0.42。（目前没有其他问题）</li>
+<li>mall中使用JDK版本是1.8，而我使用的是JDK 21。（目前没有其他问题）</li>
+<li>mall中使用的SpringBoot版本是2.1.3.RELEASE，而我使用的是SpringBoot 3.1.4。（目前没有其他问题）。</li>
+</ol>
+<h3 id="MyBatis-Generator-使用问题总结"><a href="#MyBatis-Generator-使用问题总结" class="headerlink" title="MyBatis Generator 使用问题总结"></a>MyBatis Generator 使用问题总结</h3><h4 id="📁-项目结构说明"><a href="#📁-项目结构说明" class="headerlink" title="📁 项目结构说明"></a>📁 项目结构说明</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GameStore/</span><br><span class="line">├── pom.xml</span><br><span class="line">├── src/</span><br><span class="line">│   ├── main/</span><br><span class="line">│   │   ├── java/          &lt;-- Java 代码输出目录</span><br><span class="line">│   │   └── resources/     &lt;-- Mapper XML 输出目录</span><br><span class="line">│   └── test/</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>generatorConfig.xml 位于 <code>src/main/resources/</code> 目录下。</p>
+</blockquote>
+<hr>
+<h4 id="⚠️-常见错误与解决方案"><a href="#⚠️-常见错误与解决方案" class="headerlink" title="⚠️ 常见错误与解决方案"></a>⚠️ 常见错误与解决方案</h4><h5 id="❌-The-specified-target-project-directory-does-not-exist"><a href="#❌-The-specified-target-project-directory-does-not-exist" class="headerlink" title="❌ The specified target project directory ... does not exist"></a>❌ <code>The specified target project directory ... does not exist</code></h5><p><strong>原因：</strong></p>
+<ul>
+<li><code>targetProject</code> 指定的路径不存在</li>
+<li>MyBatis Generator 不会自动创建目录</li>
+</ul>
+<p><strong>解决：</strong></p>
+<ul>
+<li>保证 <code>src/main/java</code> 和 <code>src/main/resources</code> 目录存在</li>
+<li>建议使用如下配置：</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">javaModelGenerator</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">targetPackage</span>=<span class="string">&quot;com.xzc.gamestore.mbg.model&quot;</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">targetProject</span>=<span class="string">&quot;src/main/java&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">sqlMapGenerator</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">targetPackage</span>=<span class="string">&quot;com.xzc.gamestore.mbg.mapper&quot;</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">targetProject</span>=<span class="string">&quot;src/main/resources&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">javaClientGenerator</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">type</span>=<span class="string">&quot;XMLMAPPER&quot;</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">targetPackage</span>=<span class="string">&quot;com.xzc.gamestore.mbg.mapper&quot;</span> </span></span><br><span class="line"><span class="tag">    <span class="attr">targetProject</span>=<span class="string">&quot;src/main/java&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h5 id="❌-Cannot-instantiate-object-of-type-com-xzc-gamestore-mbg-CommentGenerator"><a href="#❌-Cannot-instantiate-object-of-type-com-xzc-gamestore-mbg-CommentGenerator" class="headerlink" title="❌ Cannot instantiate object of type com.xzc.gamestore.mbg.CommentGenerator"></a>❌ <code>Cannot instantiate object of type com.xzc.gamestore.mbg.CommentGenerator</code></h5><p><strong>原因：</strong></p>
+<ul>
+<li>类不存在或未编译</li>
+<li>没有无参构造函数</li>
+<li>类未被正确加载到 classpath</li>
+</ul>
+<p><strong>解决：</strong></p>
+<ul>
+<li>确保该类存在于 <code>src/main/java/com/xzc/gamestore/mbg/CommentGenerator.java</code></li>
+<li>添加无参构造</li>
+<li>或直接使用默认注释器：</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">commentGenerator</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;suppressAllComments&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;suppressDate&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;addRemarkComments&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">commentGenerator</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h5 id="❌-Cannot-instantiate-object-of-type-org-mybatis-generator-plugins-UnmergeableXmlMappersPlugin"><a href="#❌-Cannot-instantiate-object-of-type-org-mybatis-generator-plugins-UnmergeableXmlMappersPlugin" class="headerlink" title="❌ Cannot instantiate object of type org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"></a>❌ <code>Cannot instantiate object of type org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin</code></h5><p><strong>原因：</strong></p>
+<ul>
+<li>类 <code>UnmergeableXmlMappersPlugin</code> 不存在于依赖中</li>
+<li>这是非标准插件，未引入也未定义</li>
+</ul>
+<p><strong>解决：</strong></p>
+<ul>
+<li>删除或注释掉该插件配置：</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- &lt;plugin type=&quot;org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin&quot;/&gt; --&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h5 id="❌-使用绝对路径-src-main-java-导致路径找不到"><a href="#❌-使用绝对路径-src-main-java-导致路径找不到" class="headerlink" title="❌ 使用绝对路径 /src/main/java 导致路径找不到"></a>❌ 使用绝对路径 <code>/src/main/java</code> 导致路径找不到</h5><p><strong>原因：</strong></p>
+<ul>
+<li>开头带 <code>/</code> 表示系统根路径，而不是项目路径</li>
+</ul>
+<p><strong>解决：</strong></p>
+<ul>
+<li>使用相对路径：<code>src/main/java</code></li>
+</ul>
+<hr>
+<h4 id="✅-正确运行方式"><a href="#✅-正确运行方式" class="headerlink" title="✅ 正确运行方式"></a>✅ 正确运行方式</h4><p>在项目根目录执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> GameStore</span><br><span class="line">java com.xzc.gamestore.mbg.Generator</span><br></pre></td></tr></table></figure>
+
+<p>或使用 Maven 插件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn mybatis-generator:generate</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="✅-小技巧汇总"><a href="#✅-小技巧汇总" class="headerlink" title="✅ 小技巧汇总"></a>✅ 小技巧汇总</h4><table>
+<thead>
+<tr>
+<th>问题</th>
+<th>正确做法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>targetProject 不存在</td>
+<td>先手动创建对应目录</td>
+</tr>
+<tr>
+<td>注释生成失败</td>
+<td>用默认 <code>commentGenerator</code> 或编写无参构造类</td>
+</tr>
+<tr>
+<td>非官方插件报错</td>
+<td>不使用或自行实现</td>
+</tr>
+<tr>
+<td>路径使用 <code>\</code> 或 <code>/src</code> 错误</td>
+<td>使用 <code>src/main/java</code> 这类相对路径</td>
+</tr>
+<tr>
+<td>运行失败</td>
+<td>确保当前目录是 <code>pom.xml</code> 所在的根目录</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="数据库表前缀说明单独贴出"><a href="#数据库表前缀说明单独贴出" class="headerlink" title="数据库表前缀说明单独贴出"></a>数据库表前缀说明单独贴出</h2><ul>
+<li>pms_*：商品模块相关表</li>
+<li>oms_*：订单模块相关表</li>
+<li>sms_*：营销模块相关表</li>
+<li>ums_*：权限模块相关表</li>
+<li>cms_*：内容模块相关表</li>
+</ul>
+<h2 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h2><p><a target="_blank" rel="noopener" href="https://github.com/AngryXZC/gameStore">gameStore</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B8%B8%E6%88%8F%E5%95%86%E5%9F%8E/" rel="tag"># 游戏商城</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/07/04/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/" rel="prev" title="设计模式-建造者模式">
+                  <i class="fa fa-angle-left"></i> 设计模式-建造者模式
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/07/05/%E6%B8%B8%E6%88%8F%E5%95%86%E5%9F%8E%E5%AE%9E%E6%88%98%E6%94%BB%E7%95%A5-Day2%EF%BC%9AgameStore%E6%95%B4%E5%90%88Swagger/" rel="next" title="游戏商城实战攻略 - Day2：gameStore整合Swagger">
+                  游戏商城实战攻略 - Day2：gameStore整合Swagger <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">星之辰</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">148k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:59</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>-->
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true}});</script></body>
+</html>
