@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.2.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"angryxzc.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Docker学习清单">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker学习清单">
+<meta property="og:url" content="http://angryxzc.github.io/2026/04/15/Docker%E5%AD%A6%E4%B9%A0%E6%B8%85%E5%8D%95/index.html">
+<meta property="og:site_name" content="星之辰的博客">
+<meta property="og:description" content="Docker学习清单">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-04-15T02:31:55.000Z">
+<meta property="article:modified_time" content="2026-04-15T02:35:17.101Z">
+<meta property="article:author" content="星之辰">
+<meta property="article:tag" content="Docker">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://angryxzc.github.io/2026/04/15/Docker%E5%AD%A6%E4%B9%A0%E6%B8%85%E5%8D%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://angryxzc.github.io/2026/04/15/Docker%E5%AD%A6%E4%B9%A0%E6%B8%85%E5%8D%95/","path":"2026/04/15/Docker学习清单/","title":"Docker学习清单"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Docker学习清单 | 星之辰的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">星之辰的博客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">What I cannot create, I do not understand-Feynman Diagram</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-14-%E5%A4%A9%E5%AE%9E%E6%93%8D%E7%89%88%E6%B8%85%E5%8D%95"><span class="nav-number">1.</span> <span class="nav-text">Docker 14 天实操版清单</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC-1-%E5%A4%A9%EF%BC%9A%E7%A1%AE%E8%AE%A4%E7%8E%AF%E5%A2%83%E5%8F%AF%E7%94%A8%EF%BC%8C%E8%B7%91%E8%B5%B7%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AE%B9%E5%99%A8"><span class="nav-number">1.1.</span> <span class="nav-text">第 1 天：确认环境可用，跑起第一个容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87"><span class="nav-number">1.1.1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="nav-number">1.1.2.</span> <span class="nav-text">执行命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C"><span class="nav-number">1.1.3.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E6%9C%9F%E7%BB%93%E6%9E%9C"><span class="nav-number">1.1.4.</span> <span class="nav-text">预期结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%A0%E4%BB%8A%E5%A4%A9%E5%BF%85%E9%A1%BB%E7%90%86%E8%A7%A3"><span class="nav-number">1.1.5.</span> <span class="nav-text">你今天必须理解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC-2-%E5%A4%A9%EF%BC%9A%E5%AD%A6%E4%BC%9A%E6%9C%80%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%AE%B9%E5%99%A8%E7%AE%A1%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">第 2 天：学会最基本的容器管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">执行命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C-1"><span class="nav-number">1.2.3.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E6%9C%9F%E7%BB%93%E6%9E%9C-1"><span class="nav-number">1.2.4.</span> <span class="nav-text">预期结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%A0%E4%BB%8A%E5%A4%A9%E5%BF%85%E9%A1%BB%E7%90%86%E8%A7%A3-1"><span class="nav-number">1.2.5.</span> <span class="nav-text">你今天必须理解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC-3-%E5%A4%A9%EF%BC%9A%E6%97%A5%E5%BF%97%E3%80%81%E8%BF%9B%E5%85%A5%E5%AE%B9%E5%99%A8%E3%80%81%E8%A7%82%E5%AF%9F%E5%AE%B9%E5%99%A8%E5%86%85%E9%83%A8"><span class="nav-number">1.3.</span> <span class="nav-text">第 3 天：日志、进入容器、观察容器内部</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87-2"><span class="nav-number">1.3.1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4-2"><span class="nav-number">1.3.2.</span> <span class="nav-text">执行命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C-2"><span class="nav-number">1.3.3.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E6%9C%9F%E7%BB%93%E6%9E%9C-2"><span class="nav-number">1.3.4.</span> <span class="nav-text">预期结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%A0%E4%BB%8A%E5%A4%A9%E5%BF%85%E9%A1%BB%E7%90%86%E8%A7%A3-2"><span class="nav-number">1.3.5.</span> <span class="nav-text">你今天必须理解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC-4-%E5%A4%A9%EF%BC%9A%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84"><span class="nav-number">1.4.</span> <span class="nav-text">第 4 天：端口映射</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87-3"><span class="nav-number">1.4.1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4-3"><span class="nav-number">1.4.2.</span> <span class="nav-text">执行命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C-3"><span class="nav-number">1.4.3.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E6%9C%9F%E7%BB%93%E6%9E%9C-3"><span class="nav-number">1.4.4.</span> <span class="nav-text">预期结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%A0%E4%BB%8A%E5%A4%A9%E5%BF%85%E9%A1%BB%E7%90%86%E8%A7%A3-3"><span class="nav-number">1.4.5.</span> <span class="nav-text">你今天必须理解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC-5-%E5%A4%A9%EF%BC%9A%E9%95%9C%E5%83%8F%E7%AE%A1%E7%90%86"><span class="nav-number">1.5.</span> <span class="nav-text">第 5 天：镜像管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87-4"><span class="nav-number">1.5.1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4-4"><span class="nav-number">1.5.2.</span> <span class="nav-text">执行命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C-4"><span class="nav-number">1.5.3.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E6%9C%9F%E7%BB%93%E6%9E%9C-4"><span class="nav-number">1.5.4.</span> <span class="nav-text">预期结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%A0%E4%BB%8A%E5%A4%A9%E5%BF%85%E9%A1%BB%E7%90%86%E8%A7%A3-4"><span class="nav-number">1.5.5.</span> <span class="nav-text">你今天必须理解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC-6-%E5%A4%A9%EF%BC%9A%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96%EF%BC%8C%E5%85%88%E4%BD%93%E9%AA%8C%E2%80%9C%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%E2%80%9D"><span class="nav-number">1.6.</span> <span class="nav-text">第 6 天：数据持久化，先体验“数据丢失”</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87-5"><span class="nav-number">1.6.1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4-5"><span class="nav-number">1.6.2.</span> <span class="nav-text">执行命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C-5"><span class="nav-number">1.6.3.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E6%9C%9F%E7%BB%93%E6%9E%9C-5"><span class="nav-number">1.6.4.</span> <span class="nav-text">预期结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%A0%E4%BB%8A%E5%A4%A9%E5%BF%85%E9%A1%BB%E7%90%86%E8%A7%A3-5"><span class="nav-number">1.6.5.</span> <span class="nav-text">你今天必须理解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC-7-%E5%A4%A9%EF%BC%9A%E7%94%A8%E5%8D%B7%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE"><span class="nav-number">1.7.</span> <span class="nav-text">第 7 天：用卷保存数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87-6"><span class="nav-number">1.7.1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4-6"><span class="nav-number">1.7.2.</span> <span class="nav-text">执行命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C-6"><span class="nav-number">1.7.3.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E6%9C%9F%E7%BB%93%E6%9E%9C-6"><span class="nav-number">1.7.4.</span> <span class="nav-text">预期结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%A0%E4%BB%8A%E5%A4%A9%E5%BF%85%E9%A1%BB%E7%90%86%E8%A7%A3-6"><span class="nav-number">1.7.5.</span> <span class="nav-text">你今天必须理解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC-8-%E5%A4%A9%EF%BC%9ABind-Mount%EF%BC%8C%E6%8A%8A%E5%AE%BF%E4%B8%BB%E6%9C%BA%E7%9B%AE%E5%BD%95%E6%8C%82%E8%BF%9B%E5%AE%B9%E5%99%A8"><span class="nav-number">1.8.</span> <span class="nav-text">第 8 天：Bind Mount，把宿主机目录挂进容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87-7"><span class="nav-number">1.8.1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4-7"><span class="nav-number">1.8.2.</span> <span class="nav-text">执行命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C-7"><span class="nav-number">1.8.3.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E6%9C%9F%E7%BB%93%E6%9E%9C-7"><span class="nav-number">1.8.4.</span> <span class="nav-text">预期结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%A0%E4%BB%8A%E5%A4%A9%E5%BF%85%E9%A1%BB%E7%90%86%E8%A7%A3-7"><span class="nav-number">1.8.5.</span> <span class="nav-text">你今天必须理解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC-9-%E5%A4%A9%EF%BC%9A%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">1.9.</span> <span class="nav-text">第 9 天：环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87-8"><span class="nav-number">1.9.1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4-8"><span class="nav-number">1.9.2.</span> <span class="nav-text">执行命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C-8"><span class="nav-number">1.9.3.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E6%9C%9F%E7%BB%93%E6%9E%9C-8"><span class="nav-number">1.9.4.</span> <span class="nav-text">预期结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%A0%E4%BB%8A%E5%A4%A9%E5%BF%85%E9%A1%BB%E7%90%86%E8%A7%A3-8"><span class="nav-number">1.9.5.</span> <span class="nav-text">你今天必须理解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC-10-%E5%A4%A9%EF%BC%9A%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C"><span class="nav-number">1.10.</span> <span class="nav-text">第 10 天：容器网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87-9"><span class="nav-number">1.10.1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4-9"><span class="nav-number">1.10.2.</span> <span class="nav-text">执行命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C-9"><span class="nav-number">1.10.3.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E6%9C%9F%E7%BB%93%E6%9E%9C-9"><span class="nav-number">1.10.4.</span> <span class="nav-text">预期结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%A0%E4%BB%8A%E5%A4%A9%E5%BF%85%E9%A1%BB%E7%90%86%E8%A7%A3-9"><span class="nav-number">1.10.5.</span> <span class="nav-text">你今天必须理解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC-11-%E5%A4%A9%EF%BC%9A%E5%86%99%E7%AC%AC%E4%B8%80%E4%B8%AA-Dockerfile"><span class="nav-number">1.11.</span> <span class="nav-text">第 11 天：写第一个 Dockerfile</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87-10"><span class="nav-number">1.11.1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E4%B8%80%E4%B8%AA%E6%9C%80%E5%B0%8F%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.11.2.</span> <span class="nav-text">准备一个最小项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4-10"><span class="nav-number">1.11.3.</span> <span class="nav-text">执行命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C-10"><span class="nav-number">1.11.4.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E6%9C%9F%E7%BB%93%E6%9E%9C-10"><span class="nav-number">1.11.5.</span> <span class="nav-text">预期结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%A0%E4%BB%8A%E5%A4%A9%E5%BF%85%E9%A1%BB%E7%90%86%E8%A7%A3-10"><span class="nav-number">1.11.6.</span> <span class="nav-text">你今天必须理解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC-12-%E5%A4%A9%EF%BC%9A%E5%AE%B9%E5%99%A8%E5%8C%96%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8"><span class="nav-number">1.12.</span> <span class="nav-text">第 12 天：容器化一个简单应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87-11"><span class="nav-number">1.12.1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E6%9C%80%E5%B0%8F%E5%AE%9E%E9%AA%8C"><span class="nav-number">1.12.2.</span> <span class="nav-text">推荐最小实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4-11"><span class="nav-number">1.12.3.</span> <span class="nav-text">执行命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C-11"><span class="nav-number">1.12.4.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E6%9C%9F%E7%BB%93%E6%9E%9C-11"><span class="nav-number">1.12.5.</span> <span class="nav-text">预期结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%A0%E4%BB%8A%E5%A4%A9%E5%BF%85%E9%A1%BB%E7%90%86%E8%A7%A3-11"><span class="nav-number">1.12.6.</span> <span class="nav-text">你今天必须理解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC-13-%E5%A4%A9%EF%BC%9ACompose-%E7%AE%A1%E7%90%86%E5%A4%9A%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.13.</span> <span class="nav-text">第 13 天：Compose 管理多服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87-12"><span class="nav-number">1.13.1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-compose-%E6%96%87%E4%BB%B6"><span class="nav-number">1.13.2.</span> <span class="nav-text">示例 compose 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4-12"><span class="nav-number">1.13.3.</span> <span class="nav-text">执行命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C-12"><span class="nav-number">1.13.4.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E6%9C%9F%E7%BB%93%E6%9E%9C-12"><span class="nav-number">1.13.5.</span> <span class="nav-text">预期结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%A0%E4%BB%8A%E5%A4%A9%E5%BF%85%E9%A1%BB%E7%90%86%E8%A7%A3-12"><span class="nav-number">1.13.6.</span> <span class="nav-text">你今天必须理解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC-14-%E5%A4%A9%EF%BC%9A%E5%AE%8C%E6%95%B4%E6%BC%94%E7%BB%83%E4%B8%8E%E6%8E%92%E9%94%99"><span class="nav-number">1.14.</span> <span class="nav-text">第 14 天：完整演练与排错</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8A%E6%97%A5%E7%9B%AE%E6%A0%87-13"><span class="nav-number">1.14.1.</span> <span class="nav-text">今日目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E6%BC%94%E7%BB%83%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.14.2.</span> <span class="nav-text">完整演练任务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%85%E6%84%8F%E5%88%B6%E9%80%A0%E7%9A%84%E9%94%99%E8%AF%AF"><span class="nav-number">1.14.3.</span> <span class="nav-text">故意制造的错误</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%AB%AF%E5%8F%A3%E5%86%B2%E7%AA%81"><span class="nav-number">1.14.3.1.</span> <span class="nav-text">1. 端口冲突</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%AE%B9%E5%99%A8%E5%90%AF%E5%8A%A8%E5%8D%B3%E9%80%80%E5%87%BA"><span class="nav-number">1.14.3.2.</span> <span class="nav-text">2. 容器启动即退出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E9%94%99%E8%AF%AF%E7%9A%84%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">1.14.3.3.</span> <span class="nav-text">3. 错误的环境变量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8A%E5%A4%A9%E7%9A%84%E9%AA%8C%E6%94%B6%E6%A0%87%E5%87%86"><span class="nav-number">1.14.4.</span> <span class="nav-text">今天的验收标准</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%8F%E5%A4%A9%E5%A4%8D%E7%9B%98%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.15.</span> <span class="nav-text">每天复盘模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99-14-%E5%A4%A9%E6%9C%80%E8%AF%A5%E8%83%8C%E7%86%9F%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="nav-number">1.16.</span> <span class="nav-text">这 14 天最该背熟的命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E5%91%A8%E5%90%8E%E4%BD%A0%E5%BA%94%E8%AF%A5%E8%BE%BE%E5%88%B0%E7%9A%84%E6%B0%B4%E5%B9%B3"><span class="nav-number">1.17.</span> <span class="nav-text">两周后你应该达到的水平</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">星之辰</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://angryxzc.github.io/2026/04/15/Docker%E5%AD%A6%E4%B9%A0%E6%B8%85%E5%8D%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="星之辰">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="星之辰的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Docker学习清单 | 星之辰的博客">
+      <meta itemprop="description" content="Docker学习清单">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Docker学习清单
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-04-15 10:31:55 / 修改时间：10:35:17" itemprop="dateCreated datePublished" datetime="2026-04-15T10:31:55+08:00">2026-04-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>12 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">Docker学习清单</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Docker-14-天实操版清单"><a href="#Docker-14-天实操版清单" class="headerlink" title="Docker 14 天实操版清单"></a>Docker 14 天实操版清单</h1><p>下面这份清单默认你已经装好了 Docker Desktop，使用的是 macOS。<br>节奏按每天 1 到 2 小时设计，每天都包含 4 部分：</p>
+<ol>
+<li>先执行命令</li>
+<li>再做实验</li>
+<li>对照预期结果</li>
+<li>最后做一个小复盘</li>
+</ol>
+<p>建议你把每天的结果记录成一个学习日志，格式我放在最后。</p>
+<hr>
+<h2 id="第-1-天：确认环境可用，跑起第一个容器"><a href="#第-1-天：确认环境可用，跑起第一个容器" class="headerlink" title="第 1 天：确认环境可用，跑起第一个容器"></a>第 1 天：确认环境可用，跑起第一个容器</h2><h3 id="今日目标"><a href="#今日目标" class="headerlink" title="今日目标"></a>今日目标</h3><ul>
+<li>确认 Docker 安装正常</li>
+<li>知道 Docker 已经在工作</li>
+<li>成功启动第一个容器</li>
+</ul>
+<h3 id="执行命令"><a href="#执行命令" class="headerlink" title="执行命令"></a>执行命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker version</span><br><span class="line">docker info</span><br><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
+
+<h3 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h3><ul>
+<li>看 Docker 客户端和服务端版本信息</li>
+<li>看系统信息里是否有容器运行时、镜像数量等内容</li>
+<li>运行 hello-world，观察是否自动拉取镜像并打印欢迎信息</li>
+</ul>
+<h3 id="预期结果"><a href="#预期结果" class="headerlink" title="预期结果"></a>预期结果</h3><ul>
+<li>docker version 能看到 Client 和 Server 两部分</li>
+<li>docker info 能正常输出大量信息，而不是报错</li>
+<li>docker run hello-world 会先拉镜像，再输出一段说明 Docker 工作正常的提示</li>
+</ul>
+<h3 id="你今天必须理解"><a href="#你今天必须理解" class="headerlink" title="你今天必须理解"></a>你今天必须理解</h3><ul>
+<li>Docker 客户端发命令</li>
+<li>Docker 服务端真正执行</li>
+<li>镜像不存在时会自动拉取</li>
+</ul>
+<hr>
+<h2 id="第-2-天：学会最基本的容器管理"><a href="#第-2-天：学会最基本的容器管理" class="headerlink" title="第 2 天：学会最基本的容器管理"></a>第 2 天：学会最基本的容器管理</h2><h3 id="今日目标-1"><a href="#今日目标-1" class="headerlink" title="今日目标"></a>今日目标</h3><ul>
+<li>会创建、查看、停止、删除容器</li>
+<li>知道容器和镜像不是一回事</li>
+</ul>
+<h3 id="执行命令-1"><a href="#执行命令-1" class="headerlink" title="执行命令"></a>执行命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name mynginx nginx</span><br><span class="line">docker ps</span><br><span class="line">docker ps -a</span><br><span class="line">docker stop mynginx</span><br><span class="line">docker start mynginx</span><br><span class="line">docker <span class="built_in">rm</span> -f mynginx</span><br><span class="line">docker ps -a</span><br></pre></td></tr></table></figure>
+
+<h3 id="实验-1"><a href="#实验-1" class="headerlink" title="实验"></a>实验</h3><ul>
+<li>启动一个后台运行的 Nginx 容器</li>
+<li>查看正在运行的容器</li>
+<li>停止后再启动</li>
+<li>强制删除容器</li>
+<li>删除后再次查看容器列表</li>
+</ul>
+<h3 id="预期结果-1"><a href="#预期结果-1" class="headerlink" title="预期结果"></a>预期结果</h3><ul>
+<li>docker run -d 后会返回一长串容器 ID</li>
+<li>docker ps 能看到 mynginx 正在运行</li>
+<li>docker stop 后，docker ps 看不到它，但 docker ps -a 能看到已退出的容器</li>
+<li>删除后，docker ps -a 中不再有 mynginx</li>
+</ul>
+<h3 id="你今天必须理解-1"><a href="#你今天必须理解-1" class="headerlink" title="你今天必须理解"></a>你今天必须理解</h3><ul>
+<li>镜像是模板</li>
+<li>容器是运行实例</li>
+<li>删除容器不会自动删除镜像</li>
+</ul>
+<hr>
+<h2 id="第-3-天：日志、进入容器、观察容器内部"><a href="#第-3-天：日志、进入容器、观察容器内部" class="headerlink" title="第 3 天：日志、进入容器、观察容器内部"></a>第 3 天：日志、进入容器、观察容器内部</h2><h3 id="今日目标-2"><a href="#今日目标-2" class="headerlink" title="今日目标"></a>今日目标</h3><ul>
+<li>会看日志</li>
+<li>会进入容器</li>
+<li>知道容器里到底跑了什么</li>
+</ul>
+<h3 id="执行命令-2"><a href="#执行命令-2" class="headerlink" title="执行命令"></a>执行命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name mynginx nginx</span><br><span class="line">docker logs mynginx</span><br><span class="line">docker <span class="built_in">exec</span> -it mynginx sh</span><br><span class="line">docker top mynginx</span><br><span class="line">docker inspect mynginx</span><br></pre></td></tr></table></figure>
+
+<h3 id="实验-2"><a href="#实验-2" class="headerlink" title="实验"></a>实验</h3><ul>
+<li>先看日志</li>
+<li>再进入容器内部</li>
+<li>在容器里执行下面这些命令</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">pwd</span></span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line">ps</span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="预期结果-2"><a href="#预期结果-2" class="headerlink" title="预期结果"></a>预期结果</h3><ul>
+<li>docker logs 可能日志不多，这是正常的</li>
+<li>docker exec -it 能进入容器 shell</li>
+<li>容器里能看到 Nginx 的目录结构</li>
+<li>docker top 能看到容器内运行的进程</li>
+<li>docker inspect 能输出一大段 JSON，包括网络、挂载、镜像等信息</li>
+</ul>
+<h3 id="你今天必须理解-2"><a href="#你今天必须理解-2" class="headerlink" title="你今天必须理解"></a>你今天必须理解</h3><ul>
+<li>docker logs 是看容器标准输出</li>
+<li>docker exec 是进入一个已经在运行的容器</li>
+<li>inspect 是最重要的排查工具之一</li>
+</ul>
+<hr>
+<h2 id="第-4-天：端口映射"><a href="#第-4-天：端口映射" class="headerlink" title="第 4 天：端口映射"></a>第 4 天：端口映射</h2><h3 id="今日目标-3"><a href="#今日目标-3" class="headerlink" title="今日目标"></a>今日目标</h3><ul>
+<li>理解宿主机端口和容器端口</li>
+<li>知道为什么服务在容器里启动了，但外面访问不到</li>
+</ul>
+<h3 id="执行命令-3"><a href="#执行命令-3" class="headerlink" title="执行命令"></a>执行命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name web1 -p 8080:80 nginx</span><br><span class="line">docker ps</span><br><span class="line">docker port web1</span><br></pre></td></tr></table></figure>
+
+<h3 id="实验-3"><a href="#实验-3" class="headerlink" title="实验"></a>实验</h3><ul>
+<li>浏览器访问 <a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080</a></li>
+<li>观察 Nginx 默认欢迎页</li>
+<li>删除容器后，不带端口映射再启动一次</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">rm</span> -f web1</span><br><span class="line">docker run -d --name web2 nginx</span><br><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>尝试访问 <a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080</a></li>
+</ul>
+<h3 id="预期结果-3"><a href="#预期结果-3" class="headerlink" title="预期结果"></a>预期结果</h3><ul>
+<li>带 -p 8080:80 时浏览器能访问</li>
+<li>不带 -p 时浏览器访问不到</li>
+<li>docker ps 中 PORTS 列会显示端口映射关系</li>
+</ul>
+<h3 id="你今天必须理解-3"><a href="#你今天必须理解-3" class="headerlink" title="你今天必须理解"></a>你今天必须理解</h3><ul>
+<li>左边 8080 是宿主机端口</li>
+<li>右边 80 是容器端口</li>
+<li>没有映射，不代表容器里没启动，只是外面进不去</li>
+</ul>
+<hr>
+<h2 id="第-5-天：镜像管理"><a href="#第-5-天：镜像管理" class="headerlink" title="第 5 天：镜像管理"></a>第 5 天：镜像管理</h2><h3 id="今日目标-4"><a href="#今日目标-4" class="headerlink" title="今日目标"></a>今日目标</h3><ul>
+<li>学会拉取、查看、删除镜像</li>
+<li>理解标签和版本</li>
+</ul>
+<h3 id="执行命令-4"><a href="#执行命令-4" class="headerlink" title="执行命令"></a>执行命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker pull nginx</span><br><span class="line">docker pull nginx:1.27</span><br><span class="line">docker images</span><br><span class="line">docker image <span class="built_in">ls</span></span><br><span class="line">docker rmi nginx:1.27</span><br><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+<h3 id="实验-4"><a href="#实验-4" class="headerlink" title="实验"></a>实验</h3><ul>
+<li>分别拉取默认标签和指定版本</li>
+<li>观察镜像名称、标签、ID、大小</li>
+<li>删除指定标签镜像</li>
+</ul>
+<h3 id="预期结果-4"><a href="#预期结果-4" class="headerlink" title="预期结果"></a>预期结果</h3><ul>
+<li>docker images 能看到镜像列表</li>
+<li>同一个仓库可以有多个标签</li>
+<li>删除镜像时，如果有容器依赖它，可能会提示失败</li>
+</ul>
+<h3 id="你今天必须理解-4"><a href="#你今天必须理解-4" class="headerlink" title="你今天必须理解"></a>你今天必须理解</h3><ul>
+<li>latest 不是“最新最安全”的同义词</li>
+<li>生产环境更适合固定版本标签</li>
+</ul>
+<hr>
+<h2 id="第-6-天：数据持久化，先体验“数据丢失”"><a href="#第-6-天：数据持久化，先体验“数据丢失”" class="headerlink" title="第 6 天：数据持久化，先体验“数据丢失”"></a>第 6 天：数据持久化，先体验“数据丢失”</h2><h3 id="今日目标-5"><a href="#今日目标-5" class="headerlink" title="今日目标"></a>今日目标</h3><ul>
+<li>亲眼看到删容器后数据丢失</li>
+<li>理解为什么需要卷</li>
+</ul>
+<h3 id="执行命令-5"><a href="#执行命令-5" class="headerlink" title="执行命令"></a>执行命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name mysql1 -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=testdb mysql:8</span><br><span class="line">docker ps</span><br><span class="line">docker <span class="built_in">exec</span> -it mysql1 mysql -uroot -p123456</span><br></pre></td></tr></table></figure>
+
+<p>进入 MySQL 后执行：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> DATABASES;</span><br><span class="line">USE testdb;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> users(id <span class="type">INT</span> <span class="keyword">PRIMARY</span> KEY);</span><br><span class="line"><span class="keyword">SHOW</span> TABLES;</span><br><span class="line">EXIT;</span><br></pre></td></tr></table></figure>
+
+<p>然后删除并重建：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">rm</span> -f mysql1</span><br><span class="line">docker run -d --name mysql1 -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=testdb mysql:8</span><br><span class="line">docker <span class="built_in">exec</span> -it mysql1 mysql -uroot -p123456</span><br></pre></td></tr></table></figure>
+
+<p>再次进入后执行：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">USE testdb;</span><br><span class="line"><span class="keyword">SHOW</span> TABLES;</span><br><span class="line">EXIT;</span><br></pre></td></tr></table></figure>
+
+<h3 id="实验-5"><a href="#实验-5" class="headerlink" title="实验"></a>实验</h3><ul>
+<li>在数据库里建一张表</li>
+<li>删除容器并重建</li>
+<li>再检查表是否还在</li>
+</ul>
+<h3 id="预期结果-5"><a href="#预期结果-5" class="headerlink" title="预期结果"></a>预期结果</h3><ul>
+<li>第二次进入数据库后，之前建的表不在了</li>
+<li>这说明数据跟着容器一起没了</li>
+</ul>
+<h3 id="你今天必须理解-5"><a href="#你今天必须理解-5" class="headerlink" title="你今天必须理解"></a>你今天必须理解</h3><ul>
+<li>容器本身不是持久化存储方案</li>
+<li>不挂载卷，重要数据很容易丢</li>
+</ul>
+<hr>
+<h2 id="第-7-天：用卷保存数据"><a href="#第-7-天：用卷保存数据" class="headerlink" title="第 7 天：用卷保存数据"></a>第 7 天：用卷保存数据</h2><h3 id="今日目标-6"><a href="#今日目标-6" class="headerlink" title="今日目标"></a>今日目标</h3><ul>
+<li>学会创建和使用 volume</li>
+<li>看到删容器后数据还能保留</li>
+</ul>
+<h3 id="执行命令-6"><a href="#执行命令-6" class="headerlink" title="执行命令"></a>执行命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker volume create mysql_data</span><br><span class="line">docker volume <span class="built_in">ls</span></span><br><span class="line">docker run -d --name mysql2 -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=testdb -v mysql_data:/var/lib/mysql mysql:8</span><br><span class="line">docker <span class="built_in">exec</span> -it mysql2 mysql -uroot -p123456</span><br></pre></td></tr></table></figure>
+
+<p>进入 MySQL 后执行：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">USE testdb;</span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> products(id <span class="type">INT</span> <span class="keyword">PRIMARY</span> KEY);</span><br><span class="line"><span class="keyword">SHOW</span> TABLES;</span><br><span class="line">EXIT;</span><br></pre></td></tr></table></figure>
+
+<p>删除并重建：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">rm</span> -f mysql2</span><br><span class="line">docker run -d --name mysql2 -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=testdb -v mysql_data:/var/lib/mysql mysql:8</span><br><span class="line">docker <span class="built_in">exec</span> -it mysql2 mysql -uroot -p123456</span><br></pre></td></tr></table></figure>
+
+<p>再次检查：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">USE testdb;</span><br><span class="line"><span class="keyword">SHOW</span> TABLES;</span><br><span class="line">EXIT;</span><br></pre></td></tr></table></figure>
+
+<h3 id="实验-6"><a href="#实验-6" class="headerlink" title="实验"></a>实验</h3><ul>
+<li>复现昨天的流程，但这次加卷</li>
+<li>检查数据是否还在</li>
+</ul>
+<h3 id="预期结果-6"><a href="#预期结果-6" class="headerlink" title="预期结果"></a>预期结果</h3><ul>
+<li>products 表依然存在</li>
+<li>docker volume ls 能看到 mysql_data</li>
+</ul>
+<h3 id="你今天必须理解-6"><a href="#你今天必须理解-6" class="headerlink" title="你今天必须理解"></a>你今天必须理解</h3><ul>
+<li>卷独立于容器生命周期</li>
+<li>删容器不等于删卷</li>
+</ul>
+<hr>
+<h2 id="第-8-天：Bind-Mount，把宿主机目录挂进容器"><a href="#第-8-天：Bind-Mount，把宿主机目录挂进容器" class="headerlink" title="第 8 天：Bind Mount，把宿主机目录挂进容器"></a>第 8 天：Bind Mount，把宿主机目录挂进容器</h2><h3 id="今日目标-7"><a href="#今日目标-7" class="headerlink" title="今日目标"></a>今日目标</h3><ul>
+<li>理解 volume 和 bind mount 的区别</li>
+<li>体验“改本地文件，容器立刻生效”</li>
+</ul>
+<h3 id="执行命令-7"><a href="#执行命令-7" class="headerlink" title="执行命令"></a>执行命令</h3><p>先在本机准备一个目录，比如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p ~/docker-lab/html</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;&lt;h1&gt;Hello Docker&lt;/h1&gt;&#x27;</span> &gt; ~/docker-lab/html/index.html</span><br><span class="line">docker run -d --name site1 -p 8081:80 -v ~/docker-lab/html:/usr/share/nginx/html nginx</span><br></pre></td></tr></table></figure>
+
+<h3 id="实验-7"><a href="#实验-7" class="headerlink" title="实验"></a>实验</h3><ul>
+<li>浏览器访问 <a target="_blank" rel="noopener" href="http://localhost:8081/">http://localhost:8081</a></li>
+<li>修改本地 index.html 内容</li>
+<li>刷新页面，看是否立即变化</li>
+</ul>
+<p>可以这样修改：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;&lt;h1&gt;Hello Updated Docker&lt;/h1&gt;&#x27;</span> &gt; ~/docker-lab/html/index.html</span><br></pre></td></tr></table></figure>
+
+<h3 id="预期结果-7"><a href="#预期结果-7" class="headerlink" title="预期结果"></a>预期结果</h3><ul>
+<li>页面会显示你写的内容</li>
+<li>修改本地文件后，刷新浏览器就能看到新内容</li>
+</ul>
+<h3 id="你今天必须理解-7"><a href="#你今天必须理解-7" class="headerlink" title="你今天必须理解"></a>你今天必须理解</h3><ul>
+<li>bind mount 适合开发时挂源码或配置</li>
+<li>volume 更适合持久化应用数据</li>
+</ul>
+<hr>
+<h2 id="第-9-天：环境变量"><a href="#第-9-天：环境变量" class="headerlink" title="第 9 天：环境变量"></a>第 9 天：环境变量</h2><h3 id="今日目标-8"><a href="#今日目标-8" class="headerlink" title="今日目标"></a>今日目标</h3><ul>
+<li>学会给容器传入配置</li>
+<li>理解配置和镜像分离</li>
+</ul>
+<h3 id="执行命令-8"><a href="#执行命令-8" class="headerlink" title="执行命令"></a>执行命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run --<span class="built_in">rm</span> -e MY_NAME=alice busybox sh -c <span class="string">&#x27;echo $MY_NAME&#x27;</span></span><br><span class="line">docker run --<span class="built_in">rm</span> -e APP_ENV=dev -e APP_PORT=3000 busybox sh -c <span class="string">&#x27;echo $APP_ENV &amp;&amp; echo $APP_PORT&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="实验-8"><a href="#实验-8" class="headerlink" title="实验"></a>实验</h3><ul>
+<li>给容器传多个环境变量</li>
+<li>在容器内部读取这些变量</li>
+<li>再运行一次，不传变量，比较结果</li>
+</ul>
+<h3 id="预期结果-8"><a href="#预期结果-8" class="headerlink" title="预期结果"></a>预期结果</h3><ul>
+<li>能看到 alice、dev、3000 等输出</li>
+<li>不传变量时，输出为空或默认行为不同</li>
+</ul>
+<h3 id="你今天必须理解-8"><a href="#你今天必须理解-8" class="headerlink" title="你今天必须理解"></a>你今天必须理解</h3><ul>
+<li>环境变量是运行期配置的一种最常见方式</li>
+<li>不同环境最好通过配置切换，而不是改镜像</li>
+</ul>
+<hr>
+<h2 id="第-10-天：容器网络"><a href="#第-10-天：容器网络" class="headerlink" title="第 10 天：容器网络"></a>第 10 天：容器网络</h2><h3 id="今日目标-9"><a href="#今日目标-9" class="headerlink" title="今日目标"></a>今日目标</h3><ul>
+<li>学会创建自定义网络</li>
+<li>理解容器之间如何通信</li>
+</ul>
+<h3 id="执行命令-9"><a href="#执行命令-9" class="headerlink" title="执行命令"></a>执行命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker network create appnet</span><br><span class="line">docker network <span class="built_in">ls</span></span><br><span class="line">docker run -d --name db --network appnet -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=testdb mysql:8</span><br><span class="line">docker run -it --<span class="built_in">rm</span> --network appnet busybox sh</span><br></pre></td></tr></table></figure>
+
+<p>进入 busybox 后执行：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping db</span><br></pre></td></tr></table></figure>
+
+<p>如果 busybox 没有 ping，可尝试：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nslookup db</span><br></pre></td></tr></table></figure>
+
+<h3 id="实验-9"><a href="#实验-9" class="headerlink" title="实验"></a>实验</h3><ul>
+<li>创建自定义网络</li>
+<li>把数据库容器放进这个网络</li>
+<li>在另一个容器里通过容器名访问它</li>
+</ul>
+<h3 id="预期结果-9"><a href="#预期结果-9" class="headerlink" title="预期结果"></a>预期结果</h3><ul>
+<li>容器名 db 可以被解析</li>
+<li>同网络中的容器能通过名字互相找到对方</li>
+</ul>
+<h3 id="你今天必须理解-9"><a href="#你今天必须理解-9" class="headerlink" title="你今天必须理解"></a>你今天必须理解</h3><ul>
+<li>容器里访问 localhost，访问的是容器自己，不是别的容器</li>
+<li>同一自定义网络内，服务名或容器名可以作为地址使用</li>
+</ul>
+<hr>
+<h2 id="第-11-天：写第一个-Dockerfile"><a href="#第-11-天：写第一个-Dockerfile" class="headerlink" title="第 11 天：写第一个 Dockerfile"></a>第 11 天：写第一个 Dockerfile</h2><h3 id="今日目标-10"><a href="#今日目标-10" class="headerlink" title="今日目标"></a>今日目标</h3><ul>
+<li>学会最核心的 Dockerfile 指令</li>
+<li>自己构建一个镜像</li>
+</ul>
+<h3 id="准备一个最小项目"><a href="#准备一个最小项目" class="headerlink" title="准备一个最小项目"></a>准备一个最小项目</h3><p>在本机准备目录，例如：</p>
+<ul>
+<li>一个 index.html</li>
+<li>一个 Dockerfile</li>
+</ul>
+<p>Dockerfile 内容如下：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> nginx</span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> index.html /usr/share/nginx/html/index.html</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="执行命令-10"><a href="#执行命令-10" class="headerlink" title="执行命令"></a>执行命令</h3><p>进入目录后执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker build -t mysite:v1 .</span><br><span class="line">docker images</span><br><span class="line">docker run -d --name mysite1 -p 8082:80 mysite:v1</span><br></pre></td></tr></table></figure>
+
+<h3 id="实验-10"><a href="#实验-10" class="headerlink" title="实验"></a>实验</h3><ul>
+<li>构建镜像</li>
+<li>运行容器</li>
+<li>浏览器访问 <a target="_blank" rel="noopener" href="http://localhost:8082/">http://localhost:8082</a></li>
+</ul>
+<h3 id="预期结果-10"><a href="#预期结果-10" class="headerlink" title="预期结果"></a>预期结果</h3><ul>
+<li>docker build 成功</li>
+<li>镜像列表里出现 mysite:v1</li>
+<li>浏览器能看到你的自定义页面</li>
+</ul>
+<h3 id="你今天必须理解-10"><a href="#你今天必须理解-10" class="headerlink" title="你今天必须理解"></a>你今天必须理解</h3><ul>
+<li>Dockerfile 描述的是“如何构建镜像”</li>
+<li>build 是构建阶段</li>
+<li>run 是运行阶段</li>
+</ul>
+<hr>
+<h2 id="第-12-天：容器化一个简单应用"><a href="#第-12-天：容器化一个简单应用" class="headerlink" title="第 12 天：容器化一个简单应用"></a>第 12 天：容器化一个简单应用</h2><h3 id="今日目标-11"><a href="#今日目标-11" class="headerlink" title="今日目标"></a>今日目标</h3><ul>
+<li>把一个真实的小应用打包成镜像</li>
+<li>跑通一个后端服务</li>
+</ul>
+<h3 id="推荐最小实验"><a href="#推荐最小实验" class="headerlink" title="推荐最小实验"></a>推荐最小实验</h3><p>如果你熟悉 Node.js，可以使用这样的最小示例：</p>
+<p>app.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> server = http.<span class="title function_">createServer</span>(<span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">	res.<span class="title function_">end</span>(<span class="string">&#x27;hello docker&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line">server.<span class="title function_">listen</span>(<span class="number">3000</span>, <span class="string">&#x27;0.0.0.0&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>Dockerfile</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:<span class="number">22</span>-alpine</span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> app.js .</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;node&quot;</span>, <span class="string">&quot;app.js&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="执行命令-11"><a href="#执行命令-11" class="headerlink" title="执行命令"></a>执行命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker build -t node-demo:v1 .</span><br><span class="line">docker run -d --name node-demo -p 3000:3000 node-demo:v1</span><br><span class="line">docker logs node-demo</span><br></pre></td></tr></table></figure>
+
+<h3 id="实验-11"><a href="#实验-11" class="headerlink" title="实验"></a>实验</h3><ul>
+<li>构建并启动这个应用</li>
+<li>浏览器访问 <a target="_blank" rel="noopener" href="http://localhost:3000/">http://localhost:3000</a></li>
+</ul>
+<h3 id="预期结果-11"><a href="#预期结果-11" class="headerlink" title="预期结果"></a>预期结果</h3><ul>
+<li>容器能正常运行</li>
+<li>浏览器返回 hello docker</li>
+<li>如果你把监听地址写成 127.0.0.1，容器外通常访问不到，这正好是一个排错练习</li>
+</ul>
+<h3 id="你今天必须理解-11"><a href="#你今天必须理解-11" class="headerlink" title="你今天必须理解"></a>你今天必须理解</h3><ul>
+<li>应用监听地址要注意</li>
+<li>很多“容器里启动成功但外部访问不到”的问题都在这里</li>
+</ul>
+<hr>
+<h2 id="第-13-天：Compose-管理多服务"><a href="#第-13-天：Compose-管理多服务" class="headerlink" title="第 13 天：Compose 管理多服务"></a>第 13 天：Compose 管理多服务</h2><h3 id="今日目标-12"><a href="#今日目标-12" class="headerlink" title="今日目标"></a>今日目标</h3><ul>
+<li>知道为什么多个 docker run 不适合长期管理</li>
+<li>学会用 Compose 一次启动多个服务</li>
+</ul>
+<h3 id="示例-compose-文件"><a href="#示例-compose-文件" class="headerlink" title="示例 compose 文件"></a>示例 compose 文件</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">	<span class="attr">mysql:</span></span><br><span class="line">		<span class="attr">image:</span> <span class="string">mysql:8</span></span><br><span class="line">		<span class="attr">container_name:</span> <span class="string">mysql-compose</span></span><br><span class="line">		<span class="attr">environment:</span></span><br><span class="line">			<span class="attr">MYSQL_ROOT_PASSWORD:</span> <span class="number">123456</span></span><br><span class="line">			<span class="attr">MYSQL_DATABASE:</span> <span class="string">appdb</span></span><br><span class="line">		<span class="attr">volumes:</span></span><br><span class="line">			<span class="bullet">-</span> <span class="string">mysql_compose_data:/var/lib/mysql</span></span><br><span class="line"></span><br><span class="line">	<span class="attr">nginx:</span></span><br><span class="line">		<span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">		<span class="attr">container_name:</span> <span class="string">nginx-compose</span></span><br><span class="line">		<span class="attr">ports:</span></span><br><span class="line">			<span class="bullet">-</span> <span class="string">&quot;8083:80&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">	<span class="attr">mysql_compose_data:</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="执行命令-12"><a href="#执行命令-12" class="headerlink" title="执行命令"></a>执行命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker compose up -d</span><br><span class="line">docker compose ps</span><br><span class="line">docker compose logs</span><br><span class="line">docker compose down</span><br></pre></td></tr></table></figure>
+
+<h3 id="实验-12"><a href="#实验-12" class="headerlink" title="实验"></a>实验</h3><ul>
+<li>启动服务</li>
+<li>查看服务状态</li>
+<li>查看日志</li>
+<li>停止服务</li>
+</ul>
+<h3 id="预期结果-12"><a href="#预期结果-12" class="headerlink" title="预期结果"></a>预期结果</h3><ul>
+<li>docker compose up -d 后两个服务都会起来</li>
+<li>docker compose ps 能看到服务状态</li>
+<li>docker compose down 会停止并删除容器，但卷默认还保留</li>
+</ul>
+<h3 id="你今天必须理解-12"><a href="#你今天必须理解-12" class="headerlink" title="你今天必须理解"></a>你今天必须理解</h3><ul>
+<li>Dockerfile 解决“怎么构建镜像”</li>
+<li>Compose 解决“怎么组织多个服务一起运行”</li>
+</ul>
+<hr>
+<h2 id="第-14-天：完整演练与排错"><a href="#第-14-天：完整演练与排错" class="headerlink" title="第 14 天：完整演练与排错"></a>第 14 天：完整演练与排错</h2><h3 id="今日目标-13"><a href="#今日目标-13" class="headerlink" title="今日目标"></a>今日目标</h3><ul>
+<li>从零完成一次完整流程</li>
+<li>主动制造几个常见错误并排查</li>
+</ul>
+<h3 id="完整演练任务"><a href="#完整演练任务" class="headerlink" title="完整演练任务"></a>完整演练任务</h3><p>今天你要独立完成下面这件事：</p>
+<ol>
+<li>启动一个数据库服务</li>
+<li>启动一个 Web 服务</li>
+<li>给 Web 服务映射端口</li>
+<li>给数据库加卷</li>
+<li>用 Compose 管理这两个服务</li>
+<li>查看日志确认运行正常</li>
+</ol>
+<h3 id="故意制造的错误"><a href="#故意制造的错误" class="headerlink" title="故意制造的错误"></a>故意制造的错误</h3><p>你可以按顺序做这些实验：</p>
+<h4 id="1-端口冲突"><a href="#1-端口冲突" class="headerlink" title="1. 端口冲突"></a>1. 端口冲突</h4><p>先占用一个端口，再让容器也用这个端口</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name port-test-1 -p 8084:80 nginx</span><br><span class="line">docker run -d --name port-test-2 -p 8084:80 nginx</span><br></pre></td></tr></table></figure>
+
+<p>预期：</p>
+<ul>
+<li>第二个容器启动失败</li>
+<li>报端口已被占用</li>
+</ul>
+<h4 id="2-容器启动即退出"><a href="#2-容器启动即退出" class="headerlink" title="2. 容器启动即退出"></a>2. 容器启动即退出</h4><p>运行一个执行完就结束的容器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run --name short-lived busybox <span class="built_in">echo</span> hello</span><br><span class="line">docker ps -a</span><br><span class="line">docker logs short-lived</span><br></pre></td></tr></table></figure>
+
+<p>预期：</p>
+<ul>
+<li>容器很快退出</li>
+<li>日志里能看到 hello</li>
+</ul>
+<h4 id="3-错误的环境变量"><a href="#3-错误的环境变量" class="headerlink" title="3. 错误的环境变量"></a>3. 错误的环境变量</h4><p>启动 MySQL 时故意漏掉必须的密码参数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run --name bad-mysql mysql:8</span><br><span class="line">docker logs bad-mysql</span><br></pre></td></tr></table></figure>
+
+<p>预期：</p>
+<ul>
+<li>容器不能正常运行</li>
+<li>日志会提示缺少必需的环境变量</li>
+</ul>
+<h3 id="今天的验收标准"><a href="#今天的验收标准" class="headerlink" title="今天的验收标准"></a>今天的验收标准</h3><ul>
+<li>你知道看哪里找问题</li>
+<li>你能优先检查日志、端口、环境变量、网络、卷</li>
+<li>你能独立解释 3 个以上常见报错原因</li>
+</ul>
+<hr>
+<h2 id="每天复盘模板"><a href="#每天复盘模板" class="headerlink" title="每天复盘模板"></a>每天复盘模板</h2><p>你每天学完后，用下面这个模板记录：</p>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 第 X 天复盘</span></span><br><span class="line"></span><br><span class="line"><span class="section">### 今天做了什么</span></span><br><span class="line"><span class="bullet">-</span> </span><br><span class="line"></span><br><span class="line"><span class="section">### 我执行过的关键命令</span></span><br><span class="line"><span class="bullet">-</span> </span><br><span class="line"></span><br><span class="line"><span class="section">### 我观察到的现象</span></span><br><span class="line"><span class="bullet">-</span> </span><br><span class="line"></span><br><span class="line"><span class="section">### 我踩到的坑</span></span><br><span class="line"><span class="bullet">-</span> </span><br><span class="line"></span><br><span class="line"><span class="section">### 这个坑的原因</span></span><br><span class="line"><span class="bullet">-</span> </span><br><span class="line"></span><br><span class="line"><span class="section">### 我现在还不懂的点</span></span><br><span class="line"><span class="bullet">-</span> </span><br><span class="line"></span><br><span class="line"><span class="section">### 明天要补什么</span></span><br><span class="line"><span class="bullet">-</span> </span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="这-14-天最该背熟的命令"><a href="#这-14-天最该背熟的命令" class="headerlink" title="这 14 天最该背熟的命令"></a>这 14 天最该背熟的命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">docker version</span><br><span class="line">docker info</span><br><span class="line">docker run</span><br><span class="line">docker ps</span><br><span class="line">docker ps -a</span><br><span class="line">docker stop</span><br><span class="line">docker start</span><br><span class="line">docker <span class="built_in">rm</span></span><br><span class="line">docker logs</span><br><span class="line">docker <span class="built_in">exec</span> -it</span><br><span class="line">docker images</span><br><span class="line">docker pull</span><br><span class="line">docker rmi</span><br><span class="line">docker inspect</span><br><span class="line">docker port</span><br><span class="line">docker volume create</span><br><span class="line">docker volume <span class="built_in">ls</span></span><br><span class="line">docker network create</span><br><span class="line">docker network <span class="built_in">ls</span></span><br><span class="line">docker build</span><br><span class="line">docker compose up -d</span><br><span class="line">docker compose ps</span><br><span class="line">docker compose logs</span><br><span class="line">docker compose down</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="两周后你应该达到的水平"><a href="#两周后你应该达到的水平" class="headerlink" title="两周后你应该达到的水平"></a>两周后你应该达到的水平</h2><ol>
+<li>能独立把一个静态网站放进容器并对外提供访问</li>
+<li>能把数据库数据持久化，不会因为删容器而丢数据</li>
+<li>能用 Dockerfile 构建自己的镜像</li>
+<li>能用 Compose 管理一个简单的多服务环境</li>
+<li>能处理最常见的基础问题</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/04/14/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E2%80%94%E2%80%94%E5%BC%80%E7%AF%87/" rel="prev" title="算法与数据结构——开篇">
+                  <i class="fa fa-angle-left"></i> 算法与数据结构——开篇
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">星之辰</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">163k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">9:53</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>-->
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js","integrity":"sha256-stuqcu2FrjYCXDOytWFA5SoUE/r3nkp6gTglzNSlavU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true}});</script></body>
+</html>
